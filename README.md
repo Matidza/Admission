@@ -1,7 +1,3 @@
-Certainly! Here's a customized README file for your Django website called **Admissions**, which allows parents to apply for school admissions for their children online.
-
----
-
 # 🎓 Admissions - School Admission System
 
 An online school admission platform built with Django and PostgreSQL that enables parents to apply for school admissions for their children from the comfort of their homes. This system provides a seamless and efficient way for parents to fill out application forms, submit required documents, and track the status of their child’s application.
