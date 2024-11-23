@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import SchoolProfile
 
 # Create your views here.
 
@@ -12,7 +13,8 @@ def about(request):
 
 # All Schools page
 def schools(request):
-    return render(request, 'schools.html', {})
+    school_profile = SchoolProfile.objects.all()
+    return render(request, 'schools.html', {'school_profile': school_profile})
 
 
 # All Schools page

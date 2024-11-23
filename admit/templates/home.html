@@ -21,32 +21,38 @@
     <body class="d-flex flex-column h-100">
         <main class="flex-shrink-0">
         <!-- Header-->
-        <header class="bg-dark py-5" style="background-image: url('{% static 'school.webp' %}'); background-size: cover; background-position: center;">
-            <div class="container px-5">
-                <div class="row gx-5 align-items-center justify-content-center">
-                    <div class="col-lg-8 col-xl-7 col-xxl-6">
-                        <div class="my-5 text-center text-xl-start">
+        <header class="bg-clear py-5" style="position: relative; height: 100vh; overflow: hidden;">
+    <!-- Video Background -->
+    <video autoplay loop muted playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 90%; object-fit: cover; z-index: -1;">
+        <source src="{% static 'vid.mp4' %}" type="video/mp4">
+       
+    </video>
 
-                            <h1 class="display-5 fw-bolder text-white mb-2">Your Partner in your Child's Education</h1>
-                            <p class="lead fw-normal text-secondary-50 mb-4">Where  Technology Meets Tradition: Admissions Reimagined</p>
-
-                            <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-                                <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">Get Started</a>
-                                <a class="btn btn-outline-dark btn-lg px-4" href="#">Admissions</a>  
-                            </div>
-                        </div>
+    <!-- Content Overlay -->
+    <div class="container px-2">
+        <div class="row  align-items-center justify-content-center">
+            <div class="col-lg-8 col-xl-7 col-xxl-6">
+                <div class="my-5 text-center text-xl-start">
+                    <h1 class="display-5 fw-bolder text-white mb-2">Your Partner in Your Child's Education</h1>
+                    <p class="lead fw-normal text-secondary-50 mb-4">Where Technology Meets Tradition: Admissions Reimagined</p>
+                    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
+                        <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">Get Started</a>
+                        <a class="btn btn-outline-dark btn-lg px-4" href="#">Admissions</a>
                     </div>
-                    <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center">
-                        <img class="img-fluid rounded-3 my-5"  />
-                    </div> 
                 </div>
             </div>
-        </header>
+            <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center">
+                <img class="img-fluid rounded-3 my-5" src="{% static 'school-logo.png' %}" alt="" />
+            </div>
+        </div>
+    </div>
+</header>
+
 
 
         <!-- Features section-->
         <section class="py-5" id="features">
-            <div class="container px-5 my-5">
+            <div class="container px-5">
                 <div class="row gx-5">
                     <div class="col-lg-4 mb-5 mb-lg-0"><h2 class="fw-bolder mb-0">A better way to start building your child's future.</h2></div>
                     <div class="col-lg-8">

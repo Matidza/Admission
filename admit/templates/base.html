@@ -14,13 +14,29 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+        <style>
+            html, body {
+                height: 100%;  /* Ensure full height for viewport */
+            }
+            #page-content {
+                flex: 1 0 auto;  /* Grow to fill the available space */
+            }
+            footer {
+                flex-shrink: 0;  /* Prevent footer from shrinking */
+            }
+            .d-flex {
+                display: flex;
+                flex-direction: column;
+                min-height: 5vh;  /* Ensure the body stretches to the full viewport */
+            }
+        </style>
     </head>
     <body class="d-flex flex-column h-100">
         <main class="flex-shrink-0">
-            <!-- Navigation-->
+            
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-                <div class="container  px-2 px-lg-5">
-                <img src="{% static 'assets/roup.png' %}" style="max-width: 35px; max-height: 35px; margin-top:5px" alt=""> &nbsp;&nbsp;&nbsp;
+                <div class="container  px-2 px-lg-5"><!-- Navigation
+                <img src="{% static 'assets/roup.png' %}" style="max-width: 35px; max-height: 35px; margin-top:5px" alt=""> -->
                     <a class="navbar-brand" href="{% url 'home' %}">Admissions</a>
                     
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
