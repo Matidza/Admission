@@ -3,6 +3,7 @@ from .models import SchoolProfile
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
+from .forms import SignUpForm
 
 
 
@@ -57,3 +58,7 @@ def logout_user(request):
     logout(request)
     messages.success(request, ("Logged Out!"))
     return redirect('home')
+
+def register_user(request):
+    
+    return render(request, 'register.html', {})
