@@ -50,6 +50,7 @@
                                 {% if user.is_authenticated %}
                                 <li class="nav-item active "><a class="nav-link" href="{% url 'applications' %}">Applications</a></li>
                                 <li class="nav-item active"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                                
                                 <li class="nav-item dropdown active">
                                     <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Profile</a>
                                     <ul class="dropdown-menu " aria-labelledby="navbarDropdownPortfolio">
@@ -61,7 +62,7 @@
                                 </li>
                                 {% else %}
                                     <li class="nav-item active"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
-                                    <li class="nav-item active"><a class="nav-link" href="{% url 'register' %}">register</a></li>
+                                    <li class="nav-item active"><a class="nav-link" href="{% url 'register' %}">Sign Up</a></li>
                                 {% endif %}
 
                             <!--<li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
@@ -79,6 +80,7 @@
                     </div>
                 </div>
             </nav>
+            
             
 
             {% block content %}
