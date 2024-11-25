@@ -3,8 +3,10 @@ from .models import SchoolProfile
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
-# Create your views here.
 
+
+
+# Create your views here.
 def home(request):
     return render(request, 'home.html', {})
 
@@ -26,22 +28,25 @@ def applications(request):
 
 # Loging
 def login_user(request):
-    # Determine if user filled the form
+    # Determine if user has filled the form, if not request the for to fil it
     if request.method == 'POST':
+
         # Inputs linked to to the login.html form 
         # <input type="text" class="form-control" name="username" placeholder="Username"> 
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
+
+        # Loging the authenticated user
         if user is not None:
             login(request, user)
-
-            
             #messages.success(request, ('Login Was Successful!'))
             return redirect('home')
+        # Redirect the user if login detsails arev not authenticated
         else:
-            #messages.success(request, ('Login Not Successful! Try Again!!'))
+            messages.success(request, ('Login Not Successful! Try Again!!'))
             return redirect('login')
+        #  Render all the above function on the html file
     else:
         return render(request, 'login.html', {})
 
