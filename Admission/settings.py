@@ -12,9 +12,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0^suq@5g&!0#n)7%=wd6=@h2i1yc4a%2q)qqpd_jf&jn3w_vok'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -106,10 +106,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static/',  # This should point to the directory where your app-specific static files are located
-]
+#STATIC_URL = 'static/'
+#STATICFILES_DIRS = [
+ #   BASE_DIR / 'static/',  # This should point to the directory where your app-specific static files are located
+#]
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]  # Ensure this points to your 'static' folder
+STATIC_ROOT = BASE_DIR / "staticfiles"  # Used for `collectstatic` in production
 
 
 MEDIA_URL = '/media/'

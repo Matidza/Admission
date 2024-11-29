@@ -23,7 +23,7 @@
         <!-- Header-->
         <header class="bg-clear py-5" style="position: relative; height: 100vh; overflow: hidden;">
     <!-- Video Background -->
-    <video autoplay loop muted playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 75%; object-fit: cover; z-index: -1;">
+    <video autoplay loop muted playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 98%; object-fit: cover; z-index: -1;">
         <source src="{% static 'vid.mp4' %}" type="video/mp4">
        
     </video>
@@ -37,12 +37,12 @@
                     <p class="lead fw-normal text-secondary-50 mb-4">Where Technology Meets Tradition: Admissions Reimagined</p>
                     <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
                         <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">Get Started</a>
-                        <a class="btn btn-outline-dark btn-lg px-4" href="#">Admissions</a>
+                        <a class="btn btn-outline-dark btn-lg px-4" href="{% url 'schools' %}">Admissions</a>
                     </div>
                 </div>
             </div>
             <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center">
-                <img class="img-fluid rounded-3 my-5" src="{% static 'school-logo.png' %}" alt="" />
+                <img class="img-fluid rounded-3 my-5" src="" alt="" />
             </div>
         </div>
     </div>
@@ -102,7 +102,7 @@
                         <div class="text-center">
                             <div class="fs-4 mb-4 fst-italic">"Working with Start Bootstrap templates has saved me tons of development time when building new projects! Starting with a Bootstrap template just makes things easier!"</div>
                             <div class="d-flex align-items-center justify-content-center">
-                                <img class="rounded-circle me-3" src="" alt="..." />
+                                <img class="rounded-circle me-3" src="{% static 'ok.png' %}" alt="..." style="max-height: 150px; max-width: 150px; "/>
                                 <div class="fw-bold">
                                     Mukwevho M.Z
                                     <span class="fw-bold text-primary mx-1">/</span>

@@ -3,8 +3,7 @@ import datetime
 
 # Create your models here.
 class SchoolProfile(models.Model):
-    #user = models.OneToOneField(User, on_delete=models.CASCADE)
-    #date_modified = models.DateTimeField(User, auto_now=True)
+    
     schoolname = models.CharField(max_length=100 )
     schooladdress = models.TextField(max_length=100, default="", blank=False)
     telephone = models.CharField(max_length=200, blank=True)

@@ -42,8 +42,9 @@
                 <div class="row gx-lg-5">
 
                      {% for school in school_profile %}
+                     
                         <div class="col-lg-6 col-xxl-4 mb-5">
-                            <a href="" style="text-decoration: none; color: inherit; outline: none;">
+                            <a href="{% url 'school' school.id %}" style="text-decoration: none; color: inherit; outline: none;">
                                 <div class="card bg-light border-0 h-100 d-flex flex-row align-items-center">
                                     <!-- Image aligned to the right -->
                                     <img src="{{school.image.url}}" class="img-thumbnail" alt="School Image" 
@@ -52,8 +53,9 @@
                                     <!-- Card body aligned to the left -->
                                     <div class="card-body text-start p-4">
                                         <h2 class="fs-4 fw-bold">{{school.schoolname }}</h2>
-                                        <p class="mb-0">{{school.website }}</p>
-                                        <p class="mb-0">Address: {{school.schooladdress }}</p>
+                                        <p class="mb-0">{{school.schoolemail }}</p>
+                                        <p class="mb-0">{{school.telephone }}</p>
+                                        <p class="mb-0">{{school.schooladdress }} {{school.province}}</p>
                                     </div>
                                 </div>
                             </a>

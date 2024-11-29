@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
-from .models import SchoolProfile
+from .models import Profile, SchoolProfile
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-
+from django.contrib.auth.models import User
 from .forms import SignUpForm
+
+#from school.models import SchoolProfile
 
 
 
@@ -21,7 +24,13 @@ def schools(request):
     school_profile = SchoolProfile.objects.all()
     return render(request, 'schools.html', {'school_profile': school_profile})
 
+# Individual School {page}
+def school(request, pk):
+    # Get the School Id form the SchoolAddress model
+    school = SchoolProfile.objects.get(id=pk)
+    return render(request, 'school.html', {'school':school})
 
+@login_required(login_url='/login')
 # All Schools page
 def applications(request):
     return render(request, 'applications.html', {})
@@ -41,11 +50,11 @@ def login_user(request):
         # Loging the authenticated user
         if user is not None:
             login(request, user)
-            #messages.success(request, ('Login Was Successful!'))
+            messages.success(request, ('Login Was Successful!'))
             return redirect('home')
         # Redirect the user if login detsails arev not authenticated
         else:
-            messages.success(request, ('Login Not Successful! Try Again!!'))
+            messages.error(request, ('Login Not Successful! Try Again!!'))
             return redirect('login')
         #  Render all the above function on the html file
     else:
@@ -73,7 +82,7 @@ def register_user(request):
             user = authenticate(username=username, password=password)
             login(request, user)
             messages.success(request, ('Username & Account Created, Fill Out User Info. '))
-            return redirect('home') 
+            return redirect('login') 
         else:
             messages.success(request, ('Registration Not Successfully. Try Again!!'))
             return redirect('register')   
