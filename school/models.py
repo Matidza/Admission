@@ -21,6 +21,8 @@ class SchoolProfile(models.Model):
     #province = models.CharField(max_length=20, choices=('Limpopo', 'Gauteng', 'North West', 'Mpumalanga', 'Free State', 'KwaZulu Natal', 'Northern Cape', 'Western Cape', 'Eastern Cape'))
     #district
     #date = models.DateField(default=datetime.datetime.today)
+    history = models.CharField(max_length=200, blank=True)
+    mission = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
         return self.schoolname

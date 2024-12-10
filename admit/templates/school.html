@@ -10,10 +10,10 @@
             <div class="row gx-4 gx-lg-5 align-items-center my-5">
                 <div class="col-lg-7"><img class="img-fluid rounded mb-4 mb-lg-0" src="{{ school.image.url }}" alt="..." /></div>
                 <div class="col-lg-5">
-                    <h1 class="font-weight-light">{{ school.schoolname}} </h1>
+                    <h1 class="font-weight-light">{{school.school_name}}</h1>
                     <p class="mb-0">{{school.telephone }}</p>
-                    <p class="mb-0">{{school.schoolemail }}</p>
-                    <p class="mb-0">{{school.schooladdress }}</p>
+                    <p class="mb-0">{{school.school_email }}</p>
+                    <p class="mb-0">{{school.school_address }}</p>
                     <br>
                     <a class="btn btn-primary" href="#!">Apply For Admission!</a>
                 </div>
@@ -28,36 +28,55 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <h2 class="card-title">History</h2>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+                                Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima 
+                                accusamus.
+                            </p>
                         </div>
-                        <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">More Info</a></div>
+                        <!-- Content Row
+                        <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">More Info</a></div>-->
                     </div>
                 </div>
                 <div class="col-md-4 mb-5">
                     <div class="card h-100">
                         <div class="card-body">
                             <h2 class="card-title">School Details</h2>
-                            <a href=""{{school.website }}>{{school.website }}</a>
+                            <a href="{{school.website }}">{{school.website }}</a>
                             <p class="mb-0"></p>
                             <p class="mb-0">District: {{school.district }} district</p>
                             <p class="mb-0">Province: {{school.province }}</p>
                             <p class="mb-0">Curriculam: {{school.curriculam }}</p>
                             <p class="mb-0">Grade: {{school.grade_levels }}</p>
-                            <p class="mb-0">Accreditation Status: {{school.accreditationstatus }}</p>
+                            <p class="mb-0">Accreditation: {{school.accreditationstatus }}</p>
                         </div>
-                        <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">More Info</a></div>
+                        <!-- Content Row
+                        <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">More Info</a></div>-->
                     </div>
                 </div>
                 <div class="col-md-4 mb-5">
                     <div class="card h-100">
                         <div class="card-body">
                             <h2 class="card-title">Mission</h2>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+                                Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea 
+                                minima accusamus.
+                            </p>
                         </div>
-                        <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">More Info</a></div>
+                        <!-- Content Row
+                        <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">More Info</a></div>-->
                     </div>
                 </div>
             </div>
+
+            <h2 class="card-title">More about This School</h3>
+                <br><br>
+            <h3 class="card-title">Academics</h3>
+                <br><br>
+            <h3 class="card-title">Sports</h3>
+                <br><br>
+            <h3 class="card-title">Alumni</h3>
+                <br><br>
+            
+            <br><br><br><br><br><br>
         </div>
-       
 {% endblock %}

@@ -3,29 +3,26 @@
 {% block content %}
 <!-- Header-->     
     <br><br><br><br><br>   
-    <div class="  container " >
-        <div class="row ">
-            <div class="col-md-6 offset-md-3 container border rounded rounded-3 border-white  mb-3 shadow-lg p-3 mb-5">
-                <form  method="POST" action="{% url 'login' %}">
-                    {% csrf_token %}
-                        <!-- Name input-->
-                        
-                           
-                            <input type="text" class="form-control" name="username" placeholder="username" />
-                            <div class="invalid-feedback" >Username is required.</div>
-                      
-                            <br>
-                        <!-- Phone number input-->
-                        
-                            
-                            <input type="password" class="form-control" name="password" placeholder="Password" />
-                            <div class="invalid-feedback" >Password is required.</div>
-                        <br>
-                        
-                        <!-- Submit Button-->
-                        <div class="d-grid"><button class="btn btn-primary btn-lg " id="submitButton" type="submit">Login</button></div>
-                </form>  
-            </div>	
-        </div>     
-    </div>        
+    <div class="col-md-6 offset-md-3 bg-white border rounded rounded-3 border-white  mb-3 shadow-lg p-3 mb-5">
+        
+        <form  method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+                <!-- Name input--> 
+                    <input type="text" class="form-control" name="username" placeholder="username" />
+                    <div class="invalid-feedback" >Username is required.</div>
+                    <br>
+                <!-- Phone number input-->
+                    <input type="password" class="form-control" name="password" placeholder="Password" />
+                    <div class="invalid-feedback" >
+                        Password is required.
+                    </div>
+                <br>
+                <!-- Submit Button-->
+                <div class="d-grid">
+                    <button class="btn btn-primary btn-lg " id="submitButton" type="submit">
+                        Login
+                    </button>
+                </div>
+        </form>  
+    </div>	
 {% endblock %}

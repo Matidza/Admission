@@ -32,23 +32,25 @@
         </style>
     </head>
     <body class="d-flex flex-column h-100">
-        <main class="flex-shrink-0">
-            
+        <main class="flex-shrink-0">  
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
                 <div class="container  px-2 px-lg-5"><!-- Navigation
                 <img src="{% static 'assets/roup.png' %}" style="max-width: 35px; max-height: 35px; margin-top:5px" alt=""> -->
                     <a class="navbar-brand" href="{% url 'home' %}">Admissions</a>
-                    
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <button class="navbar-toggler" type="button" 
+                    data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle 
+                    navigation"><span class="navbar-toggler-icon"></span>
+                    </button>
+
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ">
+                            
                             <li class="nav-item active"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
                             <li class="nav-item active"><a class="nav-link" href="{% url 'about' %}">About</a></li>
-                            
-                            
-                            
+                            <li class="nav-item active"><a class="nav-link" href="{% url 'schools' %}">Schools</a></li>
                                 {% if user.is_authenticated %}
-                                <li class="nav-item active"><a class="nav-link" href="{% url 'schools' %}">Schools</a></li>
+                                
                                 <li class="nav-item active "><a class="nav-link" href="{% url 'applications' %}">Applications</a></li>
                                 <li class="nav-item active"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
                                 <li class="nav-item dropdown active">
@@ -63,15 +65,11 @@
                                 {% else %}
                                     <li class="nav-item active"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
                                     <li class="nav-item active"><a class="nav-link" href="{% url 'register' %}">Sign Up</a></li>
-                                {% endif %} 
-                            
+                                {% endif %}  
                         </ul>
-                    </div>
+                    </di>
                 </div>
             </nav>
-            
-            
-
             {% block content %}
             {% endblock %}           
         </main>

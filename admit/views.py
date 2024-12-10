@@ -30,6 +30,8 @@ def school(request, pk):
     school = SchoolProfile.objects.get(id=pk)
     return render(request, 'school.html', {'school':school})
 
+
+
 @login_required(login_url='/login')
 # All Schools page
 def applications(request):

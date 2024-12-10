@@ -25,10 +25,20 @@ class Profile(models.Model):
    
 class SchoolProfile(models.Model):
     
-    schoolname = models.CharField(max_length=100 )
+    school_name = models.CharField(max_length=100 )
     telephone = models.CharField(max_length=200, blank=True)
-    schoolemail = models.EmailField(blank=True)
-    schooladdress = models.TextField(max_length=100, default="", blank=False)
+    school_email = models.EmailField(blank=True)
+    # Address
+    school_address = models.TextField(max_length=100, default="", blank=False)
+
+    #date = models.DateField(default=datetime.datetime.today)
+
+    #school_address1 = models.CharField(max_length=200, blank=True)
+    #address2 = models.CharField(max_length=200, blank=True)
+    #city = models.CharField(max_length=200, blank=True)
+    #province = models.CharField(max_length=200, blank=True)
+    #zipcode = models.CharField(max_length=200, blank=True)
+    #country = models.CharField(max_length=200, blank=True)
     website = models.CharField(max_length=100 )
     slogan = models.CharField(max_length=200, blank=True)
     type_of_school = models.CharField(max_length=200, blank=True)
@@ -45,15 +55,7 @@ class SchoolProfile(models.Model):
     curriculum = models.CharField(max_length=100 ,default="")
     grade_levels = models.CharField(max_length=100,default="" )
     accreditationstatus = models.CharField(max_length=100 ,default="")
-    
-    #date = models.DateField(default=datetime.datetime.today)
 
-    #address1 = models.CharField(max_length=200, blank=True)
-    #address2 = models.CharField(max_length=200, blank=True)
-    #city = models.CharField(max_length=200, blank=True)
-    #province = models.CharField(max_length=200, blank=True)
-    #zipcode = models.CharField(max_length=200, blank=True)
-    #country = models.CharField(max_length=200, blank=True)
     
  
     image = models.ImageField(upload_to='uploads/schoolprofile/', default=datetime.datetime.today)
