@@ -21,59 +21,9 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
-
-   
-class SchoolProfile(models.Model):
-    
-    school_name = models.CharField(max_length=100 )
-    telephone = models.CharField(max_length=200, blank=True)
-    school_email = models.EmailField(blank=True)
-    # Address
-    school_address = models.TextField(max_length=100, default="", blank=False)
-
-    #date = models.DateField(default=datetime.datetime.today)
-
-    #school_address1 = models.CharField(max_length=200, blank=True)
-    #address2 = models.CharField(max_length=200, blank=True)
-    #city = models.CharField(max_length=200, blank=True)
-    #province = models.CharField(max_length=200, blank=True)
-    #zipcode = models.CharField(max_length=200, blank=True)
-    #country = models.CharField(max_length=200, blank=True)
-    website = models.CharField(max_length=100 )
-    slogan = models.CharField(max_length=200, blank=True)
-    type_of_school = models.CharField(max_length=200, blank=True)
-    PROVINCE = [
-        ('Limpopo', 'Limpopo'),
-        ('Free State', 'Free State'),
-        ('Gauteng', 'Gauteng'),
-    ]
-    province = models.CharField(max_length=20, choices=(PROVINCE))
-
-    DISTRICT = [('Vhembe', 'Vhembe'),('Free State', 'Free State'),('Gauteng', 'Gauteng'),]
-    district = models.CharField(max_length=200,default="",choices=(DISTRICT ))
-    
-    curriculum = models.CharField(max_length=100 ,default="")
-    grade_levels = models.CharField(max_length=100,default="" )
-    accreditationstatus = models.CharField(max_length=100 ,default="")
-
-    
- 
-    image = models.ImageField(upload_to='uploads/schoolprofile/', default=datetime.datetime.today)
-    image1 = models.ImageField(upload_to='uploads/schoolprofile/', default=datetime.datetime.today)
-    image2 = models.ImageField(upload_to='uploads/schoolprofile/', default=datetime.datetime.today)
-    image3 = models.ImageField(upload_to='uploads/schoolprofile/', default=datetime.datetime.today)
-    image4 = models.ImageField(upload_to='uploads/schoolprofile/', default=datetime.datetime.today)
-    image5 = models.ImageField(upload_to='uploads/schoolprofile/', default=datetime.datetime.today)
-    image6 = models.ImageField(upload_to='uploads/schoolprofile/', default=datetime.datetime.today)
-    
-    
-
-    def __str__(self):
-        return self.schoolname
     class Meta:
-        verbose_name_plural = 'School Profile'
-
-
+        verbose_name_plural = 'profile'
+   
 
 
 #class AdmissionFormModel(models.Model):

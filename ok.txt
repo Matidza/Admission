@@ -1,4 +1,7 @@
-If you've already implemented the login, logout, and signup pages using Django's default `User` model, you can still achieve the separation of **Parents** and **Schools** by using **profile models** tied to the `User` model. This avoids the need to switch to a custom user model while maintaining a clean separation of data.
+If you've already implemented the login, logout, and signup pages using Django's default `User` model, 
+you can still achieve the separation of **Parents** and **Schools** by using **profile models** tied 
+to the `User` model. This avoids the need to switch to a custom user 
+model while maintaining a clean separation of data.
 
 Here’s how you can achieve it:
 
@@ -6,7 +9,9 @@ Here’s how you can achieve it:
 
 ### **1. Use Profile Models in the `parents` and `schools` Apps**
 
-Instead of modifying the `User` model, create two profile models in the `parents` and `schools` apps, respectively. These will extend the functionality of the `User` model.
+Instead of modifying the `User` model, create two profile models in the `parents` and `schools` apps, 
+respectively. These will extend the functionality of the `User` model.
+
 
 #### **Parent Profile Model**
 ```python
@@ -22,6 +27,7 @@ class ParentProfile(models.Model):
     def __str__(self):
         return f"Parent: {self.user.username}"
 ```
+   
 
 #### **School Profile Model**
 ```python
@@ -42,7 +48,9 @@ class SchoolProfile(models.Model):
 
 ### **2. Add a Field to Identify User Type**
 
-If you need a central way to differentiate between Parents and Schools, you can add a `user_type` field to the `Profile` models or manage the distinction separately in logic.
+If you need a central way to differentiate between Parents and Schools, 
+you can add a `user_type` field to the `Profile` models or manage the 
+distinction separately in logic.
 
 For example, if only one type of profile is created per user:
 - If a user has a `ParentProfile`, they are a **Parent**.
