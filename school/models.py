@@ -4,18 +4,18 @@ from django.contrib.auth.models import User
 
 
 class Province(models.Model):
-    PROVINCE = [
+    '''PROVINCE = [
         ('Limpopo', 'Limpopo'),
         ('Free State', 'Free State'),
         ('Gauteng', 'Gauteng'),
         ('North West', 'North West'),
-        ('KZN', 'KZN'),
+        ('KwaZulu-Natal', 'KwaZulu-Natal'),
         ('Mpumalanga', 'Mpumalanga'),
         ('Eastern Cape', 'Eastern Cape'),
         ('Northern Cape', 'Northern Cape'),
         ('Western Cape', 'Western Cape'),
-    ]
-    province = models.CharField(max_length=50, choices=(PROVINCE))
+    ]'''
+    province = models.CharField(max_length=50)#, choices=(PROVINCE)
 
     def __str__(self):
         return self.province
@@ -35,7 +35,7 @@ class School(models.Model):
     postal_address = models.CharField(max_length=100, blank=True)
     website = models.TextField(max_length=100) 
     slogan = models.CharField(max_length=200, blank=True)
-    image = models.ImageField(upload_to='uploads/schoolprofile/', default=datetime.datetime.today)
+    image = models.ImageField(upload_to='uploads/schoolprofile/', default=None, blank=True, null=True)
     
     SCHOOL_TYPE = [
         ('Primary', 'Primary School'),
@@ -184,14 +184,9 @@ class School(models.Model):
     quintile_Level = models.CharField(max_length=100, choices=(QUANTILE))
 
 
-    image = models.ImageField(upload_to='uploads/schoolprofile/', default=datetime.datetime.today)
-    image1 = models.ImageField(upload_to='uploads/schoolprofile/', default=datetime.datetime.today)
-    image2 = models.ImageField(upload_to='uploads/schoolprofile/', default=datetime.datetime.today)
-    image3 = models.ImageField(upload_to='uploads/schoolprofile/', default=datetime.datetime.today)
-    image4 = models.ImageField(upload_to='uploads/schoolprofile/', default=datetime.datetime.today)
-    image5 = models.ImageField(upload_to='uploads/schoolprofile/', default=datetime.datetime.today)
-    image6 = models.ImageField(upload_to='uploads/schoolprofile/', default=datetime.datetime.today)
-    
+    image = models.ImageField(upload_to='uploads/schoolprofile/', default=None, blank=True, null=True)
+    image1 = models.ImageField(upload_to='uploads/schoolprofile/', default=None, blank=True, null=True)
+
     history = models.CharField(max_length=200, blank=True)
     mission = models.CharField(max_length=200, blank=True)
 
