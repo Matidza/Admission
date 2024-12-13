@@ -2,21 +2,17 @@ from django.db import models
 import datetime
 from django.contrib.auth.models import User 
 
-# Create your models here.
+# Create School Model containing all 
+# neccesary fields to create a school profile
 class SchoolProfile(models.Model):
+
     #user = models.OneToOneField(User, on_delete=models.CASCADE)
     schoolname = models.CharField(max_length=100 )
     telephone = models.CharField(max_length=200, blank=True)
     schoolemail = models.EmailField(blank=True)
     schooladdress = models.TextField(max_length=100, default="", blank=False)
     postal_address = models.CharField(max_length=100, blank=True)
-    '''  
-    address1 = models.CharField(max_length=200, blank=True)
-    address2 = models.CharField(max_length=200, blank=True)
-    city = models.CharField(max_length=200, blank=True)
-    province = models.CharField(max_length=200, blank=True)
-    zipcode = models.CharField(max_length=200, blank=True)'''
-    
+
     website = models.TextField(max_length=100) 
     slogan = models.CharField(max_length=200, blank=True)
     image = models.ImageField(upload_to='uploads/schoolprofile/', default=datetime.datetime.today)
@@ -29,7 +25,6 @@ class SchoolProfile(models.Model):
         ('Other', 'Other School'),
     ]
     type_of_school = models.CharField(max_length=200, blank=True, choices=(SCHOOL_TYPE))
-    
     SCHOOL = [
         ('Public', 'Public School'),
         ('Private', 'Private School'),
@@ -40,8 +35,7 @@ class SchoolProfile(models.Model):
         ('SACAI', 'The South African Comprehensive Assessment Institute (SACAI)')
     ]
     school = models.CharField(max_length=200, blank=True, choices=(SCHOOL))
-    #curriculum
-    #grade_levels
+    
 
     # School Locality
     PROVINCE = [
@@ -134,7 +128,7 @@ class SchoolProfile(models.Model):
 
 
     ]
-    circurt = models.CharField(max_length=200,default="",choices=(CIRCUIT))
+    circuit = models.CharField(max_length=200,default="",choices=(CIRCUIT))
 
     CURRICULUM = [
         ('CAPS', 'CAPS curriculum'),
@@ -147,18 +141,18 @@ class SchoolProfile(models.Model):
     grade_levels = models.CharField(max_length=100, blank=True)
     accreditation = models.CharField(max_length=100, blank=True )
 
-    local_municipality = models.CharField(max_length=100)
-    urban_rural = models.CharField(max_length=100)
-    ward_id = models.CharField(max_length=100)
-    Eei_district = models.CharField(max_length=100)
+    local_municipality = models.CharField(max_length=100, blank=True)
+    urban_rural = models.CharField(max_length=100, blank=True)
+    ward_id = models.CharField(max_length=100, blank=True)
+    Eei_district = models.CharField(max_length=100, blank=True)
 
 
     # SCHOOL IDENTIFICATION
-    national_emis_number = models.TextField(max_length=100, blank=True)
-    examination_number = models.TextField(max_length=100, blank=True)
-    examination_centre = models.TextField(max_length=100, blank=True)
-    persal_paypoint_number = models.TextField(max_length=100, blank=True)
-    persal_component_number = models.TextField(max_length=100, blank=True)
+    emis_number = models.CharField(max_length=100, blank=True)
+    examination_number = models.CharField(max_length=100, blank=True)
+    examination_centre = models.CharField(max_length=100, blank=True)
+    persal_paypoint_number = models.CharField(max_length=100, blank=True)
+    persal_component_number = models.CharField(max_length=100, blank=True)
 
     
     # Personnel & Staff
