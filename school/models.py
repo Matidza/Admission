@@ -168,18 +168,18 @@ class SchoolProfile(models.Model):
 
     # School Fees and Finance
     SECTION = [
-        ('Section 21 (Self Reliant)', 'Yes'),
-        ('Section 21 (Self Reliant)', 'No'),
+        ('Section 21 (Self Reliant)', 'Self Reliant: Yes'),
+        ('Section 21 (Self Reliant)', 'Self Reliant: No'),
     ]
     section_21 = models.CharField(max_length=100, choices=(SECTION))
     school_fees = models.CharField(max_length=100)
     
     QUANTILE = [
-        ('Quintile 1', 'Quintile 1'),
-        ('Quintile 2', 'Quintile 2'),
-        ('Quintile 3', 'Quintile 3'),
-        ('Quintile 4', 'Quintile 4'),
-        ('Quintile 5', 'Quintile 5'),
+        ('Quintile 1', 'Q1'),
+        ('Quintile 2', 'Q2'),
+        ('Quintile 3', 'Q3'),
+        ('Quintile 4', 'Q4'),
+        ('Quintile 5', 'Q5'),
     ]
     quintile_Level = models.CharField(max_length=100, choices=(QUANTILE))
 
