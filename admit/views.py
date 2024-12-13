@@ -36,17 +36,21 @@ def school(request, pk):
 Lets filter the schools by province, district, circuit
 '''
 def filters(request, fil):
+    # Convert the filter string from URL (replace hyphens with spaces)
     fil = fil.replace('-', ' ')
-    # Filter the province Model
     try:
-        province = Province.objects.get(name=fil)
+        # Fetch the province using the name
+        province = Province.objects.get(province=fil)
+        
+        # Filter schools that belong to the selected province
         schools = School.objects.filter(province=province)
-        return render(request, 'parent/filter.html', {'province':province, 'schools':schools})
-
-    except:
-        messages.success(request, ("Filter Doesn't Exist!"))
+        
+        # Pass the filtered schools and province to the template
+        return render(request, 'parent/filter.html', {'province': province, 'school_profile': schools})
+    except Province.DoesNotExist:
+        # Show an error message if the province is not found
+        messages.error(request, "Filter doesn't exist!")
         return redirect('home')
-
 
 
 @login_required(login_url='/login')

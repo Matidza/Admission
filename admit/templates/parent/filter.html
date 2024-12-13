@@ -39,30 +39,35 @@
 
         <!-- Page Content -->
         <section class="pt-4">
-            <div class="container px-lg-5">
-                <!-- Page Features-->
-                <div class="row gx-lg-5">
-                     {% for school in schools %}
-                        <div class="col-lg-6 col-xxl-4 mb-5 rounded border-primary">
-                            <a href="{% url 'school' school.id %}" style="text-decoration: none; color: inherit; outline: none;">
-                                <div class="card bg-light border-0 h-100 d-flex flex-row align-items-center">
-                                    <!-- Image aligned to the right -->
-                                    <img src="{{school.image.url}}" class="img-thumbnail" alt="School Image" 
-                                        style="max-height: 100px; max-width: 100px; margin-right: 10px;">
-                                    <!-- Card body aligned to the left -->
-                                    <div class="card-body text-start p-4">
-                                        <h2 class="fs-4 fw-bold">{{school.schoolname }}</h2>
-                                        <p class="mb-0">{{school.schoolemail }}</p>
-                                        <p class="mb-0">{{school.telephone }}</p>
-                                        <p class="mb-0">{{school.schooladdress }} {{school.province}}</p>
-                                    </div>
+    <div class="container px-lg-5">
+        <!-- Check if there are schools -->
+        {% if school_profile %}
+            <div class="row gx-lg-5">
+                {% for school in school_profile %}
+                    <div class="col-lg-6 col-xxl-4 mb-5 rounded border-primary">
+                        <a href="{% url 'school' school.id %}" style="text-decoration: none; color: inherit; outline: none;">
+                            <div class="card bg-light border-0 h-100 d-flex flex-row align-items-center">
+                                <!-- School Image -->
+                                <img src="{{ school.image.url }}" class="img-thumbnail" alt="School Image" 
+                                     style="max-height: 100px; max-width: 100px; margin-right: 10px;">
+                                <!-- School Info -->
+                                <div class="card-body text-start p-4">
+                                    <h2 class="fs-4 fw-bold">{{ school.schoolname }}</h2>
+                                    <p class="mb-0">{{ school.schoolemail }}</p>
+                                    <p class="mb-0">{{ school.telephone }}</p>
+                                    <p class="mb-0">{{ school.schooladdress }}, {{ school.province }}</p>
                                 </div>
-                            </a>
-                        </div>
-                    {% endfor %}
-                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
             </div>
-        </section> 
+        {% else %}
+            <p class="text-center text-danger">No schools found in {{ province.name }}.</p>
+        {% endif %}
+    </div>
+</section>
+
         </main>
         <!-- Footer-->
         <!-- Bootstrap core JS-->
