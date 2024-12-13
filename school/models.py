@@ -20,11 +20,21 @@ class SchoolProfile(models.Model):
     website = models.TextField(max_length=100) 
     slogan = models.CharField(max_length=200, blank=True)
     image = models.ImageField(upload_to='uploads/schoolprofile/', default=datetime.datetime.today)
-    TYPE = [
-
-    ]
-    type_of_school = models.CharField(max_length=200, blank=True)
     
+    SCHOOL_TYPE = [
+        ('Primary', 'Primary School'),
+        ('Secondary', 'Secondary School'),
+        ('Combined', 'Combined School'),
+        ('Vocational', 'Vocational School'),
+        ('Other', 'Other School'),
+    ]
+    type_of_school = models.CharField(max_length=200, blank=True, choices=(SCHOOL_TYPE))
+    
+    SCHOOL = [
+        ('Public', 'Public School'),
+        ('Private', 'Private School'),
+    ]
+    school = models.CharField(max_length=200, blank=True, choices=(SCHOOL))
     #curriculum
     #grade_levels
 
@@ -43,19 +53,79 @@ class SchoolProfile(models.Model):
     province = models.CharField(max_length=20, choices=(PROVINCE))
 
     DISTRICT = [
-        ('Vhembe', 'Vhembe District'),
-        ('Free State', 'Free State'),
-        ('Gauteng', 'Gauteng'),
+        ('A', 'Alfred Nzo District'),
+        ('', 'Amajuba District'),
+        ('', 'Amathole District'),
+        ('', 'Bojanala Platinum District'),
+        ('', 'Buffalo City Metropolitan '),
+        ('', 'Cape Winelands District'),
+        ('', 'Capricorn District'),
+        ('', 'Central Karoo District'),
+        ('', 'Chris Hani District '),
+        ('', 'City of Cape Town Metropolitan'),
+        ('', 'City of Johannesburg Metropolitan'),
+        ('', 'City of Tshwane Metropolitan'),
+        ('', 'Dr Kenneth Kaunda District'),
+        ('', 'Dr Ruth Segomotsi Mompati District '),
+        ('', 'Ehlanzeni District '),
+        ('', 'Ekurhuleni Metropolitan '),
+        ('', 'eThekwini Metropolitan '),
+        ('', 'Fezile Dabi District '),
+        ('', 'Frances Baard District '),
+        ('', 'Garden Route District '),
+        ('', 'Gert Sibande District '),
+        ('', 'Harry Gwala District '),
+        ('', 'iLembe District'),
+        ('', 'Joe Gqabi District'),
+        ('', 'John Taolo Gaetsewe District'),
+        ('', 'King Cetshwayo District '),
+        ('', 'Lejweleputswa District '),
+        ('', 'Mangaung Metropolitan '),
+        ('', 'Mopani District'),
+        ('', 'Namakwa District'),
+        ('', 'Nelson Mandela Bay Metropolitan'),
+        ('', 'Ngaka Modiri Molema District '),
+        ('', 'Nkangala District '),
+        ('', 'OR Tambo District '),
+        ('', 'Overberg District'),
+        ('', 'Pixley ka Seme District '),
+        ('', 'Sarah Baartman District '),
+        ('', 'Sedibeng District '),
+        ('', 'Sekhukhune District'),
+        ('', 'Thabo Mofutsanyana District '),
+        ('', 'Ugu District'),
+        ('', 'uMgungundlovu District'),
+        ('', 'uMkhanyakude District '),
+        ('', 'uMzinyathi District '),
+        ('', 'uThukela District'),
+        ('', 'Vhembe District'),
+        ('', 'Waterberg District'),
+        ('', 'West Coast District '),
+        ('', 'West Rand District '),
+        ('', 'Xhariep District '),
+        ('', 'ZF Mgcawu District '),
+        ('', 'Zululand District'),
+        
+
+
+
+        
+        
+        
     ]
     district = models.CharField(max_length=200,default="",choices=(DISTRICT ))
 
-    CURRICULUM = [
 
+    CIRCUIT = [
+        ('Soutpansberg East', 'Soutpansberg East'),
+    ]
+    circurt = models.CharField(max_length=200,default="",choices=(CIRCUIT))
+
+    CURRICULUM = [
     ]
     curriculum = models.CharField(max_length=100, blank=True)
 
     GRADES = [
-
     ]
     grade_levels = models.CharField(max_length=100, blank=True)
     accreditation = models.CharField(max_length=100, blank=True )
