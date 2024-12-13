@@ -23,6 +23,7 @@ class Province(models.Model):
         verbose_name_plural = 'Province'
 
 
+
 # Create School Model containing all 
 # neccesary fields to create a school profile
 class School(models.Model):
@@ -44,22 +45,18 @@ class School(models.Model):
         ('Other', 'Other School'),
     ]
     type_of_school = models.CharField(max_length=200, blank=True, choices=(SCHOOL_TYPE))
-    SCHOOL = [
-        ('Public', 'Public School'),
-        ('Private', 'Private School'),
-    ]
+    
+    
+
     UMALUSI = [
         ('DBE', 'The Department of Basic Education (DBE)'),
         ('IEB', 'The Independent Examination Board (IEB)'),
         ('SACAI', 'The South African Comprehensive Assessment Institute (SACAI)')
     ]
-    school = models.CharField(max_length=200, blank=True, choices=(SCHOOL))
+    umalusi = models.CharField(max_length=200, blank=True, choices=(UMALUSI))
     
-
     # School Locality
     
-    
-
     DISTRICT = [
         ('Alfred Nzo District', 'Alfred Nzo District'),
         ('amajuba', 'Amajuba District'),
