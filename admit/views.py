@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
-#from .models import Profile, School
-from school.models import School
+from school.models import School, Province
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -31,11 +30,23 @@ def school(request, pk):
     school = School.objects.get(id=pk)
     return render(request, 'parent/school.html', {'school':school})
 
+
+
 ''''
 Lets filter the schools by province, district, circuit
 '''
-def filter(request):
-    return render(request, 'parent/schools.html', {})
+def filters(request, fil):
+    fil = fil.replace('-', ' ')
+    # Filter the province Model
+    try:
+        province = Province.objects.get(name=fil)
+        schools = School.objects.filter(province=province)
+        return render(request, 'parent/filter.html', {'province':province, 'schools':schools})
+
+    except:
+        messages.success(request, ("Filter Doesn't Exist!"))
+        return redirect('home')
+
 
 
 @login_required(login_url='/login')

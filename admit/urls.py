@@ -11,5 +11,5 @@ urlpatterns = [
     path('login/', views.login_user, name='login'),
     path('logout/', views.logout_user, name='logout'),
     path('register/', views.register_user, name='register'),
-    path('filter,', views.filter, name='filter'),
+    path('filters/<str:fil>/', views.filters, name='filters'),
 ]

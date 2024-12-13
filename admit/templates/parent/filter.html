@@ -28,7 +28,7 @@
             <div class="container px-lg-5">
                 <div class="p-2  bg-light rounded-3 text-center" style="background-image: url('{% static 'school.webp' %}'); background-size: cover; background-position: center;">
                     <div class="m-4 m-lg-5">
-                        <h1 class="display-5 fw-bold text-dark">Discover the Perfect School for Your Child</h1>
+                        <h1 class="display-5 fw-bold text-dark">{{ province }}</h1>
                         <p class="fs-4 text-dark">
                             Browse through the list of schools in South Africa and find the best fit for your child.
                         </p>
@@ -42,7 +42,7 @@
             <div class="container px-lg-5">
                 <!-- Page Features-->
                 <div class="row gx-lg-5">
-                     {% for school in school_profile %}
+                     {% for school in schools %}
                         <div class="col-lg-6 col-xxl-4 mb-5 rounded border-primary">
                             <a href="{% url 'school' school.id %}" style="text-decoration: none; color: inherit; outline: none;">
                                 <div class="card bg-light border-0 h-100 d-flex flex-row align-items-center">
@@ -61,21 +61,7 @@
                         </div>
                     {% endfor %}
                 </div>
-                
-                <a >
-                    Filter By:
-                </a>
-                <ul ">
-                    
-                    <li><a class="dropdown-item" href="{% url 'filters' 'Limpopo' %}">Limpopo</a></li>
-                    <li><a class="dropdown-item" href="{% url 'filters' 'Free State' %}">Free State</a></li>
-                    <li><a class="dropdown-item" href="{% url 'filters' 'Gauteng' %}">Gauteng</a></li>
-                </ul>
-                
-           
             </div>
-            
-
         </section> 
         </main>
         <!-- Footer-->
