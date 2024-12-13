@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-#from .models import Profile, SchoolProfile
-from school.models import SchoolProfile
+#from .models import Profile, School
+from school.models import School
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -22,15 +22,20 @@ def about(request):
 
 # All Schools page
 def schools(request):
-    school_profile = SchoolProfile.objects.all()
+    school_profile = School.objects.all()
     return render(request, 'parent/schools.html', {'school_profile': school_profile})
 
 # Individual School {page}
 def school(request, pk):
     # Get the School Id form the SchoolAddress model
-    school = SchoolProfile.objects.get(id=pk)
+    school = School.objects.get(id=pk)
     return render(request, 'parent/school.html', {'school':school})
 
+''''
+Lets filter the schools by province, district, circuit
+'''
+def filter(request):
+    return render(request, 'parent/schools.html', {})
 
 
 @login_required(login_url='/login')

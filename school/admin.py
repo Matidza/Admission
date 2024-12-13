@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import SchoolProfile
+from .models import School, Province
 # Register your models here.
 
-admin.site.register(SchoolProfile)
+admin.site.register(School)
+admin.site.register(Province)

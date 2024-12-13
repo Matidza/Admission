@@ -10,5 +10,6 @@ urlpatterns = [
     path('applications', views.applications, name='applications'),
     path('login/', views.login_user, name='login'),
     path('logout/', views.logout_user, name='logout'),
-    path('register/', views.register_user, name='register')
+    path('register/', views.register_user, name='register'),
+    path('filter,', views.filter, name='filter'),
 ]

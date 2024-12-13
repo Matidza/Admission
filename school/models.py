@@ -2,17 +2,36 @@ from django.db import models
 import datetime
 from django.contrib.auth.models import User 
 
+
+class Province(models.Model):
+    PROVINCE = [
+        ('Limpopo', 'Limpopo'),
+        ('Free State', 'Free State'),
+        ('Gauteng', 'Gauteng'),
+        ('North West', 'North West'),
+        ('KZN', 'KZN'),
+        ('Mpumalanga', 'Mpumalanga'),
+        ('Eastern Cape', 'Eastern Cape'),
+        ('Northern Cape', 'Northern Cape'),
+        ('Western Cape', 'Western Cape'),
+    ]
+    province = models.CharField(max_length=50, choices=(PROVINCE))
+
+    def __str__(self):
+        return self.province
+    class Meta:
+        verbose_name_plural = 'Province'
+
+
 # Create School Model containing all 
 # neccesary fields to create a school profile
-class SchoolProfile(models.Model):
-
-    #user = models.OneToOneField(User, on_delete=models.CASCADE)
+class School(models.Model):
+    province = models.ManyToManyField(Province)
     schoolname = models.CharField(max_length=100 )
     telephone = models.CharField(max_length=200, blank=True)
     schoolemail = models.EmailField(blank=True)
     schooladdress = models.TextField(max_length=100, default="", blank=False)
     postal_address = models.CharField(max_length=100, blank=True)
-
     website = models.TextField(max_length=100) 
     slogan = models.CharField(max_length=200, blank=True)
     image = models.ImageField(upload_to='uploads/schoolprofile/', default=datetime.datetime.today)
@@ -38,18 +57,8 @@ class SchoolProfile(models.Model):
     
 
     # School Locality
-    PROVINCE = [
-        ('Limpopo', 'Limpopo'),
-        ('Free State', 'Free State'),
-        ('Gauteng', 'Gauteng'),
-        ('North West', 'North West'),
-        ('KZN', 'KZN'),
-        ('Mpumalanga', 'Mpumalanga'),
-        ('Eastern Cape', 'Eastern Cape'),
-        ('Northern Cape', 'Northern Cape'),
-        ('Western Cape', 'Western Cape'),
-    ]
-    province = models.CharField(max_length=20, choices=(PROVINCE))
+    
+    
 
     DISTRICT = [
         ('Alfred Nzo District', 'Alfred Nzo District'),
@@ -193,3 +202,4 @@ class SchoolProfile(models.Model):
         return self.schoolname
     class Meta:
         verbose_name_plural = 'school profile'
+
