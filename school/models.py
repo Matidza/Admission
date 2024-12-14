@@ -37,14 +37,14 @@ class School(models.Model):
     slogan = models.CharField(max_length=200, blank=True)
     image = models.ImageField(upload_to='uploads/schoolprofile/', default=None, blank=True, null=True)
     
-    SCHOOL_TYPE = [
+    SCHOOL_SECTOR = [
         ('Primary', 'Primary School'),
         ('Secondary', 'Secondary School'),
         ('Combined', 'Combined School'),
         ('Vocational', 'Vocational School'),
         ('Other', 'Other School'),
     ]
-    type_of_school = models.CharField(max_length=200, blank=True, choices=(SCHOOL_TYPE))
+    type_of_school = models.CharField(max_length=200, blank=True, choices=(SCHOOL_SECTOR))
     
     
 
@@ -56,6 +56,18 @@ class School(models.Model):
     umalusi = models.CharField(max_length=200, blank=True, choices=(UMALUSI))
     
     # School Locality
+    PROVINCE = [
+        ('Limpopo', 'Limpopo'),
+        ('Free State', 'Free State'),
+        ('Gauteng', 'Gauteng'),
+        ('North West', 'North West'),
+        ('KwaZulu-Natal', 'KwaZulu-Natal'),
+        ('Mpumalanga', 'Mpumalanga'),
+        ('Eastern Cape', 'Eastern Cape'),
+        ('Northern Cape', 'Northern Cape'),
+        ('Western Cape', 'Western Cape'),
+    ]
+    provinc = models.CharField(max_length=50, choices=(PROVINCE), null=True)
     
     DISTRICT = [
         ('Alfred Nzo District', 'Alfred Nzo District'),

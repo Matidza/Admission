@@ -22,10 +22,10 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar Section with Filter Card -->
-            <div class="col-sm-2" style="margin-top: 50px;">
+            <div class="col-sm-2" style="margin-top: 350px;">
                 <!-- Filter Card Widget -->
                 <div class="card mb-4">
-                    <div class="card-header">filter By:</div>
+                    <p class="card-header fs-4 text-dark">Filter by:</p>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-6">
@@ -82,9 +82,9 @@
                                                     <p class="mb-0">{{school.schoolemail }}</p>
                                                     <p class="mb-0">{{school.telephone }}</p>
                                                     <p class="mb-0">{{school.schooladdress }} 
-                                                        {% for s in province %}
-                                                        {{p.province}}
-                                                        {% endfor %}
+                                                        
+                                                        {{school.provinc}}
+                                                        
                                                     </p>
                                                 </div>
                                             </div>

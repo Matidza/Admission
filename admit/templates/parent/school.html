@@ -14,7 +14,7 @@
                     <p class="mb-0">{{school.telephone }}</p>
                     <p class="mb-0">{{school.schoolemail }}</p>
                     <p class="mb-0">{{school.schooladdress }}</p>
-                    <p class="mb-0">Princial: {{school.namen_of_principal }}</p>
+                    <p class="mb-0">Princial: {{school.name_of_principal }}</p>
                     <br>
                     <a class="btn btn-primary" href="#!">Apply For Admission!</a>
                 </div>
@@ -29,9 +29,8 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <h2 class="card-title">History</h2>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-                                Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima 
-                                accusamus.
+                            <p class="card-text">
+                                {{ school.history }}
                             </p>
                         </div>
                         <!-- Content Row
@@ -45,8 +44,8 @@
                             <a href="{{school.website }}">{{school.website }}</a>
                             <p class="mb-0"></p>
                             <p class="mb-0">District: {{school.district }} district</p>
-                            <p class="mb-0">Province: {{school.province }}</p>
-                            <p class="mb-0">Curriculam: {{school.curriculam }}</p>
+                            <p class="mb-0">Province: {{school.provinc }}</p>
+                            <p class="mb-0">Curriculam: {{school.curriculum }}</p>
                             <p class="mb-0">Grade: {{school.grade_levels }}</p>
                             <p class="mb-0">Accreditation: {{school.accreditationstatus }}</p>
                         </div>
