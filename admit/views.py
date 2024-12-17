@@ -47,7 +47,7 @@ def filters(request, fil):
         schools = School.objects.filter(province=province)
         
         # Pass the filtered schools and province to the template
-        return render(request, 'parent/filter.html', {'province': province, 'school_profile': schools})
+        return render(request, 'parent/schools.html', {'province': province, 'school_profile': schools})
     except Province.DoesNotExist:
         # Show an error message if the province is not found
         messages.error(request, "Filter doesn't exist!")
