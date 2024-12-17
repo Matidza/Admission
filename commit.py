@@ -17,8 +17,8 @@ def git_add_commit_push(commit_message, branch_name="main"):
     except subprocess.CalledProcessError as e:
         print(f"Error: {e}. Please check if you're in a valid Git repository and if your branch exists.")
 
-# Example usage
+
 if __name__ == "__main__":
     commit_message = input("Enter your commit message: ")
     branch_name = input("Enter the branch name (default: 'main'): ").strip() or "main"
-    git_add_commit_push(commit_message, branch_name)
+    git_add_commit_push(commit_message, branch_name)   
