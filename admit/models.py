@@ -26,14 +26,6 @@ class Profile(models.Model):
    
 
 
-#class AdmissionFormModel(models.Model):
-   # user = models.OneToOneField(User, on_delete=models.CASCADE)
-   # childname = models.CharField(max_length=100, blank=False)
-
-  #  def __str__(self):
-  #      return self.childname
-
-
 
 #class ApplicationStatus(models.Model):
     #admissionformmodel = models.ForeignKey(AdmissionFormModel, on_delete=models.CASCADE)
