@@ -22,8 +22,8 @@ def about(request):
 # All Schools page
 def schools(request):
     school_profile = School.objects.all()
-    #province = Province.objects.all() , 'province': province
-    return render(request, 'parent/schools.html', {'school_profile': school_profile})
+    province = Province.objects.all() 
+    return render(request, 'parent/schools.html', {'school_profile': school_profile, 'province': province})
 
 # Individual School {page}
 def school(request, pk):
