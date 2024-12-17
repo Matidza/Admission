@@ -179,14 +179,11 @@ admissions/
 
 📜 **License**
 
-This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
 
 📞 **Contact**
 
 For any questions or inquiries, feel free to reach out:
 
-📧 Email: your-email@example.com
+📧 Email: admission.django@gmail.com
 
----
 
-Feel free to modify this README as needed for your specific project!
