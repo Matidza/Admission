@@ -54,10 +54,10 @@ def filters(request, fil):
         return redirect('home')
 
 
-#@login_required(login_url='/login')
+@login_required(login_url='/login')
 # All Schools page
-#def applications(request):
- #   return render(request, 'applications.html', {})
+def admission(request):
+   return render(request, 'parent/admission.html', {})
 
 
 # Loging
