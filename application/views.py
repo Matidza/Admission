@@ -1,4 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from .cart import Cart 
+from school.models import School 
+from django.http import JsonResponse 
+
+
+
 
 # Create your views here.
 def applications_summary(request):
@@ -7,7 +13,16 @@ def applications_summary(request):
 
 
 def applications_add(request):
-    pass
+    cart = Cart(request)
+    if request.POST.get('action') == 'post':
+        school_id = int(request.POST.get('school_id'))
+
+        school = get_object_or_404(School, id=school_id)
+
+        cart.add(school=school)
+
+        resonse = JsonResponse({'School Name: ': school.schoolname})
+        return resonse
     #return render(request, 'application/applications_add.html')
 
 

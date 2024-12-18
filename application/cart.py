@@ -11,3 +11,13 @@ class Cart():
 
         # Make sure cart is available on all pages of the website
         self.cart = cart
+
+    def add(self, school):
+
+        school_id = str(school.id)
+        if school_id in self.cart:
+            pass
+        else:
+            self.cart[school_id] = {'schoolname': str(school.schoolname)}
+        
+        self.session.mdified = True
