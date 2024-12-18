@@ -22,8 +22,8 @@ def about(request):
 # All Schools page
 def schools(request):
     school_profile = School.objects.all()
-    #province = Province.objects.all() , 'province': province
-    return render(request, 'parent/schools.html', {'school_profile': school_profile})
+    province = Province.objects.all() 
+    return render(request, 'parent/schools.html', {'school_profile': school_profile, 'province': province})
 
 # Individual School {page}
 def school(request, pk):
@@ -54,10 +54,10 @@ def filters(request, fil):
         return redirect('home')
 
 
-#@login_required(login_url='/login')
+@login_required(login_url='/login')
 # All Schools page
-#def applications(request):
- #   return render(request, 'applications.html', {})
+def admission(request):
+   return render(request, 'parent/admission.html', {})
 
 
 # Loging
