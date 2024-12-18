@@ -11,7 +11,7 @@ class Cart():
 
         # Make sure cart is available on all pages of the website
         self.cart = cart
-
+    ''' 
     def add(self, school):
 
         school_id = str(school.id)
@@ -20,4 +20,12 @@ class Cart():
         else:
             self.cart[school_id] = {'schoolname': str(school.schoolname)}
         
-        self.session.mdified = True
+        self.session.mdified = True '''
+    
+    def add(self, school):
+        """Add a school to the cart."""
+        school_id = str(school.id)  # Ensure the key is a string
+        if school_id not in self.cart:
+            self.cart[school_id] = {'school name': str(school.schoolname)}
+        self.session['cart'] = self.cart  # Save the cart back to the session
+        self.session.modified = True  # Mark the session as modified
