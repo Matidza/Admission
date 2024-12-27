@@ -15,14 +15,28 @@ class Profile(models.Model):
     address2 = models.CharField(max_length=200, blank=True)
     city = models.CharField(max_length=200, blank=True)
     province = models.CharField(max_length=200, blank=True)
-    zipcode = models.IntegerField( blank=True)
+    #zipcode = models.IntegerField( blank=True)
     country = models.CharField(max_length=200, blank=True)
     image = models.ImageField(upload_to='uploads/parentprofile/')
+
+    
+    ROLE_CHOICES = [('parent', 'Parent'), ('school', 'School')]
+    user_type = models.CharField(max_length=10, choices=ROLE_CHOICES, blank=True)
 
     def __str__(self):
         return self.user.username
     class Meta:
         verbose_name_plural = 'profile'
+
+
+# Create a User Profile by default when a user register an account
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        user_profile = Profile(user= instance)
+        user_profile.save()
+
+# Automate the create profile thing
+post_save.connect(create_profile, sender=User)
    
 
 

@@ -25,11 +25,19 @@ def applications_add(request):
         return resonse
     #return render(request, 'application/applications_add.html')'''
 
+'''   
+Add 
+'''
 def applications_add(request):
     if request.POST.get('action') == 'post':
+        # Retrieve the cart
         cart = Cart(request)
+        # get school stuff like its id
         school_id = int(request.POST.get('school_id'))
+        # Look up school in the school database
         school = get_object_or_404(School, id=school_id)
+
+        # Add the school and its stuff(id, schoolname, schoolemail etc) to the cart
         cart.add(school=school)
 
         response = JsonResponse({'school_name': school.schoolname})
