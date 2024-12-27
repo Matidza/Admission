@@ -15,8 +15,14 @@
                     <p class="mb-0">{{school.schoolemail }}</p>
                     <p class="mb-0">{{school.schooladdress }}</p>
                     <p class="mb-0">Princial: {{school.name_of_principal }}</p>
-                    <br>
+                  
+                    <!--  
+                    ID: {{ school.id }}
                     <a class="btn btn-primary" href="{% url 'admission' %}">Apply For Admission!</a>
+                    --><br>
+                    <button type="button" value="{{ school.id }}" id="add-cart" class="btn btn-primary">
+                        Apply For Admission
+                    </button>
                 </div>
             </div>
             <!-- Call to Action-->
@@ -79,4 +85,28 @@
             
             <br><br><br><br><br><br>
         </div>
+
+        <script>
+
+        // Check if button pressed
+        $(document).on('click', '#add-cart', function(e){
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'applications_add' %}',
+                data: {
+                school_id: $('#add-cart').val(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+                },
+                success: function(json){
+                    console.log(json)
+                    //document.getElementById("cart_quantity").textContent = json.qty
+                    //location.reload();
+                },
+                error: function(xhr, errmsg, err){
+                }
+            });
+        })
+        </script>
 {% endblock %}

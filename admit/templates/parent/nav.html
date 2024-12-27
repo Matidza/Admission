@@ -52,13 +52,8 @@
                             {% if user.is_authenticated %}
                                 {% if user.profile.user_type == 'parent' %}
                                     <!-- Parent-specific navigation -->
-<<<<<<< HEAD
-                                    <li class="nav-item active"><a class="nav-link" href="">Parent Dashboard</a></li>
-                                    <li class="nav-item active"><a class="nav-link" href="{% url 'applications_summary' %}">Applications</a></li>
-=======
                                     <li class="nav-item active"><a class="nav-link" href="{% url 'applications_summary' %}">Applications</a></li>
                                     <li class="nav-item active"><a class="nav-link" href="{% url 'parent_dashboard' %}">Parent Dashboard</a></li>
->>>>>>> 96232cf97ac4e158895036ea45a7d61281e9732b
                                 {% elif user.profile.user_type == 'school' %}
                                     <!-- School-specific navigation -->
                                     <li class="nav-item active"><a class="nav-link" href="">School Dashboard</a></li>
