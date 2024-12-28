@@ -127,6 +127,7 @@ def register_user(request):
 def search(request):
     # check if user filed the form
     if request.method == 'POST':
+        province = Province.objects.all() 
         school_profile = School.objects.all()
         searched = request.POST['searched']
         searched = School.objects.filter(Q(schoolname__icontains=searched) )
@@ -135,6 +136,6 @@ def search(request):
             messages.success(request, ("Searched Item Doesn't Not Exist"))
             return render(request, 'parent/search.html')
         else:
-            return render(request, 'parent/search.html', {'searched':searched, 'school_profile': school_profile})
+            return render(request, 'parent/search.html', {'searched':searched, 'school_profile': school_profile, 'province': province})
     else:
         return render(request, 'parent/search.html')
