@@ -2,40 +2,61 @@
 {% load static %}
 {% block content %}
 
-    <!-- Header
-    <header class="bg-dark py-5" style="background-image: url('{% static 'b.webp' %}'); background-size: cover; background-position: center;">
-        <div class="container px-4 px-lg-5 ">
-            <div class="text-center text-black">
-                    <h1 class="display-4 fw-bolder">Register</h1>
-                    <p class="lead fw-normal text-red-50 mb-0">Register for User Account...</p>
-            </div>
-        </div>
-    </header> -->
+    
 
     <br><br><br>
-   
-       
-            <div class="col-md-6 offset-md-3 bg-white  border rounded rounded-3 border-white  mb-3 shadow-lg p-3 mb-5"> 
-                <h3 class="text-black"style="font-weight: 600;">
-                   
-                       Register 
-                    
-                </h3>
-                <br/>
-                <form method="POST" action="{% url 'register' %}">   
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <br/>
-                    <button type="submit" class="btn btn-secondary">
-                        Register
-                    </button>     
-                </form>
-                <br>
-               
-                 
-            </div>	
-       
-    
-    <br/><br/>
+    <br/>
+     <div class="container">
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <!-- Left Side: Video -->
+                            <div class="col-lg-6 d-none d-lg-block" style="position: relative; overflow: hidden;">
+                                <video autoplay muted loop class="w-100 h-100" style="object-fit: cover;">
+                                    <source src="{% static 'videos/test.mp4' %}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+
+                                <!-- Overlay layer with blur and transparency -->
+                                <div class="overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(5px);"></div>
+                            </div>
+
+                            <!-- Right Side: Login Form -->
+                            <div class="col-lg-6">
+                                <div class="login-content p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                    </div>
+                                    
+                                    <form method="POST" action="{% url 'register' %}">   
+                                        {% csrf_token %}
+                                        {{ form.as_p }}
+                                        <br/>
+                                        <button type="submit" class="btn btn-primary">
+                                            Register
+                                        </button>     
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" href="">Forgot Password?</a>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="small" href="">Create an Account!</a>
+                                    </div>
+                                    <div class="text-center">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br>
+    <br/>
         
 {% endblock %}

@@ -7,6 +7,7 @@ from django.contrib import messages
 
 from django.contrib.auth.models import User
 from .forms import SignUpForm
+from django.db.models import Q
 
 
 
@@ -118,3 +119,22 @@ def register_user(request):
             return redirect('register')   
     else:
         return render(request, 'parent/register.html', {'form':form})
+
+
+
+
+# search 
+def search(request):
+    # check if user filed the form
+    if request.method == 'POST':
+        school_profile = School.objects.all()
+        searched = request.POST['searched']
+        searched = School.objects.filter(Q(schoolname__icontains=searched) )
+
+        if not searched:
+            messages.success(request, ("Searched Item Doesn't Not Exist"))
+            return render(request, 'parent/search.html')
+        else:
+            return render(request, 'parent/search.html', {'searched':searched, 'school_profile': school_profile})
+    else:
+        return render(request, 'parent/search.html')
