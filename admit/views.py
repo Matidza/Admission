@@ -11,6 +11,7 @@ from django.db.models import Q
 
 
 
+
 # Create your views here.
 def home(request):
     return render(request, 'parent/home.html', {})
@@ -27,6 +28,7 @@ def schools(request):
     return render(request, 'parent/schools.html', {'school_profile': school_profile, 'province': province})
 
 # Individual School {page}
+
 def school(request, pk):
     # Get the School Id form the SchoolAddress model
     school = School.objects.get(id=pk)
@@ -37,6 +39,7 @@ def school(request, pk):
 ''''
 Lets filter the schools by province, district, circuit
 '''
+
 def filters(request, fil):
     # Convert the filter string from URL (replace hyphens with spaces)
     fil = fil.replace('-', ' ')
