@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from school.models import School, Province
-
+from .models import Profile
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from .forms import SignUpForm
 from django.db.models import Q
 
-from .forms import UpdateUserForm, ChangePasswordForm
+from .forms import UpdateUserForm, ChangePasswordForm, UserInfoForm
 
 # Create your views here.
 def home(request):
@@ -137,7 +137,7 @@ def register_user(request):
             login(request, user)
             messages.success(
                 request, ('Username & Account Created, Fill Out User Info. '))
-            return redirect('login')
+            return redirect('update_info')
         else:
             messages.success(
                 request, ('Registration Not Successfully. Try Again!!'))
@@ -179,7 +179,7 @@ def update_user(request):
 			user_form.save()
 			login(request, current_user)
 			messages.success(request, "User Has Been Updated!!")
-			return redirect('home')
+			return redirect('login')
 		return render(request, "parent/update_user.html", {'user_form':user_form})
 	else:
 		messages.success(request, "You Must Be Logged In To Access That Page!!")
@@ -187,7 +187,7 @@ def update_user(request):
      
 
 
-
+@login_required(login_url='/login')
 def update_password(request):
     # Authenticate User
     if request.user.is_authenticated:
@@ -210,3 +210,28 @@ def update_password(request):
     else:
         messages.success(request, "You Must Be Logged In To Access That Page!!")
         return redirect('home')
+    
+
+def update_info(request):
+	if request.user.is_authenticated:
+		# Get Current User
+		current_user = Profile.objects.get(user__id=request.user.id)
+		# Get Current User's Shipping Info
+		#shipping_user = ShippingAddress.objects.get(user__id=request.user.id)
+		
+		# Get original User Form
+		form = UserInfoForm(request.POST or None, instance=current_user)
+		# Get User's Shipping Form
+		#shipping_form = ShippingForm(request.POST or None, instance=shipping_user)		
+		if form.is_valid():  #or shipping_form.is_valid():
+			# Save original form
+			form.save()
+			# Save shipping form
+			#shipping_form.save()
+
+			messages.success(request, "Your Info Has Been Updated!!")
+			return redirect('home')
+		return render(request, "parent/update_info.html", {'form':form})  #, 'shipping_form':shipping_form
+	else:
+		messages.success(request, "You Must Be Logged In To Access That Page!!")
+		return redirect('home')
