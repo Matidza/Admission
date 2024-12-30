@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import SignUpForm
 from django.db.models import Q
-
+from django.urls import reverse
 from .forms import UpdateUserForm, ChangePasswordForm, UserInfoForm
 
 # Create your views here.
@@ -85,15 +85,48 @@ def admission(request):
 
 
 # Loging
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from django.shortcuts import redirect, render
+
 def login_user(request):
-    """
+    if request.method == 'POST':
+        # Retrieve username and password from the request
+        username = request.POST['username']
+        password = request.POST['password']
+
+        # Authenticate the user
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            # Log in the authenticated user
+            login(request, user)
+            messages.success(request, 'Login Was Successful!')
+
+            # Redirect based on user type
+            if user.profile.user_type == 'school':
+                return redirect(reverse('schools:schoolhomepage'))  # Replace 'applications' with the actual URL name for the applications page
+            elif user.profile.user_type == 'parent':
+                return redirect('home')  # Redirect parents to the home page
+            else:
+                return redirect('home')  # Default redirect for other user types
+        else:
+            # Authentication failed, display error message
+            messages.error(request, 'Login Not Successful! Try Again!!')
+            return redirect('login')
+    else:
+        # Render the login form for GET requests
+        return render(request, 'parent/login.html', {})
+
+'''
+def login_user(request):
+   
     Handle user login.
 
     If the request method is POST, authenticate the user and log them in. 
     If authentication is successful, redirect to the home page. 
     Otherwise, display an error message and redirect to the login page.
     If the request method is not POST, render the login form.
-    """
+   
     if request.method == 'POST':
         # Retrieve username and password from the request
         username = request.POST['username']
@@ -113,7 +146,7 @@ def login_user(request):
     else:
         # Render the login form for GET requests
         return render(request, 'parent/login.html', {})
-
+'''
 
 # Logout
 def logout_user(request):
