@@ -13,4 +13,6 @@ urlpatterns = [
     path('register/', views.register_user, name='register'),
     path('filters/<str:fil>/', views.filters, name='filters'),
     path('search/', views.search, name='search'),
+
+    path('update_user/', views.update_user, name='update_user'),
 ]

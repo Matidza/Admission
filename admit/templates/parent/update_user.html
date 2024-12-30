@@ -1,0 +1,73 @@
+{% extends 'parent/base.html' %}
+{% load static %}
+{% block content %}
+
+    
+
+    <br><br><br>
+    <br/>
+     <div class="container">
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-sm my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <!-- Left Side: Video -->
+                            <div class="col-lg-6 d-none d-lg-block" style="position: relative; overflow: hidden;">
+                                <video autoplay muted loop class="w-100 h-100" style="object-fit: cover;">
+                                    <source src="{% static 'videos/test.mp4' %}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+
+                                <!-- Overlay layer with blur and transparency -->
+                                <div class="overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(5px);"></div>
+                            </div>
+
+                            <!-- Right Side: Login Form -->
+                            <div class="col-lg-6">
+                                <div class="login-content p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Update Login Details</h1>
+                                    </div>
+                                    
+                                    <form method="POST" action="{% url 'update_user' %}">   
+                                        {% csrf_token %}
+                                        {{ user_form.as_p }}
+                                        <br/>
+                                        <button type="submit" class="btn btn-primary">
+                                            Update
+                                        </button>     
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" href="">Forgot Password?</a>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="small" href=""">Login to Account</a>
+                                    </div>
+                                    <div class="text-center">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br>
+    <br/><br><br><br>
+    <br/><br><br><br>
+    <br/><br><br><br>
+    <br/>
+        <br><br><br>
+    <br/>
+        
+        
+        
+        
+{% endblock %}
+
+
+

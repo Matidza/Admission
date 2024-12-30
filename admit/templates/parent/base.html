@@ -52,28 +52,32 @@
                                 <li class="nav-item active"><a class="nav-link" href="{% url 'schools' %}">Schools</a></li>
                             {% elif user.profile.user_type == 'parent' %}
                                 <!-- Show Schools for parents -->
+                                <li class="nav-item active"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
                                 <li class="nav-item active"><a class="nav-link" href="{% url 'schools' %}">Schools</a></li>
                             {% elif user.profile.user_type == 'school' %}
                                 <!-- Do not show Home, About, or Schools for schools -->
+                                
                             {% endif %}
 
                             {% if user.is_authenticated %}
                                 {% if user.profile.user_type == 'parent' %}
-                                    <!-- Parent-specific navigation 
-                                    <li class="nav-item active"><a class="nav-link" href="">Dashboard</a></li>-->
+                                    <!-- Parent-specific navigation
+                                        <li class="nav-item active"><a class="nav-link" href="">Dashboard</a></li>-->
+                                     
                                     <li class="nav-item active"><a class="nav-link" href="{% url 'applications_summary' %}">Applications</a></li>
                                 {% elif user.profile.user_type == 'school' %}
                                     <!-- School-specific navigation -->
+                                
                                     <li class="nav-item active"><a class="nav-link" href="">Dashboard</a></li>
                                     <li class="nav-item active"><a class="nav-link" href="">Applications</a></li>
                                 {% endif %}
                                 <!-- Common navigation for authenticated users 
                                 <li class="nav-item active"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>-->
                                 <li class="nav-item dropdown active">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Profile</a>
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ user.username }}</a>
                                     <ul class="dropdown-menu bg-white text-black" aria-labelledby="navbarDropdownPortfolio">
+                                        <li><a class="dropdown-item text-black" href="{% url 'update_user'  %}">Update Login Details</a></li>
                                     <li><a class="dropdown-item text-black" href="#">Update Profile</a></li>
-                                    <li><a class="dropdown-item text-black" href="#">Update Login Details</a></li>
                                     <li><a class="dropdown-item text-black" href="#">Delete Account</a></li>
                                     <li><a class="dropdown-item text-black" href="{% url 'logout' %}">Logout</a></li>
                                 </ul>
@@ -86,20 +90,19 @@
                             {% endif %}
                         </ul>
                             &nbsp;
-                         <form method="POST" action="{% url 'search' %}" id="searchForm" style="display: flex; align-items: center; gap: 10px;">
+                        <form method="POST" action="{% url 'search' %}" id="searchForm" style="display: flex; align-items: center; gap: 10px;">
                                 {% csrf_token %} 
                                     <input 
                                         type="text" 
                                         class="form-control" 
-                                        placeholder="Search for..." 
+                                        placeholder="Search for school..." 
                                         name="searched" 
                                         id="searchInput"
                                     >
                                 <button type="submit" class="btn btn-secondary" >
                                     Search
                                 </button>
-                            </form> 
-                            
+                        </form>   
                     </div>
                 </div>
             </nav>
