@@ -179,7 +179,7 @@ def update_user(request):
 			user_form.save()
 			login(request, current_user)
 			messages.success(request, "User Has Been Updated!!")
-			return redirect('login')
+			return redirect('logout')
 		return render(request, "parent/update_user.html", {'user_form':user_form})
 	else:
 		messages.success(request, "You Must Be Logged In To Access That Page!!")
@@ -199,7 +199,7 @@ def update_password(request):
                 form.save()
                 messages.success(request, "Password Updated!!")
                 login(request, current_user)
-                return redirect('update_user')
+                return redirect('logout')
             else:
                 for error in list(form.errors.values()):
                     messages.error(request, error)
@@ -230,7 +230,7 @@ def update_info(request):
 			#shipping_form.save()
 
 			messages.success(request, "Your Info Has Been Updated!!")
-			return redirect('home')
+			return redirect('logout')
 		return render(request, "parent/update_info.html", {'form':form})  #, 'shipping_form':shipping_form
 	else:
 		messages.success(request, "You Must Be Logged In To Access That Page!!")
