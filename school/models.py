@@ -1,7 +1,8 @@
 from django.db import models
 import datetime
 from django.contrib.auth.models import User 
-
+from admit.models import Profile
+from django.contrib.auth.models import User
 
 class Province(models.Model):
     '''PROVINCE = [
@@ -27,7 +28,14 @@ class Province(models.Model):
 # Create School Model containing all 
 # neccesary fields to create a school profile
 class School(models.Model):
-    province = models.ManyToManyField(Province)
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        limit_choices_to={'profile__user_type': 'school'},  # Ensure only school users can be linked
+        related_name='school_profile',
+        null=True,
+        blank=True
+    )
     schoolname = models.CharField(max_length=100 )
     telephone = models.CharField(max_length=200, blank=True)
     schoolemail = models.EmailField(blank=True)
