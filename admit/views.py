@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from .forms import SignUpForm
 from django.db.models import Q
 
-from .forms import UpdateUserForm
+from .forms import UpdateUserForm, ChangePasswordForm
 
 # Create your views here.
 def home(request):
@@ -166,6 +166,7 @@ def search(request):
 
 
 # Update user Login details
+@login_required(login_url='/login')
 def update_user(request):
 	if request.user.is_authenticated:
         # What/Which user is authenticated/
@@ -178,8 +179,34 @@ def update_user(request):
 			user_form.save()
 			login(request, current_user)
 			messages.success(request, "User Has Been Updated!!")
-			return redirect('update_info')
+			return redirect('home')
 		return render(request, "parent/update_user.html", {'user_form':user_form})
 	else:
 		messages.success(request, "You Must Be Logged In To Access That Page!!")
 		return redirect('home')
+     
+
+
+
+def update_password(request):
+    # Authenticate User
+    if request.user.is_authenticated:
+        current_user = request.user
+        if request.method == 'POST':
+            form = ChangePasswordForm(current_user, request.POST)
+
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Password Updated!!")
+                login(request, current_user)
+                return redirect('update_user')
+            else:
+                for error in list(form.errors.values()):
+                    messages.error(request, error)
+                    return redirect('update_password')
+        else:
+            form = ChangePasswordForm(current_user)
+            return render(request, "parent/update_password.html", {'form':form})#          
+    else:
+        messages.success(request, "You Must Be Logged In To Access That Page!!")
+        return redirect('home')
