@@ -307,6 +307,7 @@ def update_info(request):
 
 
 
+
 def update_school_info(request):
     if request.user.is_authenticated:
         try:
@@ -317,14 +318,17 @@ def update_school_info(request):
             messages.error(request, "No School info found for this user.")
             return redirect('home')
 
-        # Get the form for updating School info
-        form = SchoolInfo(request.POST or None, instance=current_user)
+        # Get the form for updating School info, including file data
+        if request.method == 'POST' and request.FILES:
+            form = SchoolInfo(request.POST, request.FILES, instance=current_user)
+        else:
+            form = SchoolInfo(instance=current_user)
 
         if form.is_valid():
             # Save the form if it's valid
             form.save()
             messages.success(request, "Your info has been updated!")
-            return redirect('profile')  # or another redirect destination like a dashboard
+            return redirect('logout')  # or another redirect destination like a dashboard
 
         return render(request, "parent/update_school_info.html", {'form': form})
 
@@ -332,28 +336,3 @@ def update_school_info(request):
         # If the user is not authenticated
         messages.error(request, "You must be logged in to access that page.")
         return redirect('login')  # Redirect to login page
-
-''''   
-def update_school_info(request):
-	if request.user.is_authenticated:
-		# Get Current User
-		current_user = School.objects.get(user__id=request.user.id)
-		# Get Current User's Shipping Info
-		#shipping_user = ShippingAddress.objects.get(user__id=request.user.id)
-		
-		# Get original User Form
-		form = SchoolInfo(request.POST or None, instance=current_user)
-		# Get User's Shipping Form
-		#shipping_form = ShippingForm(request.POST or None, instance=shipping_user)		
-		if form.is_valid():  #or shipping_form.is_valid():
-			# Save original form
-			form.save()
-			# Save shipping form
-			#shipping_form.save()
-
-			messages.success(request, "Your Info Has Been Updated!!")
-			return redirect('logout')
-		return render(request, "parent/update_school_info.html", {'form':form})  #, 'shipping_form':shipping_form
-	else:
-		messages.success(request, "You Must Be Logged In To Access That Page!!")
-		return redirect('home') '''
