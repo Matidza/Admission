@@ -33,8 +33,15 @@ def create_profile(sender, instance, created, **kwargs):
 
 
 @receiver(post_save, sender=Profile)
-def create_school(sender, instance, created, **kwargs):
-    if created: # and instance.user_type == 'school':
-        # Lazy load the School model to avoid circular imports
-        #School = apps.get_model('school', 'School')
+def create_or_delete_school(sender, instance, created, **kwargs):
+    # Lazy load the School model to avoid circular imports
+    School = apps.get_model('school', 'School')
+    
+    # Always create a School instance when a Profile is created
+    if created:
         School.objects.create(user=instance.user)
+    
+    # Check the user_type after creation or update
+    if instance.user_type == 'parent':
+        # Delete the associated School instance if user_type is "parent"
+        School.objects.filter(user=instance.user).delete()

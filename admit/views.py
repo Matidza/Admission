@@ -12,6 +12,9 @@ from django.urls import reverse
 from .forms import UpdateUserForm, ChangePasswordForm, UserInfoForm
 
 from school.forms import SchoolInfo
+from django.shortcuts import redirect
+from django.contrib import messages 
+
 
 # Create your views here.
 def home(request):
@@ -247,6 +250,35 @@ def update_password(request):
         return redirect('home')
     
 
+
+
+
+def update_info(request):
+    if request.user.is_authenticated:
+        # Get Current User Profile
+        current_user = Profile.objects.get(user__id=request.user.id)
+
+        # Get original User Form
+        form = UserInfoForm(request.POST or None, instance=current_user)
+
+        if form.is_valid():
+            # Save the form
+            form.save()
+
+            # Check the user type and redirect accordingly
+            if current_user.user_type == "school":
+                messages.success(request, "Your Info Has Been Updated!!")
+                return redirect('update_school_info')
+            elif current_user.user_type == "parent":
+                messages.success(request, "Your Info Has Been Updated!!")
+                return redirect('logout')
+
+        return render(request, "parent/update_info.html", {'form': form})
+    else:
+        messages.error(request, "You Must Be Logged In To Access That Page!!")
+        return redirect('home')
+
+'''   
 def update_info(request):
 	if request.user.is_authenticated:
 		# Get Current User
@@ -271,9 +303,37 @@ def update_info(request):
 		messages.success(request, "You Must Be Logged In To Access That Page!!")
 		return redirect('home')
      
+'''
 
 
 
+def update_school_info(request):
+    if request.user.is_authenticated:
+        try:
+            # Get Current User's School Info
+            current_user = School.objects.get(user__id=request.user.id)
+        except School.DoesNotExist:
+            # If no School info exists for the user, handle it gracefully
+            messages.error(request, "No School info found for this user.")
+            return redirect('home')
+
+        # Get the form for updating School info
+        form = SchoolInfo(request.POST or None, instance=current_user)
+
+        if form.is_valid():
+            # Save the form if it's valid
+            form.save()
+            messages.success(request, "Your info has been updated!")
+            return redirect('profile')  # or another redirect destination like a dashboard
+
+        return render(request, "parent/update_school_info.html", {'form': form})
+
+    else:
+        # If the user is not authenticated
+        messages.error(request, "You must be logged in to access that page.")
+        return redirect('login')  # Redirect to login page
+
+''''   
 def update_school_info(request):
 	if request.user.is_authenticated:
 		# Get Current User
@@ -296,4 +356,4 @@ def update_school_info(request):
 		return render(request, "parent/update_school_info.html", {'form':form})  #, 'shipping_form':shipping_form
 	else:
 		messages.success(request, "You Must Be Logged In To Access That Page!!")
-		return redirect('home')
+		return redirect('home') '''

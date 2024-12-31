@@ -75,9 +75,20 @@ class SchoolInfo(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'form-input'}),
         required=True
     )
+	image = forms.ImageField(
+    label="Image",
+    widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': 'Upload Image'}),
+    required=False
+    )
+	image1 = forms.ImageField(
+    label="Image",
+    widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': 'Upload Image'}),
+    required=False
+    )
 	history = forms.CharField(label="Address 1",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
 	mission = forms.CharField(label="Address 1",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
 
 	class Meta:
 		model = School
 		fields = ('__all__')
+		exclude = ('user',)

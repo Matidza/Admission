@@ -84,7 +84,7 @@ class UserInfoForm(forms.ModelForm):
 	user_type = forms.ChoiceField(
         label="Register as?",
         choices=Profile.ROLE_CHOICES,
-        widget=forms.RadioSelect(attrs={'class': 'form-check-input'}),
+        widget=forms.Select(attrs={'class': 'form-input'}),
         required=True
     )
 	class Meta:
