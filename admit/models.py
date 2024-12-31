@@ -1,27 +1,23 @@
 from django.db import models
-import datetime
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.apps import apps  # Lazy model lookup
+from school.models import School
 
-
-# Create your models here.
-
-# Parents Model
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    date_modified = models.DateTimeField(User, auto_now=True)
+    date_modified = models.DateTimeField(auto_now=True)
     phone = models.CharField(max_length=200, blank=True)
     address1 = models.CharField(max_length=200, blank=True)
     address2 = models.CharField(max_length=200, blank=True)
     city = models.CharField(max_length=200, blank=True)
     province = models.CharField(max_length=200, blank=True)
-    # zipcode = models.IntegerField( blank=True)
     country = models.CharField(max_length=200, blank=True)
-    image = models.ImageField(upload_to='uploads/parentprofile/')
+    image = models.ImageField(upload_to='uploads/parentprofile/', blank=True, null=True)
 
     ROLE_CHOICES = [('parent', 'Parent'), ('school', 'School')]
-    user_type = models.CharField(
-        max_length=10, choices=ROLE_CHOICES, blank=True)
+    user_type = models.CharField(max_length=10, choices=ROLE_CHOICES, blank=True)
 
     def __str__(self):
         return self.user.username
@@ -30,20 +26,15 @@ class Profile(models.Model):
         verbose_name_plural = 'profile'
 
 
-# Create a User Profile by default when a user register an account
+@receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
     if created:
-        user_profile = Profile(user=instance)
-        user_profile.save()
+        Profile.objects.create(user=instance)
 
 
-# Automate the create profile thing
-post_save.connect(create_profile, sender=User)
-
-
-# class ApplicationStatus(models.Model):
-# admissionformmodel = models.ForeignKey(AdmissionFormModel, on_delete=models.CASCADE)
-# status = models.CharField(max_length=20, choices=('Pending', 'Approved', 'Rejected'))
-
-#   def __str__(self):
-#     return self.status
+@receiver(post_save, sender=Profile)
+def create_school(sender, instance, created, **kwargs):
+    if created: # and instance.user_type == 'school':
+        # Lazy load the School model to avoid circular imports
+        #School = apps.get_model('school', 'School')
+        School.objects.create(user=instance.user)

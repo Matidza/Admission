@@ -90,3 +90,6 @@ class UserInfoForm(forms.ModelForm):
 	class Meta:
 		model = Profile
 		fields = ('phone', 'address1', 'address2', 'city', 'province', 'country', 'user_type')
+            
+
+

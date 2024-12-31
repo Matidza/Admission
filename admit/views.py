@@ -11,6 +11,8 @@ from django.db.models import Q
 from django.urls import reverse
 from .forms import UpdateUserForm, ChangePasswordForm, UserInfoForm
 
+from school.forms import SchoolInfo
+
 # Create your views here.
 def home(request):
     return render(request, 'parent/home.html', {})
@@ -263,8 +265,35 @@ def update_info(request):
 			#shipping_form.save()
 
 			messages.success(request, "Your Info Has Been Updated!!")
-			return redirect('logout')
+			return redirect('update_school_info')
 		return render(request, "parent/update_info.html", {'form':form})  #, 'shipping_form':shipping_form
+	else:
+		messages.success(request, "You Must Be Logged In To Access That Page!!")
+		return redirect('home')
+     
+
+
+
+def update_school_info(request):
+	if request.user.is_authenticated:
+		# Get Current User
+		current_user = School.objects.get(user__id=request.user.id)
+		# Get Current User's Shipping Info
+		#shipping_user = ShippingAddress.objects.get(user__id=request.user.id)
+		
+		# Get original User Form
+		form = SchoolInfo(request.POST or None, instance=current_user)
+		# Get User's Shipping Form
+		#shipping_form = ShippingForm(request.POST or None, instance=shipping_user)		
+		if form.is_valid():  #or shipping_form.is_valid():
+			# Save original form
+			form.save()
+			# Save shipping form
+			#shipping_form.save()
+
+			messages.success(request, "Your Info Has Been Updated!!")
+			return redirect('logout')
+		return render(request, "parent/update_school_info.html", {'form':form})  #, 'shipping_form':shipping_form
 	else:
 		messages.success(request, "You Must Be Logged In To Access That Page!!")
 		return redirect('home')

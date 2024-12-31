@@ -1,8 +1,10 @@
 from django.db import models
 import datetime
-from django.contrib.auth.models import User 
-from admit.models import Profile
 from django.contrib.auth.models import User
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 class Province(models.Model):
     '''PROVINCE = [
@@ -16,35 +18,37 @@ class Province(models.Model):
         ('Northern Cape', 'Northern Cape'),
         ('Western Cape', 'Western Cape'),
     ]'''
-    province = models.CharField(max_length=50)#, choices=(PROVINCE)
+    province = models.CharField(max_length=50)  # , choices=(PROVINCE)
 
     def __str__(self):
         return self.province
+
     class Meta:
         verbose_name_plural = 'Province'
 
 
-
-# Create School Model containing all 
+# Create School Model containing all
 # neccesary fields to create a school profile
 class School(models.Model):
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        limit_choices_to={'profile__user_type': 'school'},  # Ensure only school users can be linked
+        # Ensure only school users can be linked
+        limit_choices_to={'profile__user_type': 'school'},
         related_name='school_profile',
         null=True,
         blank=True
     )
-    schoolname = models.CharField(max_length=100 )
+    schoolname = models.CharField(max_length=100)
     telephone = models.CharField(max_length=200, blank=True)
     schoolemail = models.EmailField(blank=True)
     schooladdress = models.TextField(max_length=100, default="", blank=False)
     postal_address = models.CharField(max_length=100, blank=True)
-    website = models.TextField(max_length=100) 
+    website = models.TextField(max_length=100)
     slogan = models.CharField(max_length=200, blank=True)
-    image = models.ImageField(upload_to='uploads/schoolprofile/', default=None, blank=True, null=True)
-    
+    image = models.ImageField(
+        upload_to='uploads/schoolprofile/', default=None, blank=True, null=True)
+
     SCHOOL_SECTOR = [
         ('Primary', 'Primary School'),
         ('Secondary', 'Secondary School'),
@@ -52,9 +56,8 @@ class School(models.Model):
         ('Vocational', 'Vocational School'),
         ('Other', 'Other School'),
     ]
-    type_of_school = models.CharField(max_length=200, blank=True, choices=(SCHOOL_SECTOR))
-    
-    
+    type_of_school = models.CharField(
+        max_length=200, blank=True, choices=(SCHOOL_SECTOR))
 
     UMALUSI = [
         ('DBE', 'The Department of Basic Education (DBE)'),
@@ -62,7 +65,7 @@ class School(models.Model):
         ('SACAI', 'The South African Comprehensive Assessment Institute (SACAI)')
     ]
     umalusi = models.CharField(max_length=200, blank=True, choices=(UMALUSI))
-    
+
     # School Locality
     PROVINCE = [
         ('Limpopo', 'Limpopo'),
@@ -76,7 +79,7 @@ class School(models.Model):
         ('Western Cape', 'Western Cape'),
     ]
     provinc = models.CharField(max_length=50, choices=(PROVINCE), null=True)
-    
+
     DISTRICT = [
         ('Alfred Nzo District', 'Alfred Nzo District'),
         ('amajuba', 'Amajuba District'),
@@ -130,16 +133,15 @@ class School(models.Model):
         ('xhariep', 'Xhariep District '),
         ('zf mgcawu', 'ZF Mgcawu District '),
         ('zululand', 'Zululand District'),
-        
 
 
 
-        
-        
-        
+
+
+
+
     ]
-    district = models.CharField(max_length=200,default="",choices=(DISTRICT ))
-
+    district = models.CharField(max_length=200, default="", choices=(DISTRICT))
 
     CIRCUIT = [
         ('Soutpansberg East', 'Soutpansberg East Circuit'),
@@ -150,28 +152,28 @@ class School(models.Model):
         ('Seshego ', 'Seshego '),
         ('Bochum East ', 'Bochum East '),
         ('Potgietersrus', 'Potgietersrus'),
-        
+
 
 
     ]
-    circuit = models.CharField(max_length=200,default="",choices=(CIRCUIT))
+    circuit = models.CharField(max_length=200, default="", choices=(CIRCUIT))
 
     CURRICULUM = [
         ('CAPS', 'CAPS curriculum'),
         ('Cambridge', 'Cambridge curriculum')
     ]
-    curriculum = models.CharField(max_length=100, blank=True, choices=(CURRICULUM ))
+    curriculum = models.CharField(
+        max_length=100, blank=True, choices=(CURRICULUM))
 
     GRADES = [
     ]
     grade_levels = models.CharField(max_length=100, blank=True)
-    accreditation = models.CharField(max_length=100, blank=True )
+    accreditation = models.CharField(max_length=100, blank=True)
 
     local_municipality = models.CharField(max_length=100, blank=True)
     urban_rural = models.CharField(max_length=100, blank=True)
     ward_id = models.CharField(max_length=100, blank=True)
     Eei_district = models.CharField(max_length=100, blank=True)
-
 
     # SCHOOL IDENTIFICATION
     emis_number = models.CharField(max_length=100, blank=True)
@@ -180,10 +182,9 @@ class School(models.Model):
     persal_paypoint_number = models.CharField(max_length=100, blank=True)
     persal_component_number = models.CharField(max_length=100, blank=True)
 
-    
     # Personnel & Staff
     name_of_principal = models.CharField(max_length=100, blank=True)
-    number_of_teachers = models.CharField(max_length=100, blank=True )
+    number_of_teachers = models.CharField(max_length=100, blank=True)
     number_of_learners = models.CharField(max_length=100, blank=True)
 
     # School Fees and Finance
@@ -193,7 +194,7 @@ class School(models.Model):
     ]
     section_21 = models.CharField(max_length=100, choices=(SECTION))
     school_fees = models.CharField(max_length=100)
-    
+
     QUANTILE = [
         ('Quintile 1', 'Q1'),
         ('Quintile 2', 'Q2'),
@@ -203,15 +204,17 @@ class School(models.Model):
     ]
     quintile_Level = models.CharField(max_length=100, choices=(QUANTILE))
 
-
-    image = models.ImageField(upload_to='uploads/schoolprofile/', default=None, blank=True, null=True)
-    image1 = models.ImageField(upload_to='uploads/schoolprofile/', default=None, blank=True, null=True)
+    image = models.ImageField(
+        upload_to='uploads/schoolprofile/', default=None, blank=True, null=True)
+    image1 = models.ImageField(
+        upload_to='uploads/schoolprofile/', default=None, blank=True, null=True)
 
     history = models.CharField(max_length=200, blank=True)
     mission = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
         return self.schoolname
+
     class Meta:
         verbose_name_plural = 'school profile'
 

@@ -48,7 +48,7 @@
                                         <h1 class="h4 text-gray-900 mb-4">Update Profile</h1>
                                     </div>
                                     
-                                    <form method="POST" action="{% url 'update_info' %}">   
+                                    <form method="POST" action="{% url 'update_school_info' %}">   
                                         {% csrf_token %}
                                         <br>
                                         {{ form.as_p }}
@@ -62,7 +62,6 @@
                                        <a class="small" href="{% url 'update_password'  %}"">Forgot Password</a>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <a class="small" href="{% url 'update_user'  %}"">Update Login Details</a>
-                                        <a class="small" href="{% url 'update_school_info'  %}"">Update School Info</a>
                                     </div>
                                     <div class="text-center">
                                     </div>
