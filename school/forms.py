@@ -59,9 +59,9 @@ class SchoolInfo(forms.ModelForm):
 	examination_centre = forms.CharField(label="Examination Centre",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
 	persal_paypoint_number = forms.CharField(label="Persal Paypoint Number",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
 	persal_component_number = forms.CharField(label="Persal Component Number",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
-	name_of_principal = forms.CharField(label="Address 1",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
-	number_of_teachers = forms.CharField(label="Address 1",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
-	number_of_learners = forms.CharField(label="Address 1",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
+	name_of_principal = forms.CharField(label="Principal",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
+	number_of_teachers = forms.CharField(label="Number of Teachers",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
+	number_of_learners = forms.CharField(label="Number of Learners",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
 	section_21 = forms.ChoiceField(
         label="Section 21",
         choices=School.SECTION,
