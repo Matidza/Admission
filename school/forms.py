@@ -5,45 +5,45 @@ from .models import School
 
 
 class SchoolInfo(forms.ModelForm):
-	schoolname = forms.CharField(label="School name",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Phone number'}), required=False)
-	telephone = forms.CharField(label="Address 1",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
-	schoolemail = forms.CharField(label="address 2",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address2'}), required=False)
-	schooladdress = forms.CharField(label="City",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'city'}), required=False)
-	postal_address = forms.CharField(label="Province",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'province'}), required=False)
-	website = forms.CharField(label="zipcode",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'zipcode'}), required=False)
-	slogan = forms.CharField(label="Country",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'country'}), required=False)
+	schoolname = forms.CharField(label="School name",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'School name'}), required=False)
+	telephone = forms.CharField(label="Telephone",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'telephone/ phone'}), required=False)
+	schoolemail = forms.CharField(label="School Email",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'school email'}), required=False)
+	schooladdress = forms.CharField(label="School Address",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'full address'}), required=False)
+	postal_address = forms.CharField(label="Postal Address",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Postal address'}), required=False)
+	website = forms.CharField(label="Website",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'website'}), required=False)
+	slogan = forms.CharField(label="Slogan",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'slogan'}), required=False)
 	type_of_school = forms.ChoiceField(
-        label="Register as?",
+        label="School Type",
         choices=School.SCHOOL_SECTOR,
         widget=forms.Select(attrs={'class': 'form-input'}),
         required=True
     )
 	umalusi = forms.ChoiceField(
-        label="Register as?",
+        label="Umalusi",
         choices=School.UMALUSI,
-        widget=forms.Select(attrs={'class': 'form-input'}),
+        widget=forms.RadioSelect(attrs={'class': 'form-input'}),
         required=True
     )
 	provinc = forms.ChoiceField(
-        label="Register as?",
+        label="Province",
         choices=School.PROVINCE,
         widget=forms.Select(attrs={'class': 'input'}),
         required=True
     )
 	district = forms.ChoiceField(
-        label="Register as?",
+        label="District",
         choices=School.DISTRICT,
         widget=forms.Select(attrs={'class': 'form-input'}),
         required=True
     )
 	circuit = forms.ChoiceField(
-        label="Register as?",
+        label="Circuit",
         choices=School.CIRCUIT,
         widget=forms.Select(attrs={'class': 'form-input'}),
         required=True
     )
 	curriculum = forms.ChoiceField(
-        label="Register as?",
+        label="Curriculum",
         choices=School.CURRICULUM,
         widget=forms.Select(attrs={'class': 'form-input'}),
         required=True
@@ -63,14 +63,14 @@ class SchoolInfo(forms.ModelForm):
 	number_of_teachers = forms.CharField(label="Address 1",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
 	number_of_learners = forms.CharField(label="Address 1",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
 	section_21 = forms.ChoiceField(
-        label="Register as?",
+        label="Section 21",
         choices=School.SECTION,
         widget=forms.Select(attrs={'class': 'form-input'}),
         required=True
     )
-	school_fees = forms.CharField(label="Address 1",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
+	school_fees = forms.CharField(label="School Fees",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
 	quintile_Level = forms.ChoiceField(
-        label="Register as?",
+        label="Quintile",
         choices=School.QUANTILE,
         widget=forms.Select(attrs={'class': 'form-input'}),
         required=True
@@ -85,8 +85,10 @@ class SchoolInfo(forms.ModelForm):
     widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': 'Upload Image'}),
     required=False
     )
-	history = forms.CharField(label="Address 1",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
-	mission = forms.CharField(label="Address 1",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
+	
+    
+	history = forms.CharField(label="History",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'school history'}), required=False)
+	mission = forms.CharField(label="Mission",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'school mission'}), required=False)
 
 	class Meta:
 		model = School
