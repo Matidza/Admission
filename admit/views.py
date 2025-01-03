@@ -281,29 +281,26 @@ def update_info(request):
 '''   '''
 
 def update_school_info(request):
-	if request.user.is_authenticated:
-		# Get Current User
-		current_user = School.objects.get(user__id=request.user.id)
-		# Get Current User's Shipping Info
-		#shipping_user = ShippingAddress.objects.get(user__id=request.user.id)
-		
-		# Get original User Form
-        
-		form = SchoolInfo(request.POST or None, instance=current_user)
-		# Get User's Shipping Form
-		#shipping_form = ShippingForm(request.POST or None, instance=shipping_user)		
-		if form.is_valid():  #or shipping_form.is_valid():
-			# Save original form
-			form.save()
-			# Save shipping form
-			#shipping_form.save()
+    if request.user.is_authenticated:
+        # Get the current user's school
+        try:
+            current_user = School.objects.get(user__id=request.user.id)
+        except School.DoesNotExist:
+            messages.error(request, "School profile not found!")
+            return redirect('home')
 
-			messages.success(request, "Your Info Has Been Updated!!")
-			return redirect('update_school_info')
-		return render(request, "parent/update_school_info.html", {'form':form})  #, 'shipping_form':shipping_form
-	else:
-		messages.success(request, "You Must Be Logged In To Access That Page!!")
-		return redirect('home')
+        # Initialize the form with POST data and uploaded files
+        form = SchoolInfo(request.POST or None, request.FILES or None, instance=current_user)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your information has been updated!")
+            return redirect('update_school_info')
+
+        return render(request, "parent/update_school_info.html", {'form': form})
+    else:
+        messages.error(request, "You must be logged in to access this page!")
+        return redirect('home')
      
 
 '''   
