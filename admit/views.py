@@ -276,18 +276,20 @@ def update_info(request):
         return render(request, "parent/update_info.html", {'form': form})
     else:
         messages.error(request, "You Must Be Logged In To Access That Page!!")
-        return redirect('home')
+        return redirect('login')
 
-'''   
-def update_info(request):
+'''   '''
+
+def update_school_info(request):
 	if request.user.is_authenticated:
 		# Get Current User
-		current_user = Profile.objects.get(user__id=request.user.id)
+		current_user = School.objects.get(user__id=request.user.id)
 		# Get Current User's Shipping Info
 		#shipping_user = ShippingAddress.objects.get(user__id=request.user.id)
 		
 		# Get original User Form
-		form = UserInfoForm(request.POST or None, instance=current_user)
+        
+		form = SchoolInfo(request.POST or None, instance=current_user)
 		# Get User's Shipping Form
 		#shipping_form = ShippingForm(request.POST or None, instance=shipping_user)		
 		if form.is_valid():  #or shipping_form.is_valid():
@@ -298,16 +300,13 @@ def update_info(request):
 
 			messages.success(request, "Your Info Has Been Updated!!")
 			return redirect('update_school_info')
-		return render(request, "parent/update_info.html", {'form':form})  #, 'shipping_form':shipping_form
+		return render(request, "parent/update_school_info.html", {'form':form})  #, 'shipping_form':shipping_form
 	else:
 		messages.success(request, "You Must Be Logged In To Access That Page!!")
 		return redirect('home')
      
-'''
 
-
-
-
+'''   
 def update_school_info(request):
     if request.user.is_authenticated:
         try:
@@ -335,4 +334,4 @@ def update_school_info(request):
     else:
         # If the user is not authenticated
         messages.error(request, "You must be logged in to access that page.")
-        return redirect('login')  # Redirect to login page
+        return redirect('login')  ''' # Redirect to login page

@@ -76,7 +76,7 @@ class SchoolInfo(forms.ModelForm):
         required=True
     )
 	image = forms.ImageField(
-    label="Image",
+    label="School Emblem",
     widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': 'Upload Image'}),
     required=False
     )

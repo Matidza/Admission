@@ -59,9 +59,9 @@
                         <li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ user.username }}</a>
                             <ul class="dropdown-menu bg-white text-black" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item text-black" href="{% url 'update_user' %}">Update Login Details</a></li>
-                                <li><a class="dropdown-item text-black" href="{% url 'update_info'  %}">Update Info</a></li>
-                                <li><a class="dropdown-item text-black" href="{% url 'update_school_info'  %}">Update School Info</a></li>
+                                <li><a class="dropdown-item text-black" href="{% url 'update_user' %}">Login Info</a></li>
+                                <li><a class="dropdown-item text-black" href="{% url 'update_info'  %}">Profile Info</a></li>
+                                <li><a class="dropdown-item text-black" href="{% url 'update_school_info'  %}">School Info</a></li>
                                 <li><a class="dropdown-item text-black" href="{% url 'logout' %}">Logout</a></li>
                             </ul>
                         </li>
