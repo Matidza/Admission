@@ -75,12 +75,12 @@ class ChangePasswordForm(SetPasswordForm):
 
 class UserInfoForm(forms.ModelForm):
 	phone = forms.CharField(label="Phone Number",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Phone number'}), required=False)
-	address1 = forms.CharField(label="Address 1",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
-	address2 = forms.CharField(label="address 2",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address2'}), required=False)
-	city = forms.CharField(label="City",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'city'}), required=False)
-	province = forms.CharField(label="Province",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'province'}), required=False)
+	#email = forms.CharField(label="Address 1",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
+	#address2 = forms.CharField(label="address 2",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address2'}), required=False)
+	#city = forms.CharField(label="City",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'city'}), required=False)
+	#province = forms.CharField(label="Province",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'province'}), required=False)
 	#zipcode = forms.CharField(label="zipcode",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'zipcode'}), required=False)
-	country = forms.CharField(label="Country",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'country'}), required=False)
+	#country = forms.CharField(label="Country",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'country'}), required=False)
 	user_type = forms.ChoiceField(
         label="Register as?",
         choices=Profile.ROLE_CHOICES,
@@ -89,7 +89,7 @@ class UserInfoForm(forms.ModelForm):
     )
 	class Meta:
 		model = Profile
-		fields = ('phone', 'address1', 'address2', 'city', 'province', 'country', 'user_type')
+		fields = ('phone', 'user_type')
             
 
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from school.models import School, Province
+from school.models import School, Sports
 from .models import Profile
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -30,10 +30,11 @@ def about(request):
 # All Schools page
 
 
+
 def schools(request):
     school_profile = School.objects.all()
-    province = Province.objects.all()
-    return render(request, 'parent/schools.html', {'school_profile': school_profile, 'province': province})
+    #province = Province.objects.all()
+    return render(request, 'parent/schools.html', {'school_profile': school_profile})#, 'province': province
 
 # Individual School {page}
 
@@ -41,14 +42,39 @@ def schools(request):
 def school(request, pk):
     # Get the School Id form the SchoolAddress model
     school = School.objects.get(id=pk)
-    return render(request, 'parent/school.html', {'school': school})
+    sports = Sports.objects.filter(school=school)
+    return render(request, 'parent/school.html', {'school': school, 'sports':sports} ) # using template from parent app
+    #return render(request, 'schoolhomepage.html', {'school': school})
+
+'''
+def school(request, pk):
+    # Get the School Id form the SchoolAddress model
+    school = School.objects.get(id=pk)
+    sports = Sports.objects.filter(school=school)
+    #return render(request, 'parent/school.html', {'school': school}) # using template from parent app
+    return render(request, 'schoolhomepage.html', {'school': school , 'sports':sports})
+
+    
+def school(request, pk):
+    current_user = Profile.objects.get(user__id=request.user.id)
+    if not request.user.is_authenticated:
+        # Handle unauthenticated users
+        return HttpResponseForbidden("Access denied")
+
+    school = School.objects.get(id=pk)
+    sports = Sports.objects.filter(school=school)
+    
+    if current_user.user_type == 'parent':
+        return render(request, 'parent/school.html', {'school': school, 'sports': sports})
+    elif current_user.user_type == 'school':
+        return render(request, 'schoolhomepage.html', {'school': school, 'sports': sports})
+'''
+
 
 
 ''''
 Lets filter the schools by province, district, circuit
 '''
-
-
 def filters(request, fil):
     # Convert the filter string from URL (replace hyphens with spaces)
     """
@@ -70,14 +96,14 @@ def filters(request, fil):
     fil = fil.replace('-', ' ')
     try:
         # Fetch the province using the name
-        province = Province.objects.get(province=fil)
+        province = School.objects.get(provinc=fil)
 
         # Filter schools that belong to the selected province
         schools = School.objects.filter(province=province)
 
         # Pass the filtered schools and province to the template
         return render(request, 'parent/schools.html', {'province': province, 'school_profile': schools})
-    except Province.DoesNotExist:
+    except School.DoesNotExist:
         # Show an error message if the province is not found
         messages.error(request, "Filter doesn't exist!")
         return redirect('home')
@@ -116,7 +142,7 @@ def login_user(request):
                 return redirect('home')  # Default redirect for other user types
         else:
             # Authentication failed, display error message
-            messages.error(request, 'Login Not Successful! Try Again!!')
+            messages.success(request, 'Login details invalid! Try Again!!')
             return redirect('login')
     else:
         # Render the login form for GET requests
@@ -188,7 +214,7 @@ def register_user(request):
 def search(request):
     # check if user filed the form
     if request.method == 'POST':
-        province = Province.objects.all()
+        province = School.objects.all()
         school_profile = School.objects.all()
         searched = request.POST['searched']
         searched = School.objects.filter(Q(schoolname__icontains=searched))
@@ -262,13 +288,13 @@ def update_info(request):
         form = UserInfoForm(request.POST or None, instance=current_user)
 
         if form.is_valid():
-            # Save the form
-            form.save()
+            form.save()# Save the form
 
             # Check the user type and redirect accordingly
             if current_user.user_type == "school":
                 messages.success(request, "Your Info Has Been Updated!!")
                 return redirect('update_school_info')
+            
             elif current_user.user_type == "parent":
                 messages.success(request, "Your Info Has Been Updated!!")
                 return redirect('logout')
@@ -278,7 +304,7 @@ def update_info(request):
         messages.error(request, "You Must Be Logged In To Access That Page!!")
         return redirect('login')
 
-'''   '''
+
 
 def update_school_info(request):
     if request.user.is_authenticated:
@@ -287,7 +313,7 @@ def update_school_info(request):
             current_user = School.objects.get(user__id=request.user.id)
         except School.DoesNotExist:
             messages.error(request, "School profile not found!")
-            return redirect('home')
+            return redirect('logout')
 
         # Initialize the form with POST data and uploaded files
         form = SchoolInfo(request.POST or None, request.FILES or None, instance=current_user)
@@ -295,7 +321,7 @@ def update_school_info(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Your information has been updated!")
-            return redirect('update_school_info')
+            return redirect('logout')
 
         return render(request, "parent/update_school_info.html", {'form': form})
     else:

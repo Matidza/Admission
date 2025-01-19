@@ -12,8 +12,13 @@ class SchoolInfo(forms.ModelForm):
 	postal_address = forms.CharField(label="Postal Address",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Postal address'}), required=False)
 	website = forms.CharField(label="Website",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'website'}), required=False)
 	slogan = forms.CharField(label="Slogan",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'slogan'}), required=False)
+	image = forms.ImageField(
+    label="School Emblem",
+    widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': 'Upload Image'}),
+    required=False
+    )
 	type_of_school = forms.ChoiceField(
-        label="School Type",
+        label="School of  Type",
         choices=School.SCHOOL_SECTOR,
         widget=forms.Select(attrs={'class': 'form-input'}),
         required=True
@@ -49,7 +54,7 @@ class SchoolInfo(forms.ModelForm):
         required=True
     )
 	grade_levels = forms.CharField(label="Grade Levels",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'province'}), required=False)
-	accreditation = forms.CharField(label="Accreditation",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Phone number'}), required=False)
+	#accreditation = forms.CharField(label="Accreditation",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Phone number'}), required=False)
 	local_municipality = forms.CharField(label="Local Municipality",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
 	urban_rural = forms.CharField(label="Urban/Rural",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
 	ward_id = forms.CharField(label="Ward Id",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
@@ -59,27 +64,23 @@ class SchoolInfo(forms.ModelForm):
 	examination_centre = forms.CharField(label="Examination Centre",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
 	persal_paypoint_number = forms.CharField(label="Persal Paypoint Number",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
 	persal_component_number = forms.CharField(label="Persal Component Number",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
-	name_of_principal = forms.CharField(label="Principal",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
-	number_of_teachers = forms.CharField(label="Number of Teachers",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
-	number_of_learners = forms.CharField(label="Number of Learners",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
+	name_of_principal = forms.CharField(label="Principal",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'name of principal'}), required=False)
+	number_of_teachers = forms.CharField(label="Number of Teachers",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'number of teachers'}), required=False)
+	#number_of_learners = forms.CharField(label="Number of Learners",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
 	section_21 = forms.ChoiceField(
         label="Section 21",
         choices=School.SECTION,
         widget=forms.Select(attrs={'class': 'form-input'}),
         required=True
     )
-	school_fees = forms.CharField(label="School Fees",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
+	school_fees = forms.CharField(label="School Fees",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'school fees?'}), required=False)
 	quintile_Level = forms.ChoiceField(
         label="Quintile",
         choices=School.QUANTILE,
         widget=forms.Select(attrs={'class': 'form-input'}),
         required=True
     )
-	image = forms.ImageField(
-    label="School Emblem",
-    widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': 'Upload Image'}),
-    required=False
-    )
+	
 	image1 = forms.ImageField(
     label="Image",
     widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': 'Upload Image'}),

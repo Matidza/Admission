@@ -44,6 +44,7 @@
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             {% if not user.is_authenticated or user.profile.user_type == 'guest' %}
                                 <!-- Show Home, About, and Schools for guests -->
@@ -76,10 +77,10 @@
                                 <li class="nav-item dropdown active">
                                     <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ user.username }}</a>
                                     <ul class="dropdown-menu bg-white text-black" aria-labelledby="navbarDropdownPortfolio">
-                                    <li><a class="dropdown-item text-black" href="{% url 'update_user'  %}">Login Details</a></li>
-                                    <li><a class="dropdown-item text-black" href="{% url 'update_info'  %}">Profile Info</a></li>
+                                    <li><a class="dropdown-item text-black" href="{% url 'update_user'  %}">login Details</a></li>
+                                    <li><a class="dropdown-item text-black" href="{% url 'update_info'  %}">profile Info</a></li>
                                     
-                                    <li><a class="dropdown-item text-black" href="{% url 'logout' %}">Logout</a></li>
+                                    <li><a class="dropdown-item text-black" href="{% url 'logout' %}">logout</a></li>
                                 </ul>
 
                                 </li>
@@ -89,7 +90,7 @@
                                 <li class="nav-item active"><a class="nav-link" href="{% url 'register' %}">Sign Up</a></li>
                             {% endif %}
                         </ul>
-                            &nbsp;
+                            &nbsp; <!--  
                         <form method="POST" action="{% url 'search' %}" id="searchForm" style="display: flex; align-items: center; gap: 10px;">
                                 {% csrf_token %} 
                                     <input 
@@ -102,14 +103,17 @@
                                 <button type="submit" class="btn btn-secondary" >
                                     Search
                                 </button>
-                        </form>   
+                        </form>  --> 
                     </div>
                 </div>
             </nav>
+        
             {% block content %}
             {% endblock %}
         </main>
         <!-- Footer -->
+        
+          
         <footer class="bg-secondary py-4 mt-auto">
             <div class="container px-5">
                 <div class="row align-items-center justify-content-between flex-column flex-sm-row">

@@ -47,8 +47,7 @@
     </head>
 
     <body class="d-flex flex-column">
-        <br><br><br>
-        <div class="container" style="margin-left: 10%;">
+        <div class="container" style="margin-left: 20%;">
             <div class="row">
                 <!-- Sidebar Section 
                 <div class="col-md-2 d-none d-md-block" style="margin-top: 6%;max-height: 210px;">
@@ -92,6 +91,7 @@
                                         <p class="fs-4 text-dark">
                                             Select your school and find more info about it.
                                         </p>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +102,7 @@
                             <div class="container px-lg-5">
                                 {% if searched %}
                                 <!-- Page Features -->
-                                <div class="row gx-lg-5">
+                                <div class="row gx-lg-5" style=" max-width: 1600px;">
                                     {% if school_profile %}
                                          <div class="row gx-lg-5">
                                             {% for school in searched %}
@@ -111,7 +111,7 @@
                                                         <div class="card bg-light border-0 h-100 d-flex flex-row align-items-center">
                                                             <!-- School Image -->
                                                             <img src="{{ school.image.url }}" class="img-thumbnail" alt="School Image" 
-                                                                style="max-height: 100px; max-width: 100px; margin-right: 10px;">
+                                                                style="max-height: 100px; max-width: 100px;">
                                                             <!-- School Info -->
                                                             <div class="card-body text-start p-4">
                                                                 <h2 class="fs-4 fw-bold">{{ school.schoolname }}</h2>
@@ -132,7 +132,7 @@
                                                 <div class="card bg-light border-0 h-100 d-flex flex-row align-items-center">
                                                     <!-- Image aligned to the right -->
                                                     <img src="{{school.image.url}}" class="img-thumbnail" alt="School Image" 
-                                                        style="max-height: 100px; max-width: 100px; margin-right: 10px;">
+                                                        style="max-height: 100px; max-width: 100px;">
                                                     <!-- Card body aligned to the left -->
                                                     <div class="card-body text-start p-4">
                                                         <h2 class="fs-4 fw-bold">{{school.schoolname }}</h2>

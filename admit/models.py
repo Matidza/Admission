@@ -8,12 +8,12 @@ from school.models import School
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     date_modified = models.DateTimeField(auto_now=True)
-    phone = models.CharField(max_length=200, blank=True)
-    address1 = models.CharField(max_length=200, blank=True)
-    address2 = models.CharField(max_length=200, blank=True)
-    city = models.CharField(max_length=200, blank=True)
-    province = models.CharField(max_length=200, blank=True)
-    country = models.CharField(max_length=200, blank=True)
+    phone = models.CharField(max_length=200, blank=True, null=False)
+    #address1 = models.CharField(max_length=200, blank=True)
+    #address2 = models.CharField(max_length=200, blank=True)
+    #city = models.CharField(max_length=200, blank=True)
+    #province = models.CharField(max_length=200, blank=True)
+    #country = models.CharField(max_length=200, blank=True)
     image = models.ImageField(upload_to='uploads/parentprofile/', blank=True, null=True)
 
     ROLE_CHOICES = [('parent', 'Parent'), ('school', 'School')]

@@ -6,33 +6,12 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-class Province(models.Model):
-    '''PROVINCE = [
-        ('Limpopo', 'Limpopo'),
-        ('Free State', 'Free State'),
-        ('Gauteng', 'Gauteng'),
-        ('North West', 'North West'),
-        ('KwaZulu-Natal', 'KwaZulu-Natal'),
-        ('Mpumalanga', 'Mpumalanga'),
-        ('Eastern Cape', 'Eastern Cape'),
-        ('Northern Cape', 'Northern Cape'),
-        ('Western Cape', 'Western Cape'),
-    ]'''
-    province = models.CharField(max_length=50)  # , choices=(PROVINCE)
-
-    def __str__(self):
-        return self.province
-
-    class Meta:
-        verbose_name_plural = 'Province'
-
-
 # Create School Model containing all
 # neccesary fields to create a school profile
 class School(models.Model):
     user = models.ForeignKey(
         User,
-        on_delete=models.CASCADE,
+        on_delete=models.CASCADE, 
         # Ensure only school users can be linked
         limit_choices_to={'profile__user_type': 'school'},
         related_name='school_profile',
@@ -48,6 +27,7 @@ class School(models.Model):
     slogan = models.CharField(max_length=200, blank=True)
     image = models.ImageField(
         upload_to='uploads/schoolprofile/', default=None, blank=True, null=True)
+    
 
     SCHOOL_SECTOR = [
         ('Primary', 'Primary School'),
@@ -168,7 +148,7 @@ class School(models.Model):
     GRADES = [
     ]
     grade_levels = models.CharField(max_length=100, blank=True)
-    accreditation = models.CharField(max_length=100, blank=True)
+    #accreditation = models.CharField(max_length=100, blank=True)
 
     local_municipality = models.CharField(max_length=100, blank=True)
     urban_rural = models.CharField(max_length=100, blank=True)
@@ -185,7 +165,7 @@ class School(models.Model):
     # Personnel & Staff
     name_of_principal = models.CharField(max_length=100, blank=True)
     number_of_teachers = models.CharField(max_length=100, blank=True)
-    number_of_learners = models.CharField(max_length=100, blank=True)
+    #number_of_learners = models.CharField(max_length=100, blank=True)
 
     # School Fees and Finance
     SECTION = [
@@ -204,8 +184,7 @@ class School(models.Model):
     ]
     quintile_Level = models.CharField(max_length=100, choices=(QUANTILE))
 
-    image = models.ImageField(
-        upload_to='uploads/schoolprofile/', default=None, blank=True, null=True)
+    
     image1 = models.ImageField(
         upload_to='uploads/schoolprofile/', default=None, blank=True, null=True)
 
@@ -218,3 +197,33 @@ class School(models.Model):
     class Meta:
         verbose_name_plural = 'school profile'
 
+
+  
+class Sports(models.Model):
+    school = models.ForeignKey(School, on_delete=models.CASCADE, null=True, blank=True)
+    title = models.CharField(max_length=10000, blank=True)
+    story = models.TextField(max_length=10000, blank=True)
+    date = models.CharField(max_length=10000, blank=True)
+    image = models.ImageField(
+        upload_to='uploads/sports/', default="", blank=True, null=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = 'Sports'
+
+
+class Academics(models.Model):
+    school = models.ForeignKey(School, on_delete=models.CASCADE, null=True, blank=True)
+    title = models.CharField(max_length=10000, blank=True)
+    story = models.TextField(max_length=10000, blank=True)
+    date = models.CharField(max_length=10000, blank=True)
+    image = models.ImageField(
+        upload_to='uploads/sports/', default="", blank=True, null=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = 'Academics'
