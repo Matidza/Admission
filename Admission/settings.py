@@ -1,18 +1,30 @@
-import os
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+import dj_database_url
 
-# Base Directory
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv()
 
-# Secret Key and Debug Mode
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'fallback-key-for-local-development')  # Use environment variable for security
-DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# Allowed Hosts and CSRF Trusted Origins
-ALLOWED_HOSTS = ['admission-1r18.onrender.com']
-CSRF_TRUSTED_ORIGINS = ['https://admission-1r18.onrender.com']
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-0^suq@5g&!0#n)7%=wd6=@h2i1yc4a%2q)qqpd_jf&jn3w_vok'
 
-# Installed Applications
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+#ALLOWED_HOSTS = [] 
+
+
+ALLOWED_HOSTS = ['https://admission-1r18.onrender.com', 'admission-1r18.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://admission-1r18.onrender.com', 'admission-1r18.onrender.com']
+
+
+# Application definition
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -23,29 +35,28 @@ INSTALLED_APPS = [
     'admit',
     'school',
     'application',
-    'whitenoise.runserver_nostatic',  # Allows serving static files in development
+    'whitenoise.runserver_nostatic',
 ]
 
-# Middleware
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Correct casing
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'Whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-# URL Configuration
 ROOT_URLCONF = 'Admission.urls'
 
-# Templates Configuration
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],  # Add paths to custom templates if needed
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -59,18 +70,28 @@ TEMPLATES = [
     },
 ]
 
-# WSGI Application
 WSGI_APPLICATION = 'Admission.wsgi.application'
 
-# Database Configuration
+
+# Database
+# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+
+''''  
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+}'''
+
+# Aiven.io
+DATABASES = {
+  'default': dj_database_url.parse(os.environ['Aiven'], conn_max_age=600)
 }
 
-# Password Validators
+# Password validation
+# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -86,24 +107,37 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # Internationalization
+# https://docs.djangoproject.com/en/5.1/topics/i18n/
+
 LANGUAGE_CODE = 'en-us'
+
 TIME_ZONE = 'UTC'
+
 USE_I18N = True
+
 USE_TZ = True
 
-# Static and Media Files
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Serve additional static files in development
-if DEBUG:
-    STATICFILES_DIRS = [BASE_DIR / 'static']
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.1/howto/static-files/
+
+#STATIC_URL = 'static/'
+#STATICFILES_DIRS = [
+ #   BASE_DIR / 'static/',  # This should point to the directory where your app-specific static files are located
+#]
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]  # Ensure this points to your 'static' folder
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = BASE_DIR / 'staticfiles'# Used for `collectstatic` in production
+
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Default Primary Key Field Type
+# Default primary key field type
+# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
