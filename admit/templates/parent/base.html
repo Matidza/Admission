@@ -71,6 +71,8 @@
                                 
                                     <li class="nav-item active"><a class="nav-link" href="{% url 'schools:schoolhomepage' %}">Dashboard</a></li>
                                     <li class="nav-item active"><a class="nav-link" href="">Applications</a></li>
+                                        
+
                                 {% endif %}
                                 <!-- Common navigation for authenticated users 
                                 <li class="nav-item active"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>-->
@@ -82,8 +84,17 @@
                                     
                                     <li><a class="dropdown-item text-black" href="{% url 'logout' %}">logout</a></li>
                                 </ul>
-
                                 </li>
+                                <li class="nav-item dropdown active">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Activities</a>
+                                <ul class="dropdown-menu bg-white text-black" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item text-black" href="{% url 'schools:academics' %}">Academics</a></li>
+                                <li><a class="dropdown-item text-black" href="{% url 'schools:sports' %}">Sports</a></li>
+                                <li><a class="dropdown-item text-black" href="{% url 'schools:school_history' %}">History & Mission</a></li>
+                            </ul>
+                            </li>
+
+                                
                             {% else %}
                                 <!-- Guest navigation -->
                                 <li class="nav-item active"><a class="nav-link" href="{% url 'login' %}">Login</a></li>

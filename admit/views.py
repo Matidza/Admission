@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from school.models import School, Sports
+from school.models import School, Sports, Academics
 from .models import Profile
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -30,7 +30,7 @@ def about(request):
 # All Schools page
 
 
-
+# School Details
 def schools(request):
     school_profile = School.objects.all()
     #province = Province.objects.all()
@@ -43,8 +43,14 @@ def school(request, pk):
     # Get the School Id form the SchoolAddress model
     school = School.objects.get(id=pk)
     sports = Sports.objects.filter(school=school)
-    return render(request, 'parent/school.html', {'school': school, 'sports':sports} ) # using template from parent app
-    #return render(request, 'schoolhomepage.html', {'school': school})
+    academics = Academics.objects.filter(school=school)
+    return render(request, 'parent/school.html', {'school': school, 'sports':sports, 'academics': academics} ) # using template from parent app
+    #return render(request, 'schoolhomepage.html', {'school': school, 'sports':sports})
+
+
+# Update Schools Academics
+
+
 
 '''
 def school(request, pk):
@@ -186,28 +192,30 @@ def logout_user(request):
     return redirect('home')
 
 
-def register_user(request):
+@login_required(login_url='/login')
+def update_password(request):
+    # Authenticate User
+    if request.user.is_authenticated:
+        current_user = request.user
+        if request.method == 'POST':
+            form = ChangePasswordForm(current_user, request.POST)
 
-    form = SignUpForm()
-
-    if request.method == "POST":
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']
-
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            messages.success(
-                request, ('Username & Account Created, Fill Out User Info. '))
-            return redirect('update_info')
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Password Updated!!")
+                login(request, current_user)
+                return redirect('logout')
+            else:
+                for error in list(form.errors.values()):
+                    messages.error(request, error)
+                    return redirect('update_password')
         else:
-            messages.success(
-                request, ('Registration Not Successfully. Try Again!!'))
-            return redirect('register')
+            form = ChangePasswordForm(current_user)
+            return render(request, "parent/update_password.html", {'form':form})#          
     else:
-        return render(request, 'parent/register.html', {'form': form})
+        messages.success(request, "You Must Be Logged In To Access That Page!!")
+        return redirect('home')
+
 
 
 # search
@@ -227,6 +235,8 @@ def search(request):
             return render(request, 'parent/search.html', {'user': user, 'searched': searched, 'school_profile': school_profile, 'province': province})
     else:
         return render(request, 'parent/search.html')
+
+
 
 
 # Update user Login details
@@ -251,30 +261,28 @@ def update_user(request):
      
 
 
-@login_required(login_url='/login')
-def update_password(request):
-    # Authenticate User
-    if request.user.is_authenticated:
-        current_user = request.user
-        if request.method == 'POST':
-            form = ChangePasswordForm(current_user, request.POST)
+def register_user(request):
 
-            if form.is_valid():
-                form.save()
-                messages.success(request, "Password Updated!!")
-                login(request, current_user)
-                return redirect('logout')
-            else:
-                for error in list(form.errors.values()):
-                    messages.error(request, error)
-                    return redirect('update_password')
+    form = SignUpForm()
+
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            messages.success(
+                request, ('Username & Account Created, Fill Out User Info. '))
+            return redirect('update_info')
         else:
-            form = ChangePasswordForm(current_user)
-            return render(request, "parent/update_password.html", {'form':form})#          
+            messages.success(
+                request, ('Registration Not Successfully. Try Again!!'))
+            return redirect('register')
     else:
-        messages.success(request, "You Must Be Logged In To Access That Page!!")
-        return redirect('home')
-    
+        return render(request, 'parent/register.html', {'form': form})
 
 
 

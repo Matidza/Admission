@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, SetPasswordForm
 from django import forms
-from .models import School 
+from .models import School
 
 
 class SchoolInfo(forms.ModelForm):
@@ -86,12 +86,14 @@ class SchoolInfo(forms.ModelForm):
     widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': 'Upload Image'}),
     required=False
     )
-	
-    
-	history = forms.CharField(label="History",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'school history'}), required=False)
-	mission = forms.CharField(label="Mission",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'school mission'}), required=False)
-
+	history = forms.CharField(label="History", widget=forms.Textarea(attrs={'class':'form-control', 'placeholder':'school history', 'rows':5, 'cols':30}), required=False)
+	mission = forms.CharField(label="Mission", widget=forms.Textarea(attrs={'class':'form-control', 'placeholder':'school mission', 'rows':5, 'cols':30}), required=False)
 	class Meta:
 		model = School
 		fields = ('__all__')
 		exclude = ('user',)
+		
+
+
+		
+	

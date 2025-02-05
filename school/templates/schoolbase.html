@@ -43,15 +43,20 @@
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    
+                    
                     
                              
                              
                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <ul class="navbar-nav">
                             {% if not user.is_authenticated %}
                             <li class="nav-item active"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
@@ -61,25 +66,38 @@
                             {% if user.is_authenticated %}
                             {% if user.profile.user_type == 'school' %}
                                 <!-- Navigation for school users -->
-                                <li class="nav-item active"><a class="nav-link" href="">Dashboard</a></li>
+                                <li class="nav-item active"><a class="nav-link" href="{% url 'schools:schoolhomepage' %}">Dashboard</a></li>
                                 <li class="nav-item active"><a class="nav-link" href="">Applications</a></li>
+
+                                
                                 <!-- -->
                             {% endif %}
-
                             <!-- Common dropdown for all authenticated users -->
+                            <li class="nav-item dropdown active">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Activities</a>
+                                <ul class="dropdown-menu bg-white text-black" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item text-black" href="{% url 'schools:academics' %}">Academics</a></li>
+                                <li><a class="dropdown-item text-black" href="{% url 'schools:sports' %}">Sports</a></li>
+                                <li><a class="dropdown-item text-black" href="{% url 'schools:school_history' %}">History & Mission</a></li>
+                                
+                                </ul>
+                            </li>
                             <li class="nav-item dropdown active">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ user.username }}</a>
                                 <ul class="dropdown-menu bg-white text-black" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item text-black" href="{% url 'update_user' %}">login Info</a></li>
                                 <li><a class="dropdown-item text-black" href="{% url 'update_info' %}">profile Info</a></li>
                                 <li><a class="dropdown-item text-black" href="{% url 'update_school_info' %}">school Info</a></li>
+
                                 <li><a class="dropdown-item text-black" href="{% url 'logout' %}">logout</a></li>
                                 </ul>
                             </li>
+                            
                             {% else %}
                             <!-- Guest navigation -->
                             <li class="nav-item active"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
                             <li class="nav-item active"><a class="nav-link" href="{% url 'register' %}">Sign Up</a></li>
+                            
                             {% endif %}
                         </ul>
                         &nbsp;&nbsp;

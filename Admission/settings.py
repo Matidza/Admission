@@ -1,12 +1,12 @@
 from pathlib import Path
 import os
-from dotenv import load_dotenv
-import dj_database_url
+#from dotenv import load_dotenv
+#import dj_database_url
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv()
+#load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -16,11 +16,11 @@ SECRET_KEY = 'django-insecure-0^suq@5g&!0#n)7%=wd6=@h2i1yc4a%2q)qqpd_jf&jn3w_vok
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-#ALLOWED_HOSTS = [] 
+ALLOWED_HOSTS = [] 
 
 
-ALLOWED_HOSTS = ['https://admission-1r18.onrender.com', 'admission-1r18.onrender.com']
-CSRF_TRUSTED_ORIGINS = ['https://admission-1r18.onrender.com', 'admission-1r18.onrender.com']
+#ALLOWED_HOSTS = ['https://admission-1r18.onrender.com', 'admission-1r18.onrender.com']
+#CSRF_TRUSTED_ORIGINS = ['https://admission-1r18.onrender.com', 'admission-1r18.onrender.com']
 
 
 # Application definition
@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'admit',
     'school',
     'application',
-    'whitenoise.runserver_nostatic',
+    #'whitenoise.runserver_nostatic',
 ]
 
 
@@ -48,7 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'Whitenoise.middleware.WhiteNoiseMiddleware',
+    #'Whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'Admission.urls'
@@ -76,18 +76,18 @@ WSGI_APPLICATION = 'Admission.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-''''  
+ 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-}'''
-
+}
+'''' 
 # Aiven.io
 DATABASES = {
   'default': dj_database_url.parse(os.environ['Aiven'], conn_max_age=600)
-}
+}'''
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

@@ -195,7 +195,7 @@ class School(models.Model):
         return self.schoolname
 
     class Meta:
-        verbose_name_plural = 'school profile'
+        verbose_name_plural = 'school'
 
 
   
@@ -220,7 +220,7 @@ class Academics(models.Model):
     story = models.TextField(max_length=10000, blank=True)
     date = models.CharField(max_length=10000, blank=True)
     image = models.ImageField(
-        upload_to='uploads/sports/', default="", blank=True, null=True)
+        upload_to='uploads/academics/', default="", blank=True, null=True)
 
     def __str__(self):
         return self.title
