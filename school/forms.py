@@ -53,18 +53,18 @@ class SchoolInfo(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'form-input'}),
         required=True
     )
-	grade_levels = forms.CharField(label="Grade Levels",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'province'}), required=False)
+	grade_levels = forms.CharField(label="Grade Levels",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'grade levels'}), required=False)
 	#accreditation = forms.CharField(label="Accreditation",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Phone number'}), required=False)
-	local_municipality = forms.CharField(label="Local Municipality",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
-	urban_rural = forms.CharField(label="Urban/Rural",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
-	ward_id = forms.CharField(label="Ward Id",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
-	Eei_district = forms.CharField(label="Eei District",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
-	emis_number = forms.CharField(label="Emis Number",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
-	examination_number = forms.CharField(label="Examination Number",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
-	examination_centre = forms.CharField(label="Examination Centre",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
-	persal_paypoint_number = forms.CharField(label="Persal Paypoint Number",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
-	persal_component_number = forms.CharField(label="Persal Component Number",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
-	name_of_principal = forms.CharField(label="Principal",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'name of principal'}), required=False)
+	local_municipality = forms.CharField(label="Local Municipality",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'municipality'}), required=False)
+	urban_rural = forms.CharField(label="Urban/Rural",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Urban/Rural'}), required=False)
+	ward_id = forms.CharField(label="Ward Id",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'ward wd'}), required=False)
+	Eei_district = forms.CharField(label="Eei District",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Eei District'}), required=False)
+	emis_number = forms.CharField(label="Emis Number",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Emis Number'}), required=False)
+	examination_number = forms.CharField(label="Examination Number",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Examination Number'}), required=False)
+	examination_centre = forms.CharField(label="Examination Centre",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Examination Centre'}), required=False)
+	persal_paypoint_number = forms.CharField(label="Persal Paypoint Number",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Persal Paypoint Number'}), required=False)
+	
+	name_of_principal = forms.CharField(label="Principal",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'principals name '}), required=False)
 	number_of_teachers = forms.CharField(label="Number of Teachers",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'number of teachers'}), required=False)
 	#number_of_learners = forms.CharField(label="Number of Learners",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
 	section_21 = forms.ChoiceField(
@@ -80,20 +80,11 @@ class SchoolInfo(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'form-input'}),
         required=True
     )
-	
-	image1 = forms.ImageField(
-    label="Image",
-    widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'placeholder': 'Upload Image'}),
-    required=False
-    )
-	history = forms.CharField(label="History", widget=forms.Textarea(attrs={'class':'form-control', 'placeholder':'school history', 'rows':5, 'cols':30}), required=False)
-	mission = forms.CharField(label="Mission", widget=forms.Textarea(attrs={'class':'form-control', 'placeholder':'school mission', 'rows':5, 'cols':30}), required=False)
+
+	history = forms.CharField(label="schools history", widget=forms.Textarea(attrs={'class':'form-control', 'placeholder':'school history', 'rows':10, 'cols':60}), required=False)
+	mission = forms.CharField(label="schools mission", widget=forms.Textarea(attrs={'class':'form-control', 'placeholder':'school mission', 'rows':10, 'cols':60}), required=False)
 	class Meta:
 		model = School
 		fields = ('__all__')
 		exclude = ('user',)
 		
-
-
-		
-	

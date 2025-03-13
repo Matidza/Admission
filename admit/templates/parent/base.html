@@ -14,10 +14,12 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+        
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <style>
             html, body {
                 height: 100%;
+             
             }
             #page-content {
                 flex: 1 0 auto;
@@ -32,7 +34,7 @@
             }
         </style>
     </head>
-    <body class="d-flex flex-column h-100" style="background-color:  rgb(220, 220, 220);">
+    <body class="d-flex flex-column h-100" style="background-color:  rgb(255, 255, 255);">
         <main class="flex-shrink-0">
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
                 <div class="container px-2 px-lg-5">
@@ -70,8 +72,15 @@
                                     <!-- School-specific navigation -->
                                 
                                     <li class="nav-item active"><a class="nav-link" href="{% url 'schools:schoolhomepage' %}">Dashboard</a></li>
-                                    <li class="nav-item active"><a class="nav-link" href="">Applications</a></li>
-                                        
+                                    <li class="nav-item active"><a class="nav-link" href="{% url 'recieved_applications' %}">Applications</a></li>
+                                     <li class="nav-item dropdown active">
+                                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Activities</a>
+                                        <ul class="dropdown-menu bg-white text-black" aria-labelledby="navbarDropdown">
+                                        <li><a class="dropdown-item text-black" href="{% url 'schools:academics' %}">Academics</a></li>
+                                        <li><a class="dropdown-item text-black" href="{% url 'schools:sports' %}">Sports</a></li>
+                                    
+                                    </ul>
+                                    </li>   
 
                                 {% endif %}
                                 <!-- Common navigation for authenticated users 
@@ -79,20 +88,16 @@
                                 <li class="nav-item dropdown active">
                                     <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ user.username }}</a>
                                     <ul class="dropdown-menu bg-white text-black" aria-labelledby="navbarDropdownPortfolio">
-                                    <li><a class="dropdown-item text-black" href="{% url 'update_user'  %}">login Details</a></li>
-                                    <li><a class="dropdown-item text-black" href="{% url 'update_info'  %}">profile Info</a></li>
+                                    <li><a class="dropdown-item text-black" href="{% url 'update_user'  %}">Login Details</a></li>
                                     
-                                    <li><a class="dropdown-item text-black" href="{% url 'logout' %}">logout</a></li>
+                                    {% if user.profile.user_type == 'parent' %}
+                                    {% else %}
+                                    <li><a class="dropdown-item text-black" href="{% url 'update_school_info' %}">School Info</a></li>
+                                    {% endif %}
+                                    <li><a class="dropdown-item text-black" href="{% url 'logout' %}">Logout</a></li>
                                 </ul>
                                 </li>
-                                <li class="nav-item dropdown active">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Activities</a>
-                                <ul class="dropdown-menu bg-white text-black" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item text-black" href="{% url 'schools:academics' %}">Academics</a></li>
-                                <li><a class="dropdown-item text-black" href="{% url 'schools:sports' %}">Sports</a></li>
-                                <li><a class="dropdown-item text-black" href="{% url 'schools:school_history' %}">History & Mission</a></li>
-                            </ul>
-                            </li>
+                                
 
                                 
                             {% else %}

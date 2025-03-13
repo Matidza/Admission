@@ -20,10 +20,10 @@
 
     <!-- Custom styles for this template-->
     <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'; object-src 'none';">
 </head>   
-    <br><br><br><br><br>   
-    <br><br><br>
-    <br/>
+    <br><br><br><br>  
+
     <div class="container">
         <!-- Outer Row -->
         <div class="row justify-content-center">
@@ -61,7 +61,7 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="{% url 'update_password'  %}">Forgot Password?</a>
+                                        <a class="small btn btn-clear text-primary" href="{% url 'update_password'  %}">Forgot Password?</a>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         
                                     </div>

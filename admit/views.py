@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from school.models import School, Sports, Academics
 from .models import Profile
 from django.contrib.auth import authenticate, login, logout
@@ -15,43 +15,108 @@ from school.forms import SchoolInfo
 from django.shortcuts import redirect
 from django.contrib import messages 
 
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from django.shortcuts import redirect, render
+
+
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 # Create your views here.
 def home(request):
     return render(request, 'parent/home.html', {})
 
 # About page
-
-
 def about(request):
-
     return render(request, 'parent/about.html', {})
 
-# All Schools page
+
 
 
 # School Details
+from django.core.paginator import Paginator
+
 def schools(request):
     school_profile = School.objects.all()
-    #province = Province.objects.all()
-    return render(request, 'parent/schools.html', {'school_profile': school_profile})#, 'province': province
+    paginator = Paginator(school_profile, 3)  # 5 schools per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'parent/schools.html', {'page_obj': page_obj})
+
+
 
 # Individual School {page}
-
-
 def school(request, pk):
-    # Get the School Id form the SchoolAddress model
     school = School.objects.get(id=pk)
+    sports = Sports.objects.filter(school=school).order_by('-date_modified')
+    academics = Academics.objects.filter(school=school).order_by('-date_modified')
+    return render(request, 'parent/school.html', {'school': school, 'sports': sports, 'academics': academics})
+
+
+
+def sport_art(request, id): 
+    sport_art = get_object_or_404(Sports, id=id)
+    return render(request, 'sports_d.html', {'sport_art': sport_art})
+
+def academic_art(request, id): 
+    academic_art = get_object_or_404(Academics, id=id)
+    return render(request, 'academic_art.html', {'academic_art': academic_art})
+
+
+# All Academic Articles
+def all_academic_articles(request, id):
+    school = get_object_or_404(School, id=id)
+    academics = Academics.objects.filter(school=school).order_by('-date_modified')
+    return render(request, 'all_academic_articles.html', {
+        'academics': academics,
+        'school': school
+    })
+
+# All Sports Articles
+def all_sports_articles(request, id):
+    school = get_object_or_404(School, id=id)
+    sports = Sports.objects.filter(school=school).order_by('-date_modified')
+    return render(request, 'all_sports_articles.html', {
+        'sports': sports,
+        'school': school
+    })
+
+
+# contact info
+def contact(request, id):
+    school = get_object_or_404(School, id=id)
+
+    if request.method == 'POST':
+        
+        fullname = request.POST.get('fullname', '').strip()
+        subject = request.POST.get('subject', '').strip()
+        email = request.POST.get('email', '').strip().lower()
+        message = request.POST.get('message', '').strip()
+
+        # Send email to the school
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=email,
+            recipient_list=[school.schoolemail],
+            fail_silently=False,
+        )
+
+        # Return a success message or redirect to a thank-you page
+        return render(request, 'contact_success.html')
+
+    return render(request, 'contact.html', {'school': school})
+
+'''  
+def view_sports(request):
+    #current_user = School.objects.get(id=request.user.id)
     sports = Sports.objects.filter(school=school)
     academics = Academics.objects.filter(school=school)
-    return render(request, 'parent/school.html', {'school': school, 'sports':sports, 'academics': academics} ) # using template from parent app
-    #return render(request, 'schoolhomepage.html', {'school': school, 'sports':sports})
-
+    return render(request, 'parent/view_sports.html', {'sports': sports, 'school':school})'''
 
 # Update Schools Academics
-
-
-
 '''
 def school(request, pk):
     # Get the School Id form the SchoolAddress model
@@ -81,38 +146,25 @@ def school(request, pk):
 ''''
 Lets filter the schools by province, district, circuit
 '''
+
+# Filter Schools by Province
 def filters(request, fil):
-    # Convert the filter string from URL (replace hyphens with spaces)
-    """
-    Filter schools based on the provided province name from the URL.
+    fil = fil.replace('-', ' ')  # Convert URL-friendly text back to normal
+    school_profile = School.objects.filter(provinc=fil)
+    paginator = Paginator(school_profile, 10)  # 5 schools per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'parent/filter.html', {'page_obj': page_obj, 'selected_province': fil})
 
-    Args:
-        request: The HTTP request object.
-        fil (str): The filter string representing the province name, 
-                   with hyphens replacing spaces.
 
-    Returns:
-        HttpResponse: Renders the 'parent/schools.html' template with the filtered 
-                      schools and province if the province is found.
-        HttpResponseRedirect: Redirects to the home page with an error message 
-                              if the province does not exist.
 
-    """
 
-    fil = fil.replace('-', ' ')
-    try:
-        # Fetch the province using the name
-        province = School.objects.get(provinc=fil)
+def district(request, fil):
+    fil = fil.replace('-', ' ')  # Convert URL-friendly text back to normal
+    school_profile = School.objects.filter(district=fil)
+    return render(request, 'parent/filter.html', {'school_profile': school_profile, 'selected_province': fil})
 
-        # Filter schools that belong to the selected province
-        schools = School.objects.filter(province=province)
 
-        # Pass the filtered schools and province to the template
-        return render(request, 'parent/schools.html', {'province': province, 'school_profile': schools})
-    except School.DoesNotExist:
-        # Show an error message if the province is not found
-        messages.error(request, "Filter doesn't exist!")
-        return redirect('home')
 
 
 @login_required(login_url='/login')
@@ -121,13 +173,10 @@ def admission(request):
     return render(request, 'parent/admission.html', {})
 
 
-# Loging
-from django.contrib.auth import authenticate, login
-from django.contrib import messages
-from django.shortcuts import redirect, render
-
+# Login User
 def login_user(request):
     if request.method == 'POST':
+
         # Retrieve username and password from the request
         username = request.POST['username']
         password = request.POST['password']
@@ -185,7 +234,7 @@ def login_user(request):
         return render(request, 'parent/login.html', {})
 '''
 
-# Logout
+# Logout User
 def logout_user(request):
     logout(request)
     messages.success(request, ("Logged Out!"))
@@ -218,7 +267,7 @@ def update_password(request):
 
 
 
-# search
+# Search School
 def search(request):
     # check if user filed the form
     if request.method == 'POST':
@@ -239,7 +288,7 @@ def search(request):
 
 
 
-# Update user Login details
+# Update User Login details
 @login_required(login_url='/login')
 def update_user(request):
 	if request.user.is_authenticated:
@@ -261,10 +310,9 @@ def update_user(request):
      
 
 
+# Register User
 def register_user(request):
-
     form = SignUpForm()
-
     if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -286,7 +334,7 @@ def register_user(request):
 
 
 
-
+# Update Profile
 def update_info(request):
     if request.user.is_authenticated:
         # Get Current User Profile
@@ -314,6 +362,7 @@ def update_info(request):
 
 
 
+# Update School Info
 def update_school_info(request):
     if request.user.is_authenticated:
         # Get the current user's school
@@ -366,3 +415,4 @@ def update_school_info(request):
         # If the user is not authenticated
         messages.error(request, "You must be logged in to access that page.")
         return redirect('login')  ''' # Redirect to login page
+

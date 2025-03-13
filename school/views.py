@@ -13,45 +13,31 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 
 
-@login_required(login_url='/login')
 # Create your views here.
+@login_required(login_url='/login')
 def schoolhomepage(request):
-    school = School.objects.get(user=request.user)
-    sports = Sports.objects.filter(school=school)
-    academics = Academics.objects.filter(school=school)
+    
+    school = get_object_or_404(School, user=request.user)
+    sports = Sports.objects.filter(school=school).order_by('-date_modified')
+    academics = Academics.objects.filter(school=school).order_by('-date_modified')
     return render(request, "schoolhomepage.html", {'school': school, 'sports': sports, 'academics': academics})
 
-
-def school_history(request):
-    if request.user.is_authenticated:
-        # Get the current user's school
-        try:
-            current_user = School.objects.get(id=request.user.id)
-        except School.DoesNotExist:
-            messages.error(request, "School profile not found!")
-            return redirect('schoolhomepage')
-
-        # Initialize the form with POST data and uploaded files
-        form = SchoolInfo(request.POST or None, request.FILES or None, instance=current_user)
-
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Your information has been updated!")
-            return redirect('schools:schoolhomepage')
-
-        return render(request, "school_history.html", {'form': form})
-    else:
-        messages.error(request, "You must be logged in to access this page!")
-        return redirect('schools:school_history')
+def sport_article(request, id):
+    sport_article = get_object_or_404(Sports, id=id)
+    return render(request, 'sports_id.html', {'sport_article': sport_article})
+    
 
 
 
 @login_required(login_url='/login')
 def sports(request):  
-    current_user = School.objects.get(id=request.user.id)
-    school = School.objects.get(user=request.user)
-    sports = Sports.objects.filter(school=school)
-    return render(request, 'sports.html', { 'sports': sports, 'current_user': current_user})
+    # Retrieve the School object associated with the logged-in user
+    school = get_object_or_404(School, user=request.user)
+    
+    # Query all sports records for the retrieved school
+    sports = Sports.objects.filter(school=school).order_by('-date_modified')
+    
+    return render(request, 'sports.html', { 'sports': sports, 'current_user': school })
 
 
 
@@ -68,32 +54,79 @@ def delete_sports(request, id):
         return redirect('schools:sports')
 
 
+
+@login_required(login_url='/login')
+def update_sports_article(request, id):
+    current_user = get_object_or_404(School, user=request.user) 
+    try:
+        sport_article = Sports.objects.get(id=id)
+    except Sports.DoesNotExist:
+        return redirect('home')
+
+    if request.method == 'POST':
+        sport_article.title = request.POST['title']
+        sport_article.image = request.FILES.get('image')
+        sport_article.date = request.POST['date']
+        sport_article.story = request.POST['story']
+        sport_article.save()
+        return redirect('schools:sports')
+    else:
+        return render(request, 'update_sports.html', {'sport_article': sport_article, 'current_user': current_user})
+
+
+
+
+
 @login_required(login_url='/login')
 def sportsform(request):
-    if request.user.is_authenticated:
-        current_user = School.objects.get(id=request.user.id)
-        if request.method == 'POST':
-            title = request.POST['title']
-            image = request.FILES.get('image')
-            date = request.POST['date']
-            story = request.POST['story']
+    # Use get_object_or_404 for better error handling
+    current_user = get_object_or_404(School, user=request.user)
 
-            article = Sports.objects.create(school=current_user, title=title, image=image, date=date, story=story)
-            article.save()
-            return redirect(reverse('schools:sports'))
-        else:
-            return render(request, 'sportsform.html', {'current_user': current_user})
+    if request.method == 'POST':
+        title = request.POST['title']
+        image = request.FILES.get('image')
+        date = request.POST['date']
+        story = request.POST['story']
+
+        # Create a new Sports article
+        article = Sports.objects.create(
+            school=current_user,
+            title=title,
+            image=image,
+            date=date,
+            story=story
+        )
+        article.save()
+
+        # Redirect to the sports page
+        return redirect(reverse('schools:sports'))
     else:
-        return redirect('home')
+        return render(request, 'sportsform.html', {'current_user': current_user})
     
+
+
+
+
+
+
+
+
+
 
 
 @login_required(login_url='/login')
 def academics(request):
-    current_user = School.objects.get(id=request.user.id)
-    school = School.objects.get(user=request.user)
-    academics = Academics.objects.filter(school=school)
-    return render(request, 'academics.html', { 'academics': academics, 'current_user': current_user})
+    # Ensure the school object is retrieved using the user relationship
+    school = get_object_or_404(School, user=request.user)
+    
+    # Query all academic articles associated with the school
+    academics = Academics.objects.filter(school=school).order_by('-date_modified')
+    return render(request, 'academics.html', { 'academics': academics, 'current_user': school })
+
+
+def academic_article(request, id):
+    academic_article = get_object_or_404(Academics, id=id)
+    return render(request, 'academic_id.html', {'academic_article': academic_article})
 
 
 @login_required(login_url='login/')
@@ -108,7 +141,60 @@ def delete_academic(request, id):
         messages.error(request, 'Article Not Deleted')
         return redirect('schools:academics')
 
+@login_required(login_url='/login')
+def update_academic_article(request, id):
+    current_user = get_object_or_404(School, user=request.user)
+    try:
+        academic_article = Academics.objects.get(id=id)
+    except Academics.DoesNotExist:
+        return redirect('home')
+    if request.method == 'POST':
+        academic_article.title = request.POST['title']
+        academic_article.image = request.FILES.get('image')
+        academic_article.date = request.POST['date']
+        academic_article.story = request.POST['story']
+        academic_article.save()
+        return redirect('schools:academics')  # Change this to the correct URL name
+    else:
+        return render(request, 'update_academics_article.html', {'academic_article': academic_article, 'current_user': current_user})
 
+@login_required(login_url='/login')
+def academicsform(request):
+    # Get the School object associated with the logged-in user
+    current_user = get_object_or_404(School, user=request.user)
+
+    if request.method == 'POST':
+        title = request.POST['title']
+        image = request.FILES.get('image')  # Use FILES to handle file uploads
+        date = request.POST['date']
+        story = request.POST['story']
+
+        # Create the new academic article
+        article = Academics.objects.create(
+            school=current_user,
+            title=title,
+            image=image,
+            date=date,
+            story=story
+        )
+        article.save()
+
+        # Redirect to the academics page
+        return redirect(reverse('schools:academics'))
+    else:
+        return render(request, 'academicsform.html', {'current_user': current_user})
+
+
+
+'''    
+def schoolhomepage(request):
+    school = School.objects.get(user=request.user)
+    sports = Sports.objects.filter(school=school)
+    paginator = Paginator(sports, 3)  # Show 3 sports per page
+    page_number = request.GET.get('page')
+    sports = paginator.get_page(page_number)
+    return render(request, "schoolhomepage.html", {'school': school, 'sports': sports})
+ '''
 '''   
 def searched(request):
     # check if user filed the form
@@ -128,34 +214,3 @@ def searched(request):
     else:
         return render(request, 'searches.html')
 '''
-@login_required(login_url='/login')
-def  academicsform(request):
-    if request.user.is_authenticated:
-        current_user = School.objects.get(id=request.user.id)
-        if request.method == 'POST':
-       
-            title = request.POST['title']
-            image = request.FILES.get('image')  # Use FILES instead of File
-            date = request.POST['date']
-            story = request.POST['story']
-
-            article = Academics.objects.create(school=current_user, title=title, image=image, date=date, story=story)
-            article.save()
-            return redirect(reverse('schools:academics'))  # Redirect to sports page after submission
-        else:
-            return render(request, 'academicsform.html', {'current_user': current_user})
-    else:
-        return redirect('home')
-
-
-
-'''  
-def schoolhomepage(request):
-    school = School.objects.get(user=request.user)
-    sports = Sports.objects.filter(school=school)
-    paginator = Paginator(sports, 3)  # Show 3 sports per page
-    page_number = request.GET.get('page')
-    sports = paginator.get_page(page_number)
-    return render(request, "schoolhomepage.html", {'school': school, 'sports': sports})
- '''
-

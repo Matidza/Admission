@@ -1,5 +1,5 @@
 from django.db import models
-import datetime
+from django.utils import timezone
 from django.contrib.auth.models import User
 
 from django.db.models.signals import post_save
@@ -8,6 +8,7 @@ from django.dispatch import receiver
 
 # Create School Model containing all
 # neccesary fields to create a school profile
+
 class School(models.Model):
     user = models.ForeignKey(
         User,
@@ -18,6 +19,7 @@ class School(models.Model):
         null=True,
         blank=True
     )
+
     schoolname = models.CharField(max_length=100)
     telephone = models.CharField(max_length=200, blank=True)
     schoolemail = models.EmailField(blank=True)
@@ -26,7 +28,7 @@ class School(models.Model):
     website = models.TextField(max_length=100)
     slogan = models.CharField(max_length=200, blank=True)
     image = models.ImageField(
-        upload_to='uploads/schoolprofile/', default=None, blank=True, null=True)
+    upload_to='uploads/schoolprofile/', default=None, blank=False, null=False)
     
 
     SCHOOL_SECTOR = [
@@ -160,7 +162,7 @@ class School(models.Model):
     examination_number = models.CharField(max_length=100, blank=True)
     examination_centre = models.CharField(max_length=100, blank=True)
     persal_paypoint_number = models.CharField(max_length=100, blank=True)
-    persal_component_number = models.CharField(max_length=100, blank=True)
+   
 
     # Personnel & Staff
     name_of_principal = models.CharField(max_length=100, blank=True)
@@ -184,12 +186,10 @@ class School(models.Model):
     ]
     quintile_Level = models.CharField(max_length=100, choices=(QUANTILE))
 
-    
-    image1 = models.ImageField(
-        upload_to='uploads/schoolprofile/', default=None, blank=True, null=True)
 
-    history = models.CharField(max_length=200, blank=True)
-    mission = models.CharField(max_length=200, blank=True)
+
+    history = models.CharField(max_length=20000, blank=True)
+    mission = models.CharField(max_length=20000, blank=True)
 
     def __str__(self):
         return self.schoolname
@@ -203,9 +203,9 @@ class Sports(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=10000, blank=True)
     story = models.TextField(max_length=10000, blank=True)
-    date = models.CharField(max_length=10000, blank=True)
-    image = models.ImageField(
-        upload_to='uploads/sports/', default="", blank=True, null=True)
+    date = models.DateField(max_length=10000, blank=True)
+    date_modified = models.DateTimeField(auto_now=True)
+    image = models.ImageField(upload_to='uploads/sports/', default="", blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -218,7 +218,8 @@ class Academics(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=10000, blank=True)
     story = models.TextField(max_length=10000, blank=True)
-    date = models.CharField(max_length=10000, blank=True)
+    date = models.DateField(max_length=10000, blank=True)
+    date_modified = models.DateTimeField(auto_now=True)
     image = models.ImageField(
         upload_to='uploads/academics/', default="", blank=True, null=True)
 

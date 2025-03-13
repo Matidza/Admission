@@ -18,10 +18,11 @@
 
     <!-- Custom styles for this template-->
     <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'; object-src 'none';">
 </head>   
     <br><br><br><br><br>   
-    <br><br><br>
-    <br/>
+    
+
     <div class="container">
         <!-- Outer Row -->
         <div class="row justify-content-center">
@@ -45,7 +46,7 @@
                             <div class="col-lg-6">
                                 <div class="login-content p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back! Login to Account</h1>
                                     </div>
                                     <form method="POST" action="{% url 'login' %}">
                                         <!-- Username -->
@@ -67,22 +68,18 @@
                                             </div>
                                         </div>
                                         <br>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </button>
-                                        <hr>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a>
+                                        <div align="right">
+                                            <button type="submit" class="btn btn-primary btn-user btn-block">
+                                                Login
+                                            </button>    
+                                        </div>
                                     </form>
+                                    
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="">Forgot Password?</a>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a class="small" href="{% url 'register' %}">Create an Account!</a>
+                                        <a class="small btn btn-clear text-primary" href="">Forgot Password?</a>
+                                        &nbsp;&nbsp;
+                                        <a class="small btn btn-clear text-primary" href="{% url 'register' %}">Create an Account!</a>
                                     </div>
                                     <div class="text-center">
                                     </div>
@@ -94,7 +91,7 @@
             </div>
         </div>
     </div>
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="static/new/vendor/jquery/jquery.min.js"></script>
     <script src="static/new/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 

@@ -4,8 +4,8 @@
 
     
 
-    <br><br><br>
-    <br/>
+    <br>
+    
      <div class="container">
         <!-- Outer Row -->
         <div class="row justify-content-center">
@@ -36,15 +36,18 @@
                                         {% csrf_token %}
                                         {{ form.as_p }}
                                         <br/>
-                                        <button type="submit" class="btn btn-primary">
-                                            Register
-                                        </button>     
+                                        <div align="right">
+                                            <button type="submit" class="btn btn-primary">
+                                                Register
+                                            </button>
+                                        </div>
+                                             
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="">Forgot Password?</a>
+                                        <a class="small btn btn-clear text-primary" href="">Forgot Password?</a>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a class="small" href="{% url 'login' %}"">Login to Account</a>
+                                        <a class="small btn btn-clear text-primary" href="{% url 'login' %}"">Login to Account</a>
                                     </div>
                                     <div class="text-center">
                                     </div>

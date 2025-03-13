@@ -7,12 +7,12 @@ from .models import Profile
 # Sign Up user form
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}))
-    first_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'First Name'}))
-    last_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Last Name'}))
+    #first_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'First Name'}))
+    #last_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Last Name'}))
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+        fields = ('username',  'email', 'password1', 'password2') #'first_name', 'last_name',
 
     def __init__(self, *args, **kwargs):
         super(SignUpForm, self).__init__(*args, **kwargs)
@@ -20,7 +20,7 @@ class SignUpForm(UserCreationForm):
         self.fields['username'].widget.attrs['class'] = 'form-control'
         self.fields['username'].widget.attrs['placeholder'] = 'Username'
         self.fields['username'].label = ''
-        self.fields['username'].help_text = '<span class="form-text text-muted"><small>Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</small></span>'
+        self.fields['username'].help_text = '<span class="form-text text-muted"><small></small></span>'
         
         self.fields['password1'].widget.attrs['class'] = 'form-control'
         self.fields['password1'].widget.attrs['placeholder'] = 'Password'
@@ -30,7 +30,7 @@ class SignUpForm(UserCreationForm):
         self.fields['password2'].widget.attrs['class'] = 'form-control'
         self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
         self.fields['password2'].label = ''
-        self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'
+        self.fields['password2'].help_text = '<span class="form-text text-muted"><small></small></span>'
 
 
 class UpdateUserForm(UserChangeForm):
@@ -74,22 +74,18 @@ class ChangePasswordForm(SetPasswordForm):
 
 
 class UserInfoForm(forms.ModelForm):
-	phone = forms.CharField(label="Phone Number",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Phone number'}), required=False)
-	#email = forms.CharField(label="Address 1",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)
-	#address2 = forms.CharField(label="address 2",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address2'}), required=False)
-	#city = forms.CharField(label="City",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'city'}), required=False)
-	#province = forms.CharField(label="Province",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'province'}), required=False)
-	#zipcode = forms.CharField(label="zipcode",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'zipcode'}), required=False)
-	#country = forms.CharField(label="Country",  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'country'}), required=False)
+
+
 	user_type = forms.ChoiceField(
-        label="Register as?",
+        label="Registering As ?",
         choices=Profile.ROLE_CHOICES,
         widget=forms.Select(attrs={'class': 'form-input'}),
         required=True
     )
 	class Meta:
 		model = Profile
-		fields = ('phone', 'user_type')
+		fields = ( 'user_type',)
+        
             
 
 

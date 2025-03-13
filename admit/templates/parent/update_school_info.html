@@ -19,8 +19,9 @@
 
     <!-- Custom styles for this template-->
     <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'; object-src 'none';">
 </head>   
-    <br><br>
+
     
     <div class="container">
         <!-- Outer Row -->
@@ -29,20 +30,10 @@
                 <div class="card o-hidden border-0 shadow-sm my-5">
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <!-- Left Side: Video -->
-                            <div class="col-lg-6 d-none d-lg-block" style="position: relative; overflow: hidden;">
-                                <video autoplay muted loop class="w-100 h-100" style="object-fit: cover;">
-                                    <source src="{% static 'videos/test.mp4#' %}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
+                                          <!-- Left Side: Video -->
+                            
 
-                                <!-- Overlay layer with blur and transparency -->
-                                <div class="overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(5px);"></div>
-                            </div>
 
-                            <!-- Right Side: Login Form -->
-                            <div class="col-lg-6">
                                 <div class="login-content p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Update School Infomation</h1>
@@ -51,110 +42,93 @@
                                     <form method="POST" action="{% url 'update_school_info' %}" enctype="multipart/form-data">   
                                         {% csrf_token %}
                                         <br>
-                                        {{ form.schoolname.label }}
-                                        {{ form.schoolname }}
+                                      
+                                        <style>
+                                        .grid-container {
+                                            display: grid;
+                                            grid-template-columns: 0.5fr 0.5fr;
+                                            gap: 10px;
+                                            color: rgb(79, 79, 79);
+                                        }
 
-                                        {{ form.telephone.label }}
-                                        {{ form.telephone }}
+                                        .grid-item {
+                                            background-color: #f0f0f0;
+                                            padding: 10px;
+                                            color: rgb(79, 79, 79);
+                                        }
 
-                                        {{ form.schoolemail.label }}
-                                        {{ form.schoolemail }}
+                                        @media (max-width: 541px) {
+                                            .grid-container {
+                                            grid-template-columns: 1fr;
+                                            color: rgb(79, 79, 79);
+                                            }
+                                            
+                                        }
+                                        </style>
 
-                                        {{ form.schooladdress.label }}
-                                        {{ form.schooladdress }}
+                                        <div class="grid-container" >
+                                            <div class="grid-item">
+                                                <b >{{ form.schoolname.label }}</b> {{ form.schoolname }}
+                                                <b >{{ form.telephone.label }}</b> {{ form.telephone }}                          
+                                                <b>{{ form.schoolemail.label }}</b> {{ form.schoolemail }}
+                                                <b>{{ form.schooladdress.label }} {{ form.schooladdress }}</b><br>
+                                                
+                                                <b>{{ form.postal_address.label }}</b> {{ form.postal_address }}
+                                                <b>{{ form.website.label }}</b> {{ form.website }}
+                                               <b> {{ form.slogan.label }}</b> {{ form.slogan }}<br><br>
+                                                <b>{{ form.image.label }} </b>{{ form.image }}<br>
 
-                                        {{ form.postal_address.label }}
-                                        {{ form.postal_address }}
+                                                <b>{{ form.type_of_school.label }}</b><br>{{ form.type_of_school }}<br><br>
+                                                <b>{{ form.umalusi.label }} </b>{{ form.umalusi }}<br>
+                                                <b>{{ form.provinc.label }} </b>{{ form.provinc }}<br><br>
+                                                <b>{{ form.district.label }} </b>{{ form.district }}<br><br>
+                                                <b>{{ form.circuit.label }} </b>{{ form.circuit }}<br><br>
+                                                <b>{{ form.curriculum.label }}</b> {{ form.curriculum }}<br><br>
+                                                
+                                            </div>
 
-                                        {{ form.website.label }}
-                                        {{ form.website }}
+                                        </div>                                        
+                                        <br>
+                                        <style>
+                                        .grid-container {
+                                            display: grid;
+                                            grid-template-columns: 1fr 1fr;
+                                            gap: 20px;
+                                            color: rgb(79, 79, 79);
+                                        }
 
-                                        {{ form.slogan.label }}
-                                        {{ form.slogan }}<br>
+                                        .grid-item {
+                                            background-color: #f0f0f0;
+                                            padding: 20px;
+                                            color: rgb(79, 79, 79);
+                                        }
+                                        </style>
 
-                                        {{ form.image.label }}
-                                        {{ form.image }}<br><br>
+                                        <div class="grid-container" >
+                                            <div class="grid-item">
+                                                <b>{{ form.grade_levels.label }}</b> {{ form.grade_levels }}
+                                                <b>{{ form.local_municipality.label }}</b> {{ form.local_municipality }}
+                                               <b>{{ form.urban_rural.label }} </b>{{ form.urban_rural }}
+                                               <b>{{ form.name_of_principal.label }}</b> {{ form.name_of_principal }}
+                                                
+                                            </div>
 
-                                        {{ form.type_of_school.label }}
-                                        {{ form.type_of_school }}<br><br>
+                                            <div class="grid-item">
 
-
-
-
-
-                                        {{ form.umalusi.label }}
-                                        {{ form.umalusi }}<br>
-
-                                        {{ form.provinc.label }}
-                                        {{ form.provinc }}<br><br>
-
-                                        {{ form.district.label }}
-                                        {{ form.district }}<br><br>
-
-                                        {{ form.circuit.label }}
-                                        {{ form.circuit }}<br><br>
-
-                                        {{ form.curriculum.label }}
-                                        {{ form.curriculum }}<br><br>
-
-                                        {{ form.grade_levels.label }}
-                                        {{ form.grade_levels }}
-
-                                        {{ form.local_municipality.label }}
-                                        {{ form.clocal_municipality }}
-
-                                        {{ form.urban_rural.label }}
-                                        {{ form.urban_rural }}
-
-                                        {{ form.ward_id.label }}
-                                        {{ form.ward_id }}
-
-                                        {{ form.Eei_district.label }}
-                                        {{ form.Eei_district }}
-
-                                        {{ form.emis_number.label }}
-                                        {{ form.emis_number }}
-
-                                        {{ form.examination_number.label }}
-                                        {{ form.examination_number }}
-
-                                        {{ form.examination_centre.label }}
-                                        {{ form.examination_centre }}
-
-                                        {{ form.persal_paypoint_number.label }}
-                                        {{ form.persal_paypoint_number }}
-
-                                        {{ form.persal_component_number.label }}
-                                        {{ form.persal_component_number }}
-
-                                        {{ form.name_of_principal.label }}
-                                        {{ form.name_of_principal }}
-
-                                        {{ form.number_of_teachers.label }}
-                                        {{ form.number_of_teachers }}<br><br><br>
-
-
+                                               
+                                               
+                                                <b>{{ form.number_of_teachers.label }}</b> {{ form.number_of_teachers }}<br>
+                                                <b>{{ form.section_21.label }} </b>{{ form.section_21 }}<br><br>
+                                                <b>{{ form.school_fees.label }} </b>{{ form.school_fees }}<br>
+                                                <b>{{ form.quintile_Level.label }} </b>{{ form.quintile_Level }}<br><br>
+                                            </div>
+                                        </div>
 
 
-                                        {{ form.section_21.label }}
-                                        {{ form.section_21 }}<br><br>
+                                        <b style="color: rgb(79, 79, 79);">{{ form.history.label }}</b>{{ form.history }}                                      
+                                        <br>
 
-                                        {{ form.school_fees.label }}
-                                        {{ form.school_fees }}<br>
-
-                                        {{ form.quintile_Level.label }}
-                                        {{ form.quintile_Level }}<br><br>
-
-                                        {{ form.image1.label }}
-                                        {{ form.image1 }}
-
-                                        {{ form.history.label }}
-                                        {{ form.history }}
-
-                                        {{ form.mission.label }}
-                                        {{ form.mission }}
-
-
+                                        <b style="color: rgb(79, 79, 79);">{{ form.mission.label }}</b>{{ form.mission }}
                                         <br/><br>
                                         <button type="submit" class="btn btn-primary">
                                             Update
@@ -162,15 +136,15 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                       <a class="small" href="{% url 'update_password'  %}"">Forgot Password</a>
+                                       <a class="small btn btn-clear text-primary" href="{% url 'update_password'  %}"">Forgot Password</a>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a class="small" href="{% url 'update_user'  %}"">Update Login Details</a>
+                                        <a class="small btn btn-clear text-primary" href="{% url 'update_user'  %}"">Update Login Details</a>
                                     </div>
                                     <div class="text-center">
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            
+                       
                     </div>
                 </div>
             </div>

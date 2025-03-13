@@ -19,6 +19,7 @@
 
     <!-- Custom styles for this template-->
     <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'; object-src 'none';">
 </head>   
     <br><br>
     
@@ -52,18 +53,13 @@
                                         {% csrf_token %}
                                         <br>
                                         {{ form.as_p }}
-                                        <br/><br><br>
+                                        <br/><br>
                                         <button type="submit" class="btn btn-primary">
                                             Update
                                         </button>     
                                     </form>
                                     <hr>
-                                    <div class="text-center">
-                                       <a class="small" href="{% url 'update_password'  %}"">Forgot Password</a>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a class="small" href="{% url 'update_user'  %}"">Update Login Details</a>
-                                        
-                                    </div>
+ 
                                     <div class="text-center">
                                     </div>
                                 </div>

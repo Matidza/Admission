@@ -22,13 +22,9 @@
 
     <body class="container-fluid d-flex justify-content-center align-items-center flex-column">
  
-         <div class="container-fluid"  style="margin-left: 6%;">
-   
-                
-                
-
+         <div class="container-fluid">
                 <!-- Main Content Section -->
-                <div class="col-md-9">
+                <div class="row justify-content-center">
                     <main class="flex-shrink-0">
                         <!-- Header -->
                         <header class="py-5">
@@ -56,7 +52,7 @@
                                     </div>
                                 </div>
                                                         <!-- Sidebar Section -->
-                                <div class="col-md-2 d-none d-md-block" style="margin-top: 6%;max-height: 110px;max-width: 150px;">
+                                <div class="" style="margin-top: 6%;max-height: 110px;max-width: 150px;">
                                     <div class="card border-0 shadow-sm h-100 sticky-sidebar">
                                         <a href="{% url 'schools:academicsform' %}"class="btn btn-outline-clear text-white bg-primary w-70">                                 
                                             Add Article           
@@ -67,49 +63,53 @@
                         </header>
 
 
-                                                <section class="pt-4">
+                        <section class="pt-4">
                             <div class="container px-lg-5">
                                 <!-- Page Features -->
                                 <div class="row gx-lg-5" style="max-width: 1500px;">
                                 {% if academics %}
-                                    {% for sport in academics %}
+                                    {% for academ in academics %}
                                     <div class="col-lg-6 col-xxl-4 mb-5 h-900 border-2 shadow-lg">
-                                        <a href="#" class="text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#sportModal{{ sport.id }}">
-                                        <div  class="card bg-light border-0 h-100" style="background-image: url('{% if sport.image %}{{ sport.image.url }}{% else %}{{ MEDIA_URL }}default_image.jpg{% endif %}'); background-size: cover; background-position: center; height: 900px; display: flex; justify-content: center; align-items: center; flex-direction: column;">
-                                            <!-- School Info -->
-                                            <h5 class="fs-5 text-secondary">{{ sport.title }}</h5>
-                                            
-                                        </div>
-                                        </a>
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="sportModal{{ sport.id }}" tabindex="-1" aria-labelledby="sportModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg">
-                                              
-
-                                            <div class="modal-content">
-
-                                            <img src="{{ sport.image.url }}" style="display:block;margin:auto;width:95%;height:40%;">
-                                            <div class="modal-header">
-                                                <h6 class="modal-title" id="sportModalLabel">{{ sport.title }}</h6>
+                                        <a href="#" class="text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#sportModal{{ academ.id }}">
+                                            <div  class="content text-center" style="background-image: url('{% if academ.image %}{{ academ.image.url }}{% else %}{{ MEDIA_URL }}default_image.jpg{% endif %}'); background-size: cover; background-position: center; height: 100px; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                                                <!-- School Info -->
                                                 
+                                            </div>
+                                            <h5 class="content text-center">{{ academ.title }}</h5>  
+                                            <div align="right">
+                                                <i class="text-dark" >{{ academ.date }}</i>
+                                            </div> 
+                                            
+                                        </a>
+                                        
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="sportModal{{ academ.id }}" tabindex="-1" aria-labelledby="sportModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">                                             
+                                            <div class="modal-content">
+                                            <img src="{{ academ.image.url }}" style="display:block;margin:auto;width:95%;height:350px;">
+                                            <div class="modal-header">
+                                                <h6 class="modal-title" id="sportModalLabel">{{ academ.title }}</h6>                                              
                                             </div>
                                             <div class="modal-body">
                                                 <center>
-                                                    <p>{{ sport.story }}</p>
+                                                    <p>{{ academ.story|linebreaksbr }}</p>
                                                 </center>
                                                 
                                                 <div align="right">
-                                                    <i class="text-dark" >{{ sport.date }}</i>
-                                                </div>
-                                                
+                                                    <i class="text-dark" >{{ academ.date }}</i>
+                                                </div>                                               
                                             </div>
                                             <div class="modal-footer">
-                                                <form method="POST" action="{% url 'schools:delete_academic' sport.id %}" onsubmit="return confirm('Delete the article?')">
+                                                <a href="{% url 'schools:update_academic_article' academ.id %}" class="btn btn-primary btn-lg px-4 me-sm-3" style="padding: 5px 10px;">
+                                                    Update
+                                                </a>
+                                                    &nbsp;&nbsp;
+                                                <form method="POST" action="{% url 'schools:delete_academic' academ.id %}" onsubmit="return confirm('Delete the article?')">
                                                     {% csrf_token %}
-                                                    <button type="submit" class="btn btn-danger btn-sm" style="padding: 5px 10px;">Delete</button>
+                                                    <button type="submit" class="btn btn-outline-dark btn-lg px-4" style="padding: 5px 10px;">Delete</button>
                                                 </form>
                                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-outline-danger btn-lg px-4" data-bs-dismiss="modal">Close</button>
                                             </div>
                                             </div>
                                         </div>
@@ -123,7 +123,6 @@
                             </div>
                         </section>
                     </main>
-
             </div>
         </div>
 
