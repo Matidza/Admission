@@ -22,7 +22,7 @@ class AdmissionForm(models.Model):
     # Gender
     # Race
     # Nationality 
-    # Id/passport Number
+    id_number = models.CharField(max_length=13, null=False, blank=False, default='1234567891234', unique=True)
 
 
 

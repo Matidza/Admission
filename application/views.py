@@ -77,6 +77,7 @@ def applyadmission(request, school_id):
         # Get the form data
         childname = request.POST['childname']
         childsurname = request.POST['childsurname']
+        id_number = request.POST['id_number']
         grade = request.POST['grade']
         parentname = request.POST['parentname']
         
@@ -91,9 +92,10 @@ def applyadmission(request, school_id):
             grade=grade,
             parentname=parentname,
             
-            status=status
+            status=status,
+            id_number=id_number,
         )
-        
+        # check if childs names with Id number has already applied to this school 
         # Save the admission form
         try:
             admissionform.save()
