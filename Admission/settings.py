@@ -19,10 +19,12 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'admission-6phv.onrender.com/',
     'admission-6phv.onrender.com'
+    '127.0.0.1:5000'
 ] 
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://admission-6phv.onrender.com/'
+    'https://admission-6phv.onrender.com/',
+    'http://127.0.0.1:5000/'
 ]
 
 
@@ -135,10 +137,9 @@ USE_TZ = True
  #   BASE_DIR / 'static/',  # This should point to the directory where your app-specific static files are located
 #]
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]  # Ensure this points to your 'static' folder
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = BASE_DIR / 'staticfiles'# Used for `collectstatic` in production
+STATICFILES_DIRS = [BASE_DIR / "static"]  # Ensure this points to your 'static' folder
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 MEDIA_URL = '/media/'
