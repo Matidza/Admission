@@ -88,21 +88,19 @@
                     ID: {{ school.id }}
                     <a class="btn btn-primary" href="{% url 'admission' %}">Apply For Admission!</a>
                     --><br>
+
+                    <!-- {% url 'applyadmission' school.id %}  -->
                     <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
                         {% if not user.is_authenticated or user.profile.user_type == 'guest' %}
-                        <a href="{% url 'applyadmission' school.id %}" class="btn btn-primary btn-lg px-4 me-sm-3">Apply</a>
+                        <a href="" class="btn btn-primary btn-lg px-4 me-sm-3">Apply</a>
                         {% elif user.profile.user_type == 'parent' %}
-                        <a href="{% url 'applyadmission' school.id %}" class="btn btn-primary btn-lg px-4 me-sm-3">Apply</a>
+                        <a href="" class="btn btn-primary btn-lg px-4 me-sm-3">Apply</a>
                         {% elif user.profile.user_type == 'school' %}
                         {% endif %}
                         <a class="btn btn-outline-dark btn-lg px-4" href="{% url 'contact' school.id %}">Appointment</a>
                     </div>
                     
-
-                    
-                  
-                    
-                    
+  
                 </div>
             </div>
             <!-- Call to Action-->
