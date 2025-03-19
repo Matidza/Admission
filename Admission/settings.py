@@ -18,7 +18,7 @@ SECRET_KEY = 'django-insecure-0^suq@5g&!0#n)7%=wd6=@h2i1yc4a%2q)qqpd_jf&jn3w_vok
 DEBUG = True
 ALLOWED_HOSTS = [
     'admission-6phv.onrender.com/',
-    'admission-6phv.onrender.com'
+    'admission-6phv.onrender.com',
     '127.0.0.1:5000'
 ] 
 
