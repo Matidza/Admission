@@ -16,7 +16,13 @@ SECRET_KEY = 'django-insecure-0^suq@5g&!0#n)7%=wd6=@h2i1yc4a%2q)qqpd_jf&jn3w_vok
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = [] 
+ALLOWED_HOSTS = [
+    'admission-6phv.onrender.com/'
+] 
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://admission-6phv.onrender.com/'
+]
 
 
 #ALLOWED_HOSTS = ['https://admission-1r18.onrender.com', 'admission-1r18.onrender.com']
