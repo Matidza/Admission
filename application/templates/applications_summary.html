@@ -111,25 +111,22 @@
                                         <th width="100">Date Applied</th>
                                         <th width="100">Status</th>
                                     </tr>
-                                    {% for application in applications %}
-                                    <div class="container">
-                                        <tr>
-                                        <td><a href="{% url 'application' application.id %}"><p>{{ application.childname }}</p></a></td>
-                                        <td>{{ application.grade }}</td>
-                                        
-                                        <td><a >{{ application.school.schoolname }}</a></td>
-                                        <td>{{ application.date_applied }}</td>
-                                        <td>{{ application.status }}</td>
-                                        
-                                    </tr>
-                                    </div>
-                                    
-                                    
+                                   {% for application in applications %}
+                                        <div class="container">
+                                            <tr>
+                                                <td><a href="{% url 'application' application.id %}"><p>{{ application.childname }}</p></a></td>
+                                                <td>{{ application.grade }}</td>
+                                                <td><a>{{ application.school.schoolname }}</a></td>
+                                                <td>{{ application.date_applied }}</td>
+                                                <td>{{ application.status.status }}</td>  <!-- Display only the related status -->
+                                            </tr>
+                                        </div>
                                     {% empty %}
-                                    <tr>
-                                        <td colspan="6">No applications found.</td>
-                                    </tr>
+                                        <tr>
+                                            <td colspan="6">No applications found.</td>
+                                        </tr>
                                     {% endfor %}
+ 
                                 </table>
 
 

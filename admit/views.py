@@ -322,6 +322,8 @@ def register_user(request):
 
             user = authenticate(username=username, password=password)
             login(request, user)
+            # Send Email confirmation to new users of the new accout they created
+            # send_mail()
             messages.success(
                 request, ('Username & Account Created, Fill Out User Info. '))
             return redirect('update_info')

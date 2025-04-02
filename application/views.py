@@ -4,7 +4,7 @@ from school.models import School
 from django.http import JsonResponse 
 from django.contrib.auth.decorators import login_required
 
-from .models import AdmissionForm
+from .models import AdmissionForm, Status
 from django.contrib.auth.models import User
 from django.contrib import messages
 
@@ -15,8 +15,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 
 def applications_summary(request):
-    applications = AdmissionForm.objects.filter(user=request.user)
+    applications = AdmissionForm.objects.filter(user=request.user).select_related('status')
     return render(request, 'applications_summary.html', {'applications': applications})
+
 '''  
 def applications_add(request):
     cart = Cart(request)
@@ -81,7 +82,7 @@ def applyadmission(request, school_id):
         grade = request.POST['grade']
         parentname = request.POST['parentname']
         
-        status = request.POST['status']
+        #statuss = request.POST['statuss']
         
         # Create a new AdmissionForm instance
         admissionform = AdmissionForm(
@@ -92,20 +93,20 @@ def applyadmission(request, school_id):
             grade=grade,
             parentname=parentname,
             
-            status=status,
+            #statuss=statuss,
             id_number=id_number,
         )
         # check if childs names with Id number has already applied to this school 
         # Save the admission form
         try:
             admissionform.save()
+            # send Email to School and Parent/Gurdian to confirm submitted application
+            # send_mail()
             messages.success(request, 'Application sent successfully!')
         except Exception as e:
-            messages.error(request, 'Error sending application: ' + str(e))
-        
+            messages.error(request, 'Error sending application: ' + str(e))      
         # Redirect the user
         return redirect('applications_summary')
-    
     else:
         # Render the application form template
         return render(request, 'application_form.html', {'school': school})
@@ -113,8 +114,8 @@ def applyadmission(request, school_id):
 
 # Schools recieved Applications
 def recieved_applications(request):
-    school = get_object_or_404(School, user=request.user)
-    recieved_applications = AdmissionForm.objects.filter(school=school)
+    school = get_object_or_404(School, user=request.user)  
+    recieved_applications = AdmissionForm.objects.filter(school=school).select_related('status')  
     return render(request, 'recieved_applications.html', {'recieved_applications': recieved_applications})
 
 
