@@ -31,7 +31,7 @@
                         <div class="container px-lg-5">
                             <div class="p-2 bg-light rounded-3 text-center" style="background-image: url('{% static 'school.webp' %}'); background-size: cover; background-position: center;">
                                 <div class="m-4 m-lg-5">
-                                    <h1 class="display-5 fw-bold text-dark">{{ applications.childname }}'s Application</h1>
+                                    <h1 class="display-5 fw-bold text-dark">{{ status.admissionform.childname }}'s Application</h1>
                                     <p class="fs-4 text-dark">
                                         
                                     </p>
@@ -43,22 +43,34 @@
                 </main>
             </div>
         </div>
+        <div align="right">
+         <a href="{% url 'download_admission_form' application.id %}" class="btn btn-primary">
+            Download Application
+         </a>
+        </div>
+        
+
+
         <!-- Testimonial section-->
         <div class="py-1">
             <div class="container ">
                            <div class="appointment_box">
                <div class="row">
                   <div class="col-md-12">
-                     <h4 class="appointment_taital"><span style="color: #2d8de7;">Application to : {{ applications.school.schoolname }}</span></h4>
+                     <h4 class="appointment_taital"><span style="color: #2d8de7;">Application to : {{ status.admissionform.school.schoolname }}</span></h4>
                   </div>
-                   <h6 class="appointment_taital">Application No: <span style="color: #292929;">{{ applications.id }}</span></h6>
-                   <h6 class="appointment_taital">grade applied: <span style="color: #292929;">{{ applications.grade }}</span></h6>
+                   <h6 class="appointment_taital">Application No: <span style="color: #292929;">{{ status.admissionform.id }}</span></h6>
+                   <h6 class="appointment_taital">grade applied: <span style="color: #292929;">{{ status.admissionform.grade }}</span></h6>
                    <h6 class="appointment_taital">admission for: <span style="color: #292929;">2026</span></h6>
-                   <h6 class="appointment_taital">date applied: <span style="color: #292929;">{{ applications.date_applied }}</span></h6>
+                   <h6 class="appointment_taital">date applied: <span style="color: #292929;">{{ status.admissionform.date_applied }}</span></h6>
                
                   <div class="col-md-12" align="right">
-                     <h5 class="appointment_taital">Status: <span style="color: #ecae27;"> {{ applications.statuss}}</span> </h5>
+                     <h5 class="appointment_taital">Status: <span style="color: #ecae27;"> {{ status.status }}</span> </h5>
                   </div>
+                  <a href="{% url 'update_application_status' application.id %}">
+                     Update Status
+                  </a>
+
                   
                </div><br><br>
                <div class="col-md-12" align="left">
@@ -68,13 +80,13 @@
                   <div class="row">
                      <div class="col-md-3" >
                         <p class=" text.secondary" >Name</p>
-                        <input type="text" value="{{applications.childname}}" class="email_text" placeholder="" name="">
+                        <input type="text" value="{{status.admissionform.childname}}" class="email_text" placeholder="" name="">
                      </div>
                      <div class="col-md-3">
                         <form>
                            <div class="form-group">
                               <p class="doctorname_text">Surname</p>
-                              <input type="text" value="{{applications.childsurname}}" class="email_text" placeholder="" name="{{applications.childname}}">
+                              <input type="text" value="{{status.admissionform.childsurname}}" class="email_text" placeholder="" name="{{applications.childname}}">
                            </div>
                         </form>
                      </div>

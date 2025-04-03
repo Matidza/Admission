@@ -120,5 +120,80 @@ def recieved_applications(request):
 
 
 def application(request, id):
-    applications = get_object_or_404(AdmissionForm, id=id)
-    return render(request, 'parent_application.html', {'applications': applications})
+    # Get the admission form based on the id
+    application_form = get_object_or_404(AdmissionForm, id=id)
+    
+    # Retrieve the status associated with this admission form
+    status = application_form.status  # This uses the related_name 'status' in the Status model
+    
+    # Pass the application form and its status to the template
+    return render(request, 'parent_application.html', {
+        'application': application_form,
+        'status': status
+    })
+
+@login_required(login_url='/login')
+def update_application_status(request, id):
+    try:
+        application_form = get_object_or_404(AdmissionForm, id=id)
+        application = application_form.status
+    except AdmissionForm.DoesNotExist:
+        return redirect('application')
+    
+    if request.method == 'POST':
+        application.status = request.POST['status']
+        application.save()
+        return redirect('application')
+    else:
+        render (request, 'status.html', {'application':application})
+
+
+
+
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
+from .models import AdmissionForm  # Ensure you import your models
+
+def download_admission_form(request, id):
+    # Get the application data
+    application = get_object_or_404(AdmissionForm, id=id)
+
+    # Create the response object with a PDF content type
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="Admission_Form_{application.childname}.pdf"'
+
+    # Create a PDF document
+    p = canvas.Canvas(response, pagesize=letter)
+    width, height = letter
+
+    # Set Title
+    p.setFont("Helvetica-Bold", 16)
+    p.drawString(200, height - 50, f"Admission Form for {application.childname}")
+
+    # Set Application Details
+    p.setFont("Helvetica", 12)
+    p.drawString(100, height - 100, f"Application No: {application.id}")
+    p.drawString(100, height - 120, f"School: {application.school.schoolname}")
+    p.drawString(100, height - 140, f"Grade Applied: {application.grade}")
+    p.drawString(100, height - 160, f"Admission Year: 2026")
+    p.drawString(100, height - 180, f"Date Applied: {application.date_applied}")
+    p.drawString(100, height - 200, f"Status: {application.status}")
+
+    # Child's Information
+    p.setFont("Helvetica-Bold", 14)
+    p.drawString(100, height - 240, "Child's Information")
+
+    p.setFont("Helvetica", 12)
+    p.drawString(100, height - 260, f"Name: {application.childname}")
+    p.drawString(100, height - 280, f"Surname: {application.childsurname}")
+    p.drawString(100, height - 300, f"Gender: {application.child.gender}")  # Adjusted here
+    p.drawString(100, height - 320, f"Nationality: {application.nationality}")
+    p.drawString(100, height - 340, f"ID/Passport No: {application.id_or_passport}")
+
+    # Save the PDF document
+    p.showPage()
+    p.save()
+
+    return response
