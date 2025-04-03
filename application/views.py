@@ -136,16 +136,16 @@ def application(request, id):
 def update_application_status(request, id):
     try:
         application_form = get_object_or_404(AdmissionForm, id=id)
-        application = application_form.status
     except AdmissionForm.DoesNotExist:
         return redirect('application')
-    
+
     if request.method == 'POST':
-        application.status = request.POST['status']
-        application.save()
+        application_form.status = request.POST['status']
+        application_form.save()
         return redirect('application')
     else:
-        render (request, 'status.html', {'application':application})
+        return render(request, 'status.html', {'application': application_form})
+
 
 
 

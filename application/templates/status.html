@@ -1,11 +1,17 @@
-<form action="{% url 'update_application_status' application.id %}" class="contact-form" method="POST" enctype="multipart/form-data">
-{% csrf_token %}
+<form action="{% url 'update_application_status' application.id %}" class="contact-form" method="POST">
+    {% csrf_token %}
 
-<div class="form-floating mb-3">
-<input class="form-control" id="title" type="text" name="status" value="{{ application.status }}" placeholder="Enter your title.." data-sb-validations="required" autocomplete="off"  inputmode="verbatim">
-<label for="status">title</label>
-<div class="invalid-feedback" data-sb-feedback="status:required">A title is required.</div>
-</div>
+    <div class="form-floating mb-3">
+        <select class="form-control" id="status" name="status" required>
+            {% for choice_value, choice_label in application.APPLICATION_STATUS %}
+                <option value="{{ choice_value }}" {% if application.status == choice_value %}selected{% endif %}>
+                    {{ choice_label }}
+                </option>
+            {% endfor %}
+        </select>
+        <label for="status">Application Status</label>
+        <div class="invalid-feedback" data-sb-feedback="status:required">A status is required.</div>
+    </div>
 
-<button type="submit" class="btn btn-primary btn-user btn-block">Update Article</button>
+    <button type="submit" class="btn btn-primary btn-user btn-block">Update Status</button>
 </form>
