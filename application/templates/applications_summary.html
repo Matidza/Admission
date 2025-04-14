@@ -105,7 +105,7 @@
                                 <table style="overflow-x: auto;">
                                     <tr >
                                         <th width="100">Child Name</th>
-                                        <th width="100">Grade Applied</th>
+                                        <th width="50">Applied for:</th>
                                     
                                         <th width="200">School</th>
                                         <th width="100">Date Applied</th>
@@ -115,7 +115,7 @@
                                         <div class="container">
                                             <tr>
                                                 <td><a href="{% url 'application' application.id %}"><p>{{ application.childname }}</p></a></td>
-                                                <td>{{ application.grade }}</td>
+                                                <td>Gr. {{ application.grade }}</td>
                                                 <td><a>{{ application.school.schoolname }}</a></td>
                                                 <td>{{ application.date_applied }}</td>
                                                 <td>{{ application.status.status }}</td>  <!-- Display only the related status -->

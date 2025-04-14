@@ -40,7 +40,7 @@ from django.core.paginator import Paginator
 
 def schools(request):
     school_profile = School.objects.all()
-    paginator = Paginator(school_profile, 3)  # 5 schools per page
+    paginator = Paginator(school_profile, 6)  # 5 schools per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'parent/schools.html', {'page_obj': page_obj})
@@ -88,13 +88,18 @@ def all_sports_articles(request, id):
 def contact(request, id):
     school = get_object_or_404(School, id=id)
 
+    return render(request, 'parent/contact.html', {'school': school})
+
+def email(request,id):
+    school = get_object_or_404(School, id=id)
+
     if request.method == 'POST':
         
-        fullname = request.POST.get('fullname', '').strip()
+        #fullname = request.POST.get('fullname', '').strip()
         subject = request.POST.get('subject', '').strip()
         email = request.POST.get('email', '').strip().lower()
         message = request.POST.get('message', '').strip()
-
+        print(f'Subject: {subject} \n from: {email} \n message: {message} ')
         # Send email to the school
         send_mail(
             subject=subject,
@@ -105,9 +110,9 @@ def contact(request, id):
         )
 
         # Return a success message or redirect to a thank-you page
-        return render(request, 'contact_success.html')
-
-    return render(request, 'contact.html', {'school': school})
+        return render(request, 'parent/contact.html', {'school': school})
+    else:
+        return render(request, 'parent/contact.html', {'school': school})
 
 '''  
 def view_sports(request):
@@ -311,28 +316,42 @@ def update_user(request):
 
 
 # Register User
+from django.core.mail import send_mail
+from django.contrib import messages
+from django.shortcuts import redirect, render
+from django.contrib.auth import authenticate, login
+from .forms import SignUpForm
+
 def register_user(request):
     form = SignUpForm()
     if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
+            email = form.cleaned_data['email']
 
             user = authenticate(username=username, password=password)
             login(request, user)
-            # Send Email confirmation to new users of the new accout they created
-            # send_mail()
-            messages.success(
-                request, ('Username & Account Created, Fill Out User Info. '))
+
+            # Send confirmation email
+            send_mail(
+                'Welcome to [Your Website Name]',
+                'Hi {}, thank you for registering at [Your Website Name].'.format(username),
+                'your_email@example.com',  # Replace with your sender email address
+                [email],
+                fail_silently=False,
+            )
+
+            messages.success(request, 'Username & Account Created. A confirmation email has been sent.')
             return redirect('update_info')
         else:
-            messages.success(
-                request, ('Registration Not Successfully. Try Again!!'))
+            messages.error(request, 'Registration Not Successful. Try Again!')
             return redirect('register')
     else:
         return render(request, 'parent/register.html', {'form': form})
+
 
 
 

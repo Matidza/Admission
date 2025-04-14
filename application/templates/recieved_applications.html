@@ -25,32 +25,7 @@
                 <!-- Main Content Section -->
                 <div class="">
                     <main class="flex-shrink-0">
-                        <!-- Header -->
-                        <header class="py-5">
-                            <div class="container px-lg-5">
-                                <div class="p-2 bg-light rounded-3 text-center" style="background-image: url('{% static 'school.webp' %}'); background-size: cover; background-position: center;">
-                                    <div class="m-4 m-lg-5">
-                                        <h1 class="display-5 fw-bold text-dark">Received Applications</h1>
-
-                                        <!-- 
-                                        <form method="POST" action="" id="searchForm" style="display: flex; align-items: center; gap: 10px;">
-                                            {% csrf_token %} 
-                                                <input 
-                                                    type="text" 
-                                                    class="form-control" 
-                                                    placeholder="Search for school..." 
-                                                    name="searched" 
-                                                    id="searchInput"
-                                                >
-                                            <button type="submit" class="btn btn-primary" >
-                                                Search
-                                            </button>
-                                        </form>  --> 
-                                    </div>
-                                </div>
- 
-                            </div>
-                        </header>
+                        
                          
 
                         <section class="pt-4">
@@ -104,46 +79,50 @@
                                     <div class="row"> 
                             
                                     <div class="col-xl-3 col-md-6">
-                                        <div class="card bg-primary text-white mb-4">
+                                        <div class="card bg-primary text-dark mb-4">
                                             <div class="card-body"><center>Submitted</center> </div>
                                             
                                         </div>
                                     </div>
                                     <div class="col-xl-2 col-md-6">
-                                        <div class="card bg-warning text-white mb-4">
+                                        <div class="card bg-clear text-dark mb-4">
+                                            <div class="card-body"><center>Reviewing</center></div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-2 col-md-6">
+                                        <div class="card bg-warning text-dark mb-4">
                                             <div class="card-body"><center>Pending</center></div>
                                             
                                         </div>
                                     </div>
                                     <div class="col-xl-2 col-md-6">
-                                        <div class="card bg-secondary text-white mb-4">
+                                        <div class="card bg-secondary text-dark mb-4">
                                             <div class="card-body"><center>Wait-Listed</center></div>
                                             
                                         </div>
                                     </div>
                                     <div class="col-xl-2 col-md-6">
-                                        <div class="card bg-danger text-white mb-4">
+                                        <div class="card bg-danger text-dark mb-4">
                                             <div class="card-body"><center>Rejected</center></div>
                                             
                                         </div>
                                     </div>
                                     <div class="col-xl-3 col-md-6">
-                                        <div class="card bg-success text-white mb-4">
+                                        <div class="card bg-success text-dark mb-4">
                                             <div class="card-body"><center>Admitted</center></div>
                                         
                                         </div>
                                     </div>
                                 </div>
                                 </center>
-                                 <br><br><br><br>
+                                 
                                 
-                               
-                                <table style="overflow-x: auto;">
-                                    <div class="card-header">
-                                    <i class="fas fa-table me-1"></i>
-                                        Submitted Appllications
-                                </div>
+                                
+                                <table style="overflow-x: auto;margin-top: 50px;">
+                                    
                                     <tr >
+                                        
                                         <th width="200">Child Name</th>
                                         <th width="200">Grade Applied For</th>
                                         <th width="200">Parent Name</th>                                      
@@ -192,6 +171,7 @@
         <!-- JavaScript for Real-Time Filtering -->
 
     </body>
+    <br><br><br><br>
 
 </html>
 

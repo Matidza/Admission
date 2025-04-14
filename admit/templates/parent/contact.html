@@ -63,7 +63,7 @@
                             <div class="container px-lg-5">
                                 <div class="p-2 bg-light rounded-3 text-center" style="background-image: url('{% static 'school.webp' %}'); background-size: cover; background-position: center;">
                                     <div class="m-4 m-lg-5">
-                                        <h1 class="display-5 fw-bold text-dark">Get in touch with {{ school.schoolname }}</h1>
+                                        <h1 class="display-5 fw-bold text-dark">Get in touch!</h1>
                                         
                                         <!-- 
                                         <form method="POST" action="" id="searchForm" style="display: flex; align-items: center; gap: 10px;">
@@ -102,7 +102,7 @@
                                 <div class="col-md-12 col-lg-7 mb-5">                       
                                     
 
-                                    <form action="{% url 'contact' school.id %}" class="contactForm" method="POST">
+                                    <form action="{% url 'email' school.id %}" class="contactForm" method="POST">
                                         {% csrf_token %}
                                         <div class="row form-group">
                                             <div class="col-md-12 mb-3 mb-md-0">

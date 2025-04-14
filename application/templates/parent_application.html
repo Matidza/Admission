@@ -43,11 +43,7 @@
                 </main>
             </div>
         </div>
-        <div align="right">
-         <a href="{% url 'download_admission_form' application.id %}" class="btn btn-primary">
-            Download Application
-         </a>
-        </div>
+        
         
 
 
@@ -56,26 +52,49 @@
             <div class="container ">
                            <div class="appointment_box">
                <div class="row">
-                  <div class="col-md-12">
-                     <h4 class="appointment_taital"><span style="color: #2d8de7;">Application to : {{ status.admissionform.school.schoolname }}</span></h4>
+                  <div class="col-md-12" >
+                     <h4 class="appointment_taital">
+                        <span style="color: #2d8de7;">Application to : {{ status.admissionform.school.schoolname }}</span>                    
+                        
+                                                                                                 
+                     </h4>                  
+                                                                   
                   </div>
                    <h6 class="appointment_taital">Application No: <span style="color: #292929;">{{ status.admissionform.id }}</span></h6>
-                   <h6 class="appointment_taital">grade applied: <span style="color: #292929;">{{ status.admissionform.grade }}</span></h6>
-                   <h6 class="appointment_taital">admission for: <span style="color: #292929;">2026</span></h6>
-                   <h6 class="appointment_taital">date applied: <span style="color: #292929;">{{ status.admissionform.date_applied }}</span></h6>
-               
-                  <div class="col-md-12" align="right">
-                     <h5 class="appointment_taital">Status: <span style="color: #ecae27;"> {{ status.status }}</span> </h5>
+                   <h6 class="appointment_taital">Grade applied: <span style="color: #292929;">{{ status.admissionform.grade }}</span></h6>
+                   <h6 class="appointment_taital">Admission for: <span style="color: #292929;">2026</span></h6>
+                   <h6 class="appointment_taital">Date applied: <span style="color: #292929;">{{ status.admissionform.date_applied }}</span></h6>
+                  
+                  <div class="col-md-12" align="left">
+                     <h5 class="appointment_taital">
+                        status:<span style="color: #ecae27;"> {{ status.status }}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                        {% if not user.is_authenticated or user.profile.user_type == 'guest' %}
+                        {% elif user.profile.user_type == 'parent' %}
+                        {% elif user.profile.user_type == 'school' %}
+                        
+                         <a href="{% url 'update_application_status' application.id %}" 
+                           class="btn btn-secondary text-white">
+                           Update Status
+                        </a>
+                        {% endif %} 
+                      </h5>         
                   </div>
-                  <a href="{% url 'update_application_status' application.id %}">
-                     Update Status
-                  </a>
+                  
 
                   
-               </div><br><br>
+               </div>
+               <br>
                <div class="col-md-12" align="left">
-                     <h6 class="appointment_taital">Child's Infomation </h6>
-                  </div>
+                  <a href="{% url 'download_admission_form' application.id %}" class="btn btn-primary">
+                           Download Application
+                        </a>  
+                        <br><br>  
+                     <h6 class="appointment_taital">
+                        Child's Infomation                       
+                     </h6>
+                     
+                     
+               </div>
                <div class="appointment_section_2">
                   <div class="row">
                      <div class="col-md-3" >
