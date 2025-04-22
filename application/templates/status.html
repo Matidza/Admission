@@ -34,7 +34,7 @@
                         <div class="container px-lg-5">
                             <div class="p-2 bg-light rounded-3 text-center" style="background-image: url('{% static 'school.webp' %}'); background-size: cover; background-position: center;">
                                 <div class="m-4 m-lg-5">
-                                    <h1 class="display-5 fw-bold text-dark"> Update {{ application.childname }}'s Application Status</h1>
+                                    <h1 class="display-5 fw-bold text-dark"> Update {{ application_form.childname }}'s Application Status</h1>
                                     <p class="fs-4 text-dark">
                                         
                                     </p>
@@ -56,20 +56,19 @@
         </center>
         <div class="py-1">
             <div class="container ">
-                <form action="{% url 'update_application_status' application.id %}" 
-            class="contact-form" method="POST" enctype="multipart/form-data" align="center">
-            {% csrf_token %}
+                <form action="{% url 'application:update_application_status' status.id %}" 
+                    class="contact-form" method="POST" enctype="multipart/form-data" align="center">
+                {% csrf_token %}
 
             <div class="form-floating mb-3">
 
             <input class="form-control" id="status" type="radio" name="status" value="{{ application.status }}" placeholder="Enter your title.." data-sb-validations="required" autocomplete="off"  inputmode="verbatim">
-            <label for="status">{{ application.status }}</label>
-            <div class="invalid-feedback" data-sb-feedback="status:required">A title is required.</div>
-            </div>
+          
+            
 
              <h3>
                 <label for="degree">
-                    Status: {{application.status.status }}
+                   Application status: {{ status.status }}
                 </label>
             </h3>
             <br>
@@ -138,29 +137,7 @@
 
             <button type="submit" class="btn btn-primary btn-user btn-block">Update Application</button>
             </form>
-            <div class="row justify-content">
-                                <div class="col-md-2">Qty:</div>
-                                    <div class="col-md-3">
-                                        <select class="form-select form-select-sm" id="select{{product.id}}">
-                                            
-                                            {% for key, value in appliccation.status.items %}
-                                                {% if key == application.status|slugify %}
-                                            <option selected>{{ value }}</option>
-                                                {% endif %}
-                                            {% endfor %}
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                        
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <button type="button" data-index="{{ product.id }}" class="btn_1 bg-info text-white checkout_btn_1 update-cart">Update</button>
-                                        &nbsp;&nbsp;
-                                        <button  type="button" data-index="{{ product.id }}" class="btn_1 bg-danger text-white checkout_btn_1 btn-sm delete-product" >Remove</button>
-                                    </div>                                                                     
-                            </div>
+
 
 
 

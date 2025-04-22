@@ -78,9 +78,9 @@
                                 <center>
                                     <div class="row"> 
                             
-                                    <div class="col-xl-3 col-md-6">
+                                    <div class="col-xl-2 col-md-6">
                                         <div class="card bg-primary text-dark mb-4">
-                                            <div class="card-body"><center>Submitted</center> </div>
+                                            <div class="card-body"><center>Submited</center> </div>
                                             
                                         </div>
                                     </div>
@@ -108,9 +108,9 @@
                                             
                                         </div>
                                     </div>
-                                    <div class="col-xl-3 col-md-6">
+                                    <div class="col-xl-2 col-md-6">
                                         <div class="card bg-success text-dark mb-4">
-                                            <div class="card-body"><center>Admitted</center></div>
+                                            <div class="card-body"><center>Admited</center></div>
                                         
                                         </div>
                                     </div>
@@ -141,7 +141,7 @@
 
                                     {% for application in recieved_applications %}
                                     <tr>
-                                        <td><a href="{% url 'application' application.id %}">{{ application.childname }}</a></td>
+                                        <td><a href="{% url 'application:application' application.id %}">{{ application.childname }}</a></td>
                                         <td>{{ application.grade }}</td>
                                         <td>{{ application.parentname }}</td>                                     
                                         <td>{{ application.date_applied }}</td>

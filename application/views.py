@@ -7,8 +7,12 @@ from django.contrib.auth.decorators import login_required
 from .models import AdmissionForm, Status
 from django.contrib.auth.models import User
 from django.contrib import messages
+from admit.models import Profile
 
 from django.shortcuts import get_object_or_404, redirect, render
+
+from django.core.mail import send_mail
+from django.urls import reverse
 
 # Create your views here.
 
@@ -53,18 +57,36 @@ def applications_add(request):
         print(response)
         return response
 
-def applications_delete(request):
-    pass
+def application_delete(request, id):
+    application = get_object_or_404(AdmissionForm, id=id)
+
+    try:
+        application.delete()
+        messages.success(request, 'Application withdrawn!')
+        return redirect('application:applications_summary')
+    except Exception as e:
+        messages.error(request, 'Application not withdrawn!')
+        return redirect('application:applications_summary')
 
     #return render(request, 'appication/applications_delete.html')
 
+# Update Application if Status is pending(Parents)
+@login_required(login_url='/login')
+def update_application(request, id):
+    
 
-def applications_update(request):
-    pass
-    #return render(request, 'application/applications_update.html')
-
-
-
+    try:
+        application_form = AdmissionForm.objects.get(id=id)
+        
+    except AdmissionForm.DoesNotExist:
+        return redirect('application:applications_summary')
+    
+    if request.method == 'POST': 
+        application_form.childname = request.POST['childname']
+        application_form.save()
+        return redirect('application:applications_summary')
+    else:
+        return render(request, 'update_application.html', {'application_form': application_form})
 
 @login_required(login_url='/login')
 def applyadmission(request, school_id):
@@ -100,13 +122,26 @@ def applyadmission(request, school_id):
         # Save the admission form
         try:
             admissionform.save()
+
             # send Email to School and Parent/Gurdian to confirm submitted application
-            # send_mail()
+            user_email = current_user.email
+            subject = f'Application to SchoolName'
+            message = f"Your application  for {childname} was sent to {school}. {school} will keep in touch with you with regards to your application. Or you can always check your application status on views.com"
+            print(f"Your application to {school} for {childname} was sent. {school} will keep in touch with you with regards to your application. Or you can always check your application status on views.com")          
+            
+            #send_mail(
+            #    subject = subject,
+            #    message = message,
+            #    from_email = "views@ygmail.com",
+            #    recipient_list = [user_email],
+            #    fail_silently = False,
+            #)
+
             messages.success(request, 'Application sent successfully!')
         except Exception as e:
             messages.error(request, 'Error sending application: ' + str(e))      
         # Redirect the user
-        return redirect('applications_summary')
+        return redirect('application:applications_summary')
     else:
         # Render the application form template
         return render(request, 'application_form.html', {'school': school})
@@ -121,11 +156,9 @@ def recieved_applications(request):
 
 def application(request, id):
     # Get the admission form based on the id
-    application_form = get_object_or_404(AdmissionForm, id=id)
-    
+    application_form = get_object_or_404(AdmissionForm, id=id) 
     # Retrieve the status associated with this admission form
-    status = application_form.status  # This uses the related_name 'status' in the Status model
-    
+    status = application_form.status  # This uses the related_name 'status' in the Status model  
     # Pass the application form and its status to the template
     return render(request, 'parent_application.html', {
         'application': application_form,
@@ -134,66 +167,16 @@ def application(request, id):
 
 @login_required(login_url='/login')
 def update_application_status(request, id):
-    try:
-        application_form = get_object_or_404(AdmissionForm, id=id)
-    except AdmissionForm.DoesNotExist:
-        return redirect('application')
+  
+    application_form = AdmissionForm.objects.get(id)
+    status = get_object_or_404(Status, id=application_form)
+
 
     if request.method == 'POST':
-        application_form.status = request.POST['status']
-        application_form.save()
-        return redirect('application')
+        status.status = request.POST['status']
+        status.save()
+        return redirect('application:applications_summary')
     else:
-        return render(request, 'status.html', {'application': application_form})
+        return render(request, 'status.html', {'status': status, 'application_form':application_form})
 
 
-
-
-
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
-from .models import AdmissionForm  # Ensure you import your models
-
-def download_admission_form(request, id):
-    # Get the application data
-    application = get_object_or_404(AdmissionForm, id=id)
-
-    # Create the response object with a PDF content type
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="Admission_Form_{application.childname}.pdf"'
-
-    # Create a PDF document
-    p = canvas.Canvas(response, pagesize=letter)
-    width, height = letter
-
-    # Set Title
-    p.setFont("Helvetica-Bold", 16)
-    p.drawString(200, height - 50, f"Admission Form for {application.childname}")
-
-    # Set Application Details
-    p.setFont("Helvetica", 12)
-    p.drawString(100, height - 100, f"Application No: {application.id}")
-    p.drawString(100, height - 120, f"School: {application.school.schoolname}")
-    p.drawString(100, height - 140, f"Grade Applied: {application.grade}")
-    p.drawString(100, height - 160, f"Admission Year: 2026")
-    p.drawString(100, height - 180, f"Date Applied: {application.date_applied}")
-    p.drawString(100, height - 200, f"Status: {application.status}")
-
-    # Child's Information
-    p.setFont("Helvetica-Bold", 14)
-    p.drawString(100, height - 240, "Child's Information")
-
-    p.setFont("Helvetica", 12)
-    p.drawString(100, height - 260, f"Name: {application.childname}")
-    p.drawString(100, height - 280, f"Surname: {application.childsurname}")
-    p.drawString(100, height - 300, f"Gender: {application.child.gender}")  # Adjusted here
-    p.drawString(100, height - 320, f"Nationality: {application.nationality}")
-    p.drawString(100, height - 340, f"ID/Passport No: {application.id_or_passport}")
-
-    # Save the PDF document
-    p.showPage()
-    p.save()
-
-    return response

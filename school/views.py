@@ -40,7 +40,6 @@ def sports(request):
     return render(request, 'sports.html', { 'sports': sports, 'current_user': school })
 
 
-
 @login_required(login_url='login/')
 def delete_sports(request, id):
     
@@ -52,8 +51,6 @@ def delete_sports(request, id):
     except Exception as e:
         messages.error(request, 'Article Not Deleted')
         return redirect('schools:sports')
-
-
 
 @login_required(login_url='/login')
 def update_sports_article(request, id):

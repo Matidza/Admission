@@ -87,64 +87,28 @@ def all_sports_articles(request, id):
 # contact info
 def contact(request, id):
     school = get_object_or_404(School, id=id)
-
-    return render(request, 'parent/contact.html', {'school': school})
-
-def email(request,id):
-    school = get_object_or_404(School, id=id)
-
+    schoolname = school.schoolname
     if request.method == 'POST':
         
         #fullname = request.POST.get('fullname', '').strip()
         subject = request.POST.get('subject', '').strip()
         email = request.POST.get('email', '').strip().lower()
         message = request.POST.get('message', '').strip()
-        print(f'Subject: {subject} \n from: {email} \n message: {message} ')
+        print(f'Subject: {subject} \n from: {email} \n message: {message} to school: {schoolname}')
         # Send email to the school
-        send_mail(
-            subject=subject,
-            message=message,
-            from_email=email,
-            recipient_list=[school.schoolemail],
-            fail_silently=False,
-        )
+        #send_mail(
+        #    subject=subject,
+        #    message=message,
+        #    from_email=email,
+        #    recipient_list=[school.schoolemail],
+        #    fail_silently=False,
+        #)
 
         # Return a success message or redirect to a thank-you page
-        return render(request, 'parent/contact.html', {'school': school})
+        return redirect('contact')
     else:
         return render(request, 'parent/contact.html', {'school': school})
 
-'''  
-def view_sports(request):
-    #current_user = School.objects.get(id=request.user.id)
-    sports = Sports.objects.filter(school=school)
-    academics = Academics.objects.filter(school=school)
-    return render(request, 'parent/view_sports.html', {'sports': sports, 'school':school})'''
-
-# Update Schools Academics
-'''
-def school(request, pk):
-    # Get the School Id form the SchoolAddress model
-    school = School.objects.get(id=pk)
-    sports = Sports.objects.filter(school=school)
-    #return render(request, 'parent/school.html', {'school': school}) # using template from parent app
-    return render(request, 'schoolhomepage.html', {'school': school , 'sports':sports})
-
-    
-def school(request, pk):
-    current_user = Profile.objects.get(user__id=request.user.id)
-    if not request.user.is_authenticated:
-        # Handle unauthenticated users
-        return HttpResponseForbidden("Access denied")
-
-    school = School.objects.get(id=pk)
-    sports = Sports.objects.filter(school=school)
-    
-    if current_user.user_type == 'parent':
-        return render(request, 'parent/school.html', {'school': school, 'sports': sports})
-    elif current_user.user_type == 'school':
-        return render(request, 'schoolhomepage.html', {'school': school, 'sports': sports})
-'''
 
 
 
@@ -246,10 +210,10 @@ def logout_user(request):
     return redirect('home')
 
 
-@login_required(login_url='/login')
+
 def update_password(request):
     # Authenticate User
-    if request.user.is_authenticated:
+    #if request.user.is_authenticated:
         current_user = request.user
         if request.method == 'POST':
             form = ChangePasswordForm(current_user, request.POST)
@@ -266,9 +230,9 @@ def update_password(request):
         else:
             form = ChangePasswordForm(current_user)
             return render(request, "parent/update_password.html", {'form':form})#          
-    else:
-        messages.success(request, "You Must Be Logged In To Access That Page!!")
-        return redirect('home')
+   # else:
+    #   messages.success(request, "You Must Be Logged In To Access That Page!!")
+    #   return redirect('home')
 
 
 
@@ -334,15 +298,22 @@ def register_user(request):
 
             user = authenticate(username=username, password=password)
             login(request, user)
+            from_email = "views@ygmail.com"
 
             # Send confirmation email
+            subject = f'Application to SchoolName'
+            message = f"Your application  for  was sent to.  will keep in touch with you with regards to your application. Or you can always check your application status on views.com"
+
             send_mail(
-                'Welcome to [Your Website Name]',
-                'Hi {}, thank you for registering at [Your Website Name].'.format(username),
-                'your_email@example.com',  # Replace with your sender email address
-                [email],
-                fail_silently=False,
+                subject = subject,
+                message = message,
+                from_email = "views@ygmail.com",
+                recipient_list = [email],
+                fail_silently = False,
             )
+
+            # Testing mail
+            #print(f'{email} created an account and this email is from {from_email}')
 
             messages.success(request, 'Username & Account Created. A confirmation email has been sent.')
             return redirect('update_info')
@@ -405,35 +376,3 @@ def update_school_info(request):
     else:
         messages.error(request, "You must be logged in to access this page!")
         return redirect('home')
-     
-
-'''   
-def update_school_info(request):
-    if request.user.is_authenticated:
-        try:
-            # Get Current User's School Info
-            current_user = School.objects.get(user__id=request.user.id)
-        except School.DoesNotExist:
-            # If no School info exists for the user, handle it gracefully
-            messages.error(request, "No School info found for this user.")
-            return redirect('home')
-
-        # Get the form for updating School info, including file data
-        if request.method == 'POST' and request.FILES:
-            form = SchoolInfo(request.POST, request.FILES, instance=current_user)
-        else:
-            form = SchoolInfo(instance=current_user)
-
-        if form.is_valid():
-            # Save the form if it's valid
-            form.save()
-            messages.success(request, "Your info has been updated!")
-            return redirect('logout')  # or another redirect destination like a dashboard
-
-        return render(request, "parent/update_school_info.html", {'form': form})
-
-    else:
-        # If the user is not authenticated
-        messages.error(request, "You must be logged in to access that page.")
-        return redirect('login')  ''' # Redirect to login page
-

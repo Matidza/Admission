@@ -68,7 +68,7 @@
                                 <!-- To make this form functional, sign up at-->
                                 <!-- https://startbootstrap.com/solution/contact-forms-->
                                 <!-- to get an API token!-->
-                                <form action="{% url 'applyadmission' school.id %}" class="contact-form" method="POST" enctype="multipart/form-data">  
+                                <form action="{% url 'application:applyadmission' school.id %}" class="contact-form" method="POST" enctype="multipart/form-data">  
                                     <!-- Name input-->
                                     {% csrf_token %}
                                     <!-- Email address input-->

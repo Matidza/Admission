@@ -89,15 +89,18 @@ class AdmissionForm(models.Model):
 class Status(models.Model):
     admissionform = models.OneToOneField(AdmissionForm, on_delete=models.CASCADE, related_name="status")
     APPLICATION_STATUS = [
-        ('Submitted', 'Submitted'),
-        ('Reviewing', 'reviewing'),
-        ('Pending', 'Pending'),
-        ('Wait_listed', 'Wait-listed'),
-        ('Rejected', 'Rejected'),
-        ('Admitted', 'Admitted'),
+        ('submitted', 'submitted'),
+        ('reviewing', 'reviewing'),
+        ('pending', 'pending'),
+        ('wait-listed', 'wait-listed'),
+        ('rejected', 'rejected'),
+        ('admitted', 'admitted'),
     ]
     status = models.CharField(max_length=50, choices=APPLICATION_STATUS, default='Submitted')
     # if status is pending, give a reason
+    reason = models.CharField(max_length=500, blank=True)
+
+
     class Meta:
         verbose_name_plural = 'Status'
 

@@ -114,7 +114,7 @@
                                    {% for application in applications %}
                                         <div class="container">
                                             <tr>
-                                                <td><a href="{% url 'application' application.id %}"><p>{{ application.childname }}</p></a></td>
+                                                <td><a href="{% url 'application:application' application.id %}"><p>{{ application.childname }}</p></a></td>
                                                 <td>Gr. {{ application.grade }}</td>
                                                 <td><a>{{ application.school.schoolname }}</a></td>
                                                 <td>{{ application.date_applied }}</td>

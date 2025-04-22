@@ -135,18 +135,24 @@
                                                     </div>                                                   
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <!-- 
-                                                    <a href="{% url 'schools:update_sports_article' sport.id %}" class="btn btn-warning" style="padding: 5px 10px;">Update</a>
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <form method="POST" action="{% url 'schools:delete_sports' sport.id %}" onsubmit="return confirm('Delete the article?')">
-                                                    {% csrf_token %}
-                                                        <button type="submit" class="btn btn-danger" style="padding: 5px 10px;">Delete</button>
-                                                    </form>-->
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <!-- -->
+                                                     {% if not user.is_authenticated or user.profile.user_type == 'guest' %}
+                                                        {% elif user.profile.user_type == 'parent' %}
+                                                        {% elif user.profile.user_type == 'school' %}
+                                                        <a href="{% url 'schools:update_sports_article' sport.id %}" class="btn btn-warning" style="padding: 5px 10px;">Update</a>
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <form method="POST" action="{% url 'schools:delete_sports' sport.id %}" onsubmit="return confirm('Delete the article?')">
+                                                        {% csrf_token %}
+                                                            <button type="submit" class="btn btn-danger" style="padding: 5px 10px;">Delete</button>
+                                                        </form>
+                                                         {% endif %}
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                       
                                                 </div>
                                                 </div>
                                             </div>
+                                            
                                         </div>
                                     </div>
                                     {% endfor %}

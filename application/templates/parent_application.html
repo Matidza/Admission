@@ -66,35 +66,43 @@
                    <h6 class="appointment_taital">Date applied: <span style="color: #292929;">{{ status.admissionform.date_applied }}</span></h6>
                   
                   <div class="col-md-12" align="left">
-                     <h5 class="appointment_taital">
-                        status:<span style="color: #ecae27;"> {{ status.status }}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                        {% if not user.is_authenticated or user.profile.user_type == 'guest' %}
-                        {% elif user.profile.user_type == 'parent' %}
-                        {% elif user.profile.user_type == 'school' %}
-                        
-                         <a href="{% url 'update_application_status' application.id %}" 
-                           class="btn btn-secondary text-white">
-                           Update Status
-                        </a>
-                        {% endif %} 
-                      </h5>         
-                  </div>
-                  
-
-                  
+                     <h6 class="appointment_taital">
+                        Status:<span style="color: #ecae27;"> {{ status.status }}</span>  
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                           {% if status.status == "pending"  %}
+                             Reason: {{ status.reason }}
+                           {% elif status.status == 'wait_listed' %}
+                              Reason: {{ status.reason }}
+                           {% elif  status.status == "rejected" %}
+                              Reason: {{ status.reason }}
+                           {% else %}
+                           {% endif %}
+                      </h6>         
+                  </div>  
                </div>
                <br>
-               <div class="col-md-12" align="left">
-                  <a href="{% url 'download_admission_form' application.id %}" class="btn btn-primary">
-                           Download Application
-                        </a>  
-                        <br><br>  
-                     <h6 class="appointment_taital">
-                        Child's Infomation                       
-                     </h6>
+
+               <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start" >
+                  {% if not user.is_authenticated or user.profile.user_type == 'guest' %}
+                  {% elif user.profile.user_type == 'parent' %}
+                     <a href="" class="btn btn-primary btn-lg px-4 me-sm-3">download application</a> 
+                     <a href="{% url 'application:update_application' application_form.id %}" class="btn btn-outline-dark btn-lg px-2">update application</a>
                      
+                     <form method="POST" action="{% url 'application:application_delete' application.id %}" onsubmit="return confirm('Delete the article?')">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-lg px-4 me-sm-3" style="padding: 5px 10px;">withdraw</button>
+                     </form>
                      
+                  {% elif user.profile.user_type == 'school' %}
+                     <a href="" class="btn btn-primary btn-lg px-4 me-sm-3">download application</a> 
+                     <a href="{% url 'application:update_application_status' application.id %}" class="btn btn-outline-dark btn-lg px-2">
+                           update status
+                     </a>
+                  {% endif %}
                </div>
+               
+               <br>
+
                <div class="appointment_section_2">
                   <div class="row">
                      <div class="col-md-3" >
@@ -151,7 +159,7 @@
         </div>
     </div>
 
-    <br><br>
+    <br><br><br><br><br><br>
 
     <!-- Footer -->
     <!-- Bootstrap core JS-->

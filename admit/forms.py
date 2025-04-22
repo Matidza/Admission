@@ -61,7 +61,6 @@ class ChangePasswordForm(SetPasswordForm):
 	def __init__(self, *args, **kwargs):
 		super(ChangePasswordForm, self).__init__(*args, **kwargs)
 
-	
 		self.fields['new_password1'].widget.attrs['class'] = 'form-control'
 		self.fields['new_password1'].widget.attrs['placeholder'] = 'Password'
 		self.fields['new_password1'].label = ''
@@ -77,7 +76,7 @@ class UserInfoForm(forms.ModelForm):
 
 
 	user_type = forms.ChoiceField(
-        label="Registering As ?",
+        label="Creating an account as parent/school",
         choices=Profile.ROLE_CHOICES,
         widget=forms.Select(attrs={'class': 'form-input'}),
         required=True

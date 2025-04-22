@@ -141,7 +141,7 @@
                                                 <a href="{% url 'school' school.id %}" class="text-decoration-none text-dark">
                                                     <div class="card bg-light border-0 h-100 d-flex flex-row align-items-center">
                                                         <!-- School Image -->
-                                                        <img src="{% if school.image %}{{ school.image.url }}{% else %}{{ MEDIA_URL }}default_image.jpg{% endif %}" class="img-thumbnail" style="max-height: 100px; max-width: 80px; margin-left: 5px;">
+                                                        <img src="{% if school.image %}{{ school.image.url }}{% else %}{{ MEDIA_URL }}default_image.jpg{% endif %}" class="img-thumbnail" style="max-height: 100px; max-width: 80px; margin-left: 5px;" alt="static/school">
                                                         <!-- School Info -->
                                                         <div class="card-body text-start p-4" style="margin-left: 20px;">
                                                             <h2 class="fs-4 fw-bold">{{ school.schoolname }}</h2>

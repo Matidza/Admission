@@ -1,5 +1,5 @@
 from django import forms
-from .models import AdmissionForm
+from .models import AdmissionForm, Status
 
 
 class Form(forms.ModelForm):
@@ -12,3 +12,17 @@ class Form(forms.ModelForm):
         model = AdmissionForm
         fields = ('__all__')
         exclude = ('schoolname', 'user')
+
+
+
+
+class UpdateStatus(forms.ModelForm):
+	status = forms.ChoiceField(
+        label="Registering As ?",
+        choices=Status.APPLICATION_STATUS,
+        widget=forms.Select(attrs={'class': 'form-input'}),
+        required=True
+    )
+	class Meta:
+		model = AdmissionForm
+		fields = ( 'status',)
