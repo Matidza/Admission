@@ -1,6 +1,6 @@
 from pathlib import Path
 import os
-#import dj_database_url
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -61,8 +61,23 @@ WSGI_APPLICATION = 'Admission.wsgi.application'
 # Database
 # Production database connection using environment variable
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('AIVEN'), conn_max_age=600)
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'wYLaHcnRtQyduiqwWZhGmPvvdhuXBKXH',
+        'HOST': 'yamanote.proxy.rlwy.net',
+        'PORT': '52241',
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
+    }
 }
+
+
+#DATABASES = {
+#    'default': dj_database_url.parse(os.environ.get('AIVEN'), conn_max_age=600)
+#}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
