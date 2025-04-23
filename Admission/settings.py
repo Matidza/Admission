@@ -15,7 +15,7 @@ ALLOWED_HOSTS = [
     'localhost',
     'admission.up.railway.app',  # No trailing slash
     '.railway.app',
-    'admission-6phv.onrender.com/',
+    'admission-6phv.onrender.com',
 ]
 CSRF_TRUSTED_ORIGINS = [
     'https://admission.up.railway.app/',
