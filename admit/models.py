@@ -9,7 +9,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     date_modified = models.DateTimeField(auto_now=True)
     #country = models.CharField(max_length=200, blank=True)
-    image = models.ImageField(upload_to='uploads/parentprofile/', blank=True, null=True)
+    #image = models.ImageField(upload_to='uploads/parentprofile/', blank=True, null=True)
 
     ROLE_CHOICES = [('parent', 'Parent'), ('school', 'School')]
     user_type = models.CharField(max_length=10, choices=ROLE_CHOICES, blank=True)
