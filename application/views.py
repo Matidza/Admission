@@ -141,7 +141,7 @@ def applyadmission(request, school_id):
             send_mail(
                 subject = subject,
                 message = message,
-                from_email = "views@ygmail.com",
+                from_email = "admissions.django@gmail.com",
                 recipient_list = [user_email],
                 fail_silently = False,
             )
