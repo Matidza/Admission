@@ -1,32 +1,19 @@
 from pathlib import Path
 import os
-#from dotenv import load_dotenv
-#import dj_database_url
-
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-#load_dotenv()
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-0^suq@5g&!0#n)7%=wd6=@h2i1yc4a%2q)qqpd_jf&jn3w_vok'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-0^suq@5g&!0#n)7%=wd6=@h2i1yc4a%2q)qqpd_jf&jn3w_vok')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-#ALLOWED_HOSTS = ['*'] 
-
-#CSRF_TRUSTED_ORIGINS = []
-
-
-ALLOWED_HOSTS = ['https://admission-1r18.onrender.com', 'admission-1r18.onrender.com']
-CSRF_TRUSTED_ORIGINS = ['https://admission-1r18.onrender.com', 'admission-1r18.onrender.com']
-
+DEBUG = False  # Set to False in production
+ALLOWED_HOSTS = ['admission-1r18.onrender.com', 'www.admission-1r18.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://admission-1r18.onrender.com']
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,10 +24,7 @@ INSTALLED_APPS = [
     'admit',
     'school',
     'application',
-    'whitenoise.runserver_nostatic',
 ]
-
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -50,7 +34,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'Whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'Admission.urls'
@@ -74,26 +58,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Admission.wsgi.application'
 
-
 # Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
- 
+# Production database connection using environment variable
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.parse(os.environ.get('AIVEN'), conn_max_age=600)
 }
-'''' 
-# Aiven.io
-DATABASES = {
-  'default': dj_database_url.parse(os.environ['Aiven'], conn_max_age=600)
-}'''
 
 # Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -109,45 +80,30 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-#STATIC_URL = 'static/'
-#STATICFILES_DIRS = [
- #   BASE_DIR / 'static/',  # This should point to the directory where your app-specific static files are located
-#]
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'# Used for `collectstatic` in production
-STATICFILES_DIRS = [BASE_DIR / "static"]  # Ensure this points to your 'static' folder
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Used for `collectstatic` in production
+STATICFILES_DIRS = [BASE_DIR / 'static']  # Ensure this points to your 'static' folder
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
+# Media files (uploads)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+# Email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'admissions.django@gmail.com'
-EMAIL_HOST_PASSWORD = 'Dlta123!@#'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'admissions.django@gmail.com')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'your_email_password')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
