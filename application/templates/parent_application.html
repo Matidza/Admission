@@ -49,113 +49,82 @@
 
         <!-- Testimonial section-->
         <div class="py-1">
-            <div class="container ">
-                           <div class="appointment_box">
-               <div class="row">
-                  <div class="col-md-12" >
-                     <h4 class="appointment_taital">
-                        <span style="color: #2d8de7;">Application to : {{ status.admissionform.school.schoolname }}</span>                    
-                        
-                                                                                                 
-                     </h4>                  
-                                                                   
-                  </div>
-                   <h6 class="appointment_taital">Application No: <span style="color: #292929;">{{ status.admissionform.id }}</span></h6>
-                   <h6 class="appointment_taital">Grade applied: <span style="color: #292929;">{{ status.admissionform.grade }}</span></h6>
-                   <h6 class="appointment_taital">Admission for: <span style="color: #292929;">2026</span></h6>
-                   <h6 class="appointment_taital">Date applied: <span style="color: #292929;">{{ status.admissionform.date_applied }}</span></h6>
-                  
-                  <div class="col-md-12" align="left">
-                     <h6 class="appointment_taital">
-                        Status:<span style="color: #ecae27;"> {{ status.status }}</span>  
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                           {% if status.status == "pending"  %}
-                             Reason: {{ status.reason }}
-                           {% elif status.status == 'wait_listed' %}
-                              Reason: {{ status.reason }}
-                           {% elif  status.status == "rejected" %}
-                              Reason: {{ status.reason }}
-                           {% else %}
-                           {% endif %}
-                      </h6>         
-                  </div>  
-               </div>
-               <br>
+            <div class="container my-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">{{ status.admissionform.childname }}'s Application</h4>
+        </div>
+        <div class="card-body bg-light">
+            <h5 class="mb-3">Application Details</h5>
+            <ul class="list-group list-group-flush mb-4">
+                <li class="list-group-item"><strong>Application To:</strong> {{ status.admissionform.school.schoolname }}</li>
+                <li class="list-group-item"><strong>Application No:</strong> {{ status.admissionform.id }}</li>
+                <li class="list-group-item"><strong>Grade Applied:</strong> {{ status.admissionform.grade }}</li>
+                <li class="list-group-item"><strong>Admission For:</strong> 2026</li>
+                <li class="list-group-item"><strong>Date Applied:</strong> {{ status.admissionform.date_applied }}</li>
+                <li class="list-group-item">
+                    <strong>Status:</strong> <span class="text-warning">{{ status.status|title }}</span>
+                    {% if status.status in "pending wait_listed rejected" %}
+                        <br><strong>Reason:</strong> {{ status.reason }}
+                    {% endif %}
+                </li>
+            </ul>
 
-               <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start" >
-                  {% if not user.is_authenticated or user.profile.user_type == 'guest' %}
-                  {% elif user.profile.user_type == 'parent' %}
-                     <a href="" class="btn btn-primary btn-lg px-4 me-sm-3">download application</a> 
-                     <a href="{% url 'application:update_application' application_form.id %}" class="btn btn-outline-dark btn-lg px-2">update application</a>
-                     
-                     <form method="POST" action="{% url 'application:application_delete' application.id %}" onsubmit="return confirm('Delete the article?')">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger btn-lg px-4 me-sm-3" style="padding: 5px 10px;">withdraw</button>
-                     </form>
-                     
-                  {% elif user.profile.user_type == 'school' %}
-                     <a href="" class="btn btn-primary btn-lg px-4 me-sm-3">download application</a> 
-                     <a href="{% url 'application:update_application_status' application.id %}" class="btn btn-outline-dark btn-lg px-2">
-                           update status
-                     </a>
-                  {% endif %}
-               </div>
-               
-               <br>
+            <!-- User Action Buttons -->
+            {% if user.is_authenticated %}
+                {% if user.profile.user_type == 'parent' %}
+                    <div class="mb-3">
+                        <a href="#" class="btn btn-primary me-2">Download Application</a>
+                        <a href="{% url 'application:update_application' status.admissionform.id %}" class="btn btn-outline-secondary me-2">Update Application</a>
+                        <form method="POST" action="{% url 'application:application_delete' application.id %}" class="d-inline" onsubmit="return confirm('Delete the application?')">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Withdraw</button>
+                        </form>
+                    </div>
+                {% elif user.profile.user_type == 'school' %}
+                    <div class="mb-3">
+                        <a href="#" class="btn btn-primary me-2">Download Application</a>
+                        <a href="{% url 'application:update_application_status' status.admissionform.id %}" class="btn btn-outline-dark">Update Status</a>
+                    </div>
+                {% endif %}
+            {% endif %}
 
-               <div class="appointment_section_2">
-                  <div class="row">
-                     <div class="col-md-3" >
-                        <p class=" text.secondary" >Name</p>
-                        <input type="text" value="{{status.admissionform.childname}}" class="email_text" placeholder="" name="">
-                     </div>
-                     <div class="col-md-3">
-                        <form>
-                           <div class="form-group">
-                              <p class="doctorname_text">Surname</p>
-                              <input type="text" value="{{status.admissionform.childsurname}}" class="email_text" placeholder="" name="{{applications.childname}}">
-                           </div>
-                        </form>
-                     </div>
-                     <div class="col-md-3">
-                        <form>
-                           <div class="form-group">
-                              <p class="doctorname_text">Title:</p>
-                              <input type="text" value="Ms" class="email_text" placeholder="" name="{{applications.childname}}">
-                           </div>
-                        </form>
-                     </div>
-                     <div class="col-md-3">
-                        <form>
-                           <div class="form-group">
-                              <p class="doctorname_text">Initials:</p>
-                              <input type="text" value="Mm" class="email_text" placeholder="" name="{{applications.childname}}">
-                           </div>
-                        </form>
-                     </div>
-                  </div>
-                  <br>
-                  <div class="row">
-                     <div class="col-md-3">
-                        <p class="doctorname_text">Gender</p>
-                        <input type="text" value="Female" class="email_text" placeholder="" name="">
-                     </div>
-                     <div class="col-md-3">
-                        <form>
-                           <div class="form-group">
-                              <p class="doctorname_text">Nationality</p>
-                              <input type="text" value="South African" class="email_text" placeholder="" name="{{applications.childname}}">
-                           </div>
-                        </form>
-                     </div>
-                     <div class="col-md-3">
-                        <p class="doctorname_text">Id/Passport Number</p>
-                        <input type="text" value="1234567891234" class="email_text" placeholder="" name="{{applications.childname}}">
-                     </div>
-                  </div>
-               </div>
-            </div> 
+            <!-- Child Information -->
+            <h5 class="mb-3">Child Details</h5>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">First Name</label>
+                    <input type="text" class="form-control" value="{{ status.admissionform.childname }}" readonly>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Surname</label>
+                    <input type="text" class="form-control" value="{{ status.admissionform.childsurname }}" readonly>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-control" value="Ms" readonly>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Initials</label>
+                    <input type="text" class="form-control" value="Mm" readonly>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Gender</label>
+                    <input type="text" class="form-control" value="Female" readonly>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Nationality</label>
+                    <input type="text" class="form-control" value="South African" readonly>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">ID/Passport Number</label>
+                    <input type="text" class="form-control" value="1234567891234" readonly>
+                </div>
             </div>
+        </div>
+    </div>
+</div>
+
         </div>
     </div>
 

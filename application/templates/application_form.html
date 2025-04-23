@@ -2,154 +2,66 @@
 {% load static %}
 {% block content %}
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content />
-        <meta name="author" content />
-        <title>School Finder</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="{% static 'assets/Group@2x.ico' %}" /> 
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
-        
-        <!-- Custom CSS -->
-        <style>
-            /* Sidebar filter items hover effects */
-            .filter-item {
-                transition: background-color 0.2s ease-in-out;
-                color: #495057;
-                text-decoration: none;
-                display: block;
-                padding: 8px 12px;
-            }
-
-            .filter-item:hover {
-                background-color: #f8f9fa;
-                color: #0d6efd;
-                padding-left: 14px;
-            }
-
-            /* Scrollable sidebar */
-            .scrollable-sidebar {
-                max-height: 400px;
-                overflow-y: auto;
-            }
-
-            /* Sticky sidebar */
-            .sticky-sidebar {
-                position: sticky;
-                top: 20px;
-            }
-        </style>
-    </head>
-
-    <body class="d-flex flex-column">
-        
-                    <section class="py-5">
-                <div class="container px-5">
-                    <!-- Contact form-->
-                    <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
-                        <div class="text-center mb-5">
-                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
-                            <h1 class="fw-bolder"> </h1>
-                            <p class="lead fw-normal text-muted mb-0"></p>
-                        </div>
-                        <div class="row gx-5 justify-content-center">
-                            <div class="col-lg-8 col-xl-6">
-                                <!-- * * * * * * * * * * * * * * *-->
-                                <!-- * * SB Forms Contact Form * *-->
-                                <!-- * * * * * * * * * * * * * * *-->
-                                <!-- This form is pre-integrated with SB Forms.-->
-                                <!-- To make this form functional, sign up at-->
-                                <!-- https://startbootstrap.com/solution/contact-forms-->
-                                <!-- to get an API token!-->
-                                <form action="{% url 'application:applyadmission' school.id %}" class="contact-form" method="POST" enctype="multipart/form-data">  
-                                    <!-- Name input-->
-                                    {% csrf_token %}
-                                    <!-- Email address input-->
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="childname" type="text" name="childname" placeholder="childname.." data-sb-validations="required" autocomplete="off" inputmode="verbatim" />
-                                        <label for="childname">Name</label>
-                                        <div class="invalid-feedback" data-sb-feedback="childname:required">A childname is required.</div>
-                                    </div>
-                                  
-                                    <!-- Message input-->
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="childsurname" type="text" name="childsurname" placeholder="Enter your story here..." style="height: 10rem" data-sb-validations="required" autocomplete="off" pattern="[a-zA-Z0-9_]+" inputmode="verbatim"></input>
-                                        <label for="childsurname">surname</label>
-                                        <div class="invalid-feedback" data-sb-feedback="childsurname:required">A childsurname is required.</div>
-                                    </div>
-
-                                    
-
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="grade" type="text" name="grade" placeholder="grade.." data-sb-validations="required" autocomplete="off" inputmode="verbatim" />
-                                        <label for="grade">Grade</label>
-                                        <div class="invalid-feedback" data-sb-feedback="grade:required">A grade is required.</div>
-                                    </div>
-
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="parentname" type="text" name="parentname" placeholder="parentname.." data-sb-validations="required" autocomplete="off" inputmode="verbatim" />
-                                        <label for="parentname">parentname</label>
-                                        <div class="invalid-feedback" data-sb-feedback="parentname:required">A childname is required.</div>
-                                    </div>
-                                    <!-- 
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="statuss" type="text" name="statuss" placeholder="statuss.." data-sb-validations="required" autocomplete="off" inputmode="verbatim" />
-                                        <label for="statuss">status</label>
-                                        <div class="invalid-feedback" data-sb-feedback="statuss:required">A status is required.</div>
-                                    </div>-->
-
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="id_number" type="text" name="id_number" placeholder="id_number.." data-sb-validations="required" autocomplete="off" inputmode="verbatim" />
-                                        <label for="id_number">id_number</label>
-                                        <div class="invalid-feedback" data-sb-feedback="id_number:required">A id_number is required.</div>
-                                    </div>
-
-
-                                    <button type="submit" class="btn btn-primary btn-user btn-block">
-                                        Submit Application
-                                    </button>
-                                    
-
-                                    
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
+<section class="py-5">
+    <div class="container px-5">
+        <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+            <div class="text-center mb-5">
+                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+                    <i class="bi bi-envelope"></i>
                 </div>
-            </section>
+                <h2 class="fw-bold">Admission Application</h2>
+                <p class="text-muted">Please fill out the form below to apply for admission.</p>
+            </div>
 
-        <!-- Footer -->
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        
-        <!-- Core theme JS-->
-        <script src="{% static 'js/scripts.js' %}"></script>
+            <div class="row gx-5 justify-content-center">
+                <div class="col-lg-8 col-xl-6">
+                    <form action="{% url 'application:applyadmission' school.id %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
 
-        <!-- JavaScript for Real-Time Filtering -->
-        <script>
-            function filterProvinces() {
-                const input = document.getElementById("filter-search");
-                const filter = input.value.toLowerCase();
-                const items = document.getElementsByClassName("filter-item");
+                        <!-- Child Name -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="childname" name="childname" placeholder="Child's First Name" required>
+                            <label for="childname">Child's First Name</label>
+                        </div>
 
-                for (let i = 0; i < items.length; i++) {
-                    const text = items[i].innerText || items[i].textContent;
-                    items[i].style.display = text.toLowerCase().includes(filter) ? "" : "none";
-                }
-            }
-        </script>
-    </body>
-</html>
- <br><br>
-          <br><br> <br><br>
-          <br><br> <br><br>
-          <br><br>
+                        <!-- Child Surname -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="childsurname" name="childsurname" placeholder="Child's Surname" required>
+                            <label for="childsurname">Child's Surname</label>
+                        </div>
+
+                        <!-- Grade -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="grade" name="grade" placeholder="Grade Applying For" required>
+                            <label for="grade">Grade Applying For</label>
+                        </div>
+
+                        <!-- Parent Name -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="parentname" name="parentname" placeholder="Parent or Guardian Name" required>
+                            <label for="parentname">Parent/Guardian Full Name</label>
+                        </div>
+
+                        <!-- ID Number -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="id_number" name="id_number" placeholder="South African ID Number" required>
+                            <label for="id_number">Child's ID Number</label>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <button class="btn btn-primary btn-lg" type="submit">Submit Application</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/scripts.js' %}"></script>
+
 {% endblock %}

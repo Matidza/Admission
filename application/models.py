@@ -86,6 +86,8 @@ class AdmissionForm(models.Model):
     def __str__(self):
         return self.childname
     
+from django.core.exceptions import ValidationError
+
 class Status(models.Model):
     admissionform = models.OneToOneField(AdmissionForm, on_delete=models.CASCADE, related_name="status")
     APPLICATION_STATUS = [
@@ -96,16 +98,23 @@ class Status(models.Model):
         ('rejected', 'rejected'),
         ('admitted', 'admitted'),
     ]
-    status = models.CharField(max_length=50, choices=APPLICATION_STATUS, default='Submitted')
-    # if status is pending, give a reason
+    status = models.CharField(max_length=50, choices=APPLICATION_STATUS, default='submitted')
     reason = models.CharField(max_length=500, blank=True)
 
+    def clean(self):
+        if self.status in ['pending', 'wait-listed', 'rejected'] and not self.reason.strip():
+            raise ValidationError("Reason is required for pending, wait-listed, or rejected applications.")
+
+    def save(self, *args, **kwargs):
+        self.full_clean()  # This will trigger clean()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = 'Status'
 
     def __str__(self):
         return f"{self.admissionform.childname} - {self.status}"
+
 
 
 # Signal to automatically create a Status when an AdmissionForm is created

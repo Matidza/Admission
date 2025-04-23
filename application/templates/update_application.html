@@ -46,14 +46,28 @@
         
         
 
-        {% if update_application %}
-        <!-- Testimonial section-->
-        <div class="py-1">
-            <div class="container ">
-                
-            </div>
+        <div class="container mt-5">
+    <h2 class="mb-4">Update Application</h2>
+
+    {% if error %}
+        <div class="alert alert-danger">
+            {{ error }}
         </div>
-        {% endif %}
+    {% endif %}
+
+    <form method="post" action="">
+        {% csrf_token %}
+        <div class="form-group mb-3">
+            <label for="childname">Child's Full Name</label>
+            <input type="text" class="form-control" id="childname" name="childname" value="{{ application_form.childname }}">
+        </div>
+
+        <!-- Add more fields here if needed -->
+
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="{% url 'application:applications_summary' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
     </div>
 
     <br><br>

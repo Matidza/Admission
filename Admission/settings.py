@@ -16,13 +16,13 @@ SECRET_KEY = 'django-insecure-0^suq@5g&!0#n)7%=wd6=@h2i1yc4a%2q)qqpd_jf&jn3w_vok
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-#ALLOWED_HOSTS = ['*'] 
+ALLOWED_HOSTS = ['*'] 
 
-#CSRF_TRUSTED_ORIGINS = []
+CSRF_TRUSTED_ORIGINS = []
 
 
-ALLOWED_HOSTS = ['https://admission-1r18.onrender.com', 'admission-1r18.onrender.com']
-CSRF_TRUSTED_ORIGINS = ['https://admission-1r18.onrender.com', 'admission-1r18.onrender.com']
+#ALLOWED_HOSTS = ['https://admission-1r18.onrender.com', 'admission-1r18.onrender.com']
+#CSRF_TRUSTED_ORIGINS = ['https://admission-1r18.onrender.com', 'admission-1r18.onrender.com']
 
 
 # Application definition
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'admit',
     'school',
     'application',
-    'whitenoise.runserver_nostatic',
+    #'whitenoise.runserver_nostatic',
 ]
 
 
@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'Whitenoise.middleware.WhiteNoiseMiddleware',
+    #'Whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'Admission.urls'
@@ -148,6 +148,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'admission.django@gmail.com'
+EMAIL_HOST_USER = 'admissions.django@gmail.com'
 EMAIL_HOST_PASSWORD = 'Dlta123!@#'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

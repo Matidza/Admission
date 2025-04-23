@@ -307,7 +307,7 @@ def register_user(request):
             send_mail(
                 subject = subject,
                 message = message,
-                from_email = "views@ygmail.com",
+                from_email = "admission.django@gmail.com",
                 recipient_list = [email],
                 fail_silently = False,
             )

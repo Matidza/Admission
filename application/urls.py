@@ -13,6 +13,7 @@ urlpatterns = [
     path('application/<int:id>/', views.application, name='application'),
     path('update_application_status/<int:id>/', views.update_application_status, name='update_application_status'),
     path('update_application/<int:id>/', views.update_application, name='update_application'),
+ 
     path('application_delete/<int:id>/', views.application_delete, name='application_delete'),
     # Update Application if Status is pending(Parents)
 

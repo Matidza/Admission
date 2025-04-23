@@ -71,22 +71,31 @@ def application_delete(request, id):
     #return render(request, 'appication/applications_delete.html')
 
 # Update Application if Status is pending(Parents)
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import AdmissionForm
+
 @login_required(login_url='/login')
 def update_application(request, id):
-    
+    # Safely fetch the application form or redirect if not found
+    application_form = get_object_or_404(AdmissionForm, id=id)
 
-    try:
-        application_form = AdmissionForm.objects.get(id=id)
-        
-    except AdmissionForm.DoesNotExist:
-        return redirect('application:applications_summary')
+    if request.method == 'POST':
+        # Update only fields that are allowed
+        childname = request.POST.get('childname')
+        if childname:
+            application_form.childname = childname
+            application_form.save()
+            return redirect('application:applications_summary')
+        else:
+            return render(request, 'update_application.html', {
+                'application_form': application_form,
+                'error': 'Child name cannot be empty.'
+            })
     
-    if request.method == 'POST': 
-        application_form.childname = request.POST['childname']
-        application_form.save()
-        return redirect('application:applications_summary')
-    else:
-        return render(request, 'update_application.html', {'application_form': application_form})
+    # For GET request, show the form with existing data
+    return render(request, 'update_application.html', {'application_form': application_form})
+
 
 @login_required(login_url='/login')
 def applyadmission(request, school_id):
@@ -129,13 +138,13 @@ def applyadmission(request, school_id):
             message = f"Your application  for {childname} was sent to {school}. {school} will keep in touch with you with regards to your application. Or you can always check your application status on views.com"
             print(f"Your application to {school} for {childname} was sent. {school} will keep in touch with you with regards to your application. Or you can always check your application status on views.com")          
             
-            #send_mail(
-            #    subject = subject,
-            #    message = message,
-            #    from_email = "views@ygmail.com",
-            #    recipient_list = [user_email],
-            #    fail_silently = False,
-            #)
+            send_mail(
+                subject = subject,
+                message = message,
+                from_email = "views@ygmail.com",
+                recipient_list = [user_email],
+                fail_silently = False,
+            )
 
             messages.success(request, 'Application sent successfully!')
         except Exception as e:
@@ -165,18 +174,48 @@ def application(request, id):
         'status': status
     })
 
+
+from django.utils.http import url_has_allowed_host_and_scheme
+from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.contrib import messages
+
+
+from django.core.exceptions import ValidationError
+from django.contrib import messages
+from django.utils.http import url_has_allowed_host_and_scheme
 @login_required(login_url='/login')
 def update_application_status(request, id):
-  
-    application_form = AdmissionForm.objects.get(id)
-    status = get_object_or_404(Status, id=application_form)
-
+    application_form = get_object_or_404(AdmissionForm, id=id)
+    status = get_object_or_404(Status, admissionform=application_form)
 
     if request.method == 'POST':
-        status.status = request.POST['status']
-        status.save()
-        return redirect('application:applications_summary')
-    else:
-        return render(request, 'status.html', {'status': status, 'application_form':application_form})
+        new_status = request.POST.get('degree')
+        reason = request.POST.get('reason', '').strip()
+
+        if new_status in ['Pending', 'Wait-listed', 'Rejected'] and not reason:
+            messages.error(request, 'Reason is required for the selected status.')
+            return redirect(request.path_info)
+
+        status.status = new_status
+        status.reason = reason
+
+        try:
+            status.save()
+            messages.success(request, 'Status updated successfully.')
+            next_url = request.GET.get('next')
+            if next_url and url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
+                return redirect(next_url)
+            return redirect('application:recieved_applications')
+        except ValidationError as e:
+            for error in e.messages:
+                messages.error(request, error)
+
+    return render(request, 'status.html', {
+        'status': status,
+        'application_form': application_form
+    })
+
+
 
 
