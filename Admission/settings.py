@@ -69,7 +69,7 @@ WSGI_APPLICATION = 'Admission.wsgi.application'
 
 # Database
 # Production database connection using environment variable
-'''   
+'''   '''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -82,7 +82,7 @@ DATABASES = {
             'sslmode': 'require',
         },
     }
-}'''
+}
 
 #import dj_database_url
 
