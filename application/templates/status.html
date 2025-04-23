@@ -36,14 +36,14 @@
     <div class="py-1">
         <div class="container">
 
-            <!-- Display Django messages -->
+            <!-- Display Django messages 
             {% if messages %}
                 {% for message in messages %}
                     <div class="alert alert-{{ message.tags }} text-center" role="alert">
                         {{ message }}
                     </div>
                 {% endfor %}
-            {% endif %}
+            {% endif %}-->
 
             <form action="{% url 'application:update_application_status' application_form.id %}" method="POST" class="contact-form text-center">
                 {% csrf_token %}
