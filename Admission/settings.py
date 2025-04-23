@@ -11,15 +11,15 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-0^suq@5g&!0#n)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False  # Set to False in production
 ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'localhost',
     'admission.up.railway.app',  # No trailing slash
-    '.railway.app',
+    'localhost',
     'admission-6phv.onrender.com',
 ]
 CSRF_TRUSTED_ORIGINS = [
     'https://admission.up.railway.app/',
     'https://admission-6phv.onrender.com',
+    'http://localhost',
+    'https://localhost'
 ]
 
 # Application definition
