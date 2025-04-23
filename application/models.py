@@ -4,7 +4,13 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.apps import apps  # Lazy model lookup
+from django.core.validators import RegexValidator
+from django.core.exceptions import ValidationError
 
+
+def validate_id_number(value):
+    if len(str(value)) != 13:
+        raise ValidationError('ID number must be 13 digits.')
 
 class AdmissionForm(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -25,7 +31,13 @@ class AdmissionForm(models.Model):
     # Gender
     # Race
     # Nationality 
-    id_number = models.CharField(max_length=13, null=False, blank=False, default='1234567891234', unique=True)
+    #id_number = models.BigIntegerField(
+    #null=False,
+    #blank=False,
+    #default=1234567891234,
+    #unique=True,
+    #validators=[validate_id_number]
+#)
 
 
 
@@ -84,9 +96,10 @@ class AdmissionForm(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.childname
+        return f"{self.childname} ({self.grade}) - {self.school.name}"
+
     
-from django.core.exceptions import ValidationError
+
 
 class Status(models.Model):
     admissionform = models.OneToOneField(AdmissionForm, on_delete=models.CASCADE, related_name="status")

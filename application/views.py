@@ -125,7 +125,7 @@ def applyadmission(request, school_id):
             parentname=parentname,
             
             #statuss=statuss,
-            id_number=id_number,
+           
         )
         # check if childs names with Id number has already applied to this school 
         # Save the admission form
