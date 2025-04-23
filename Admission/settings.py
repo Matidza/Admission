@@ -18,7 +18,7 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://admission.up.railway.app',
+    'https://admission.up.railway.app/',
     'https://admission-6phv.onrender.com',
     'http://localhost',
     'http://127.0.0.1',
