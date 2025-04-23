@@ -258,7 +258,7 @@ def search(request):
 
 
 # Update User Login details
-@login_required(login_url='/login')
+
 def update_user(request):
 	if request.user.is_authenticated:
         # What/Which user is authenticated/
@@ -304,13 +304,13 @@ def register_user(request):
             subject = f'Application to SchoolName'
             message = f"Your application  for  was sent to.  will keep in touch with you with regards to your application. Or you can always check your application status on views.com"
 
-            send_mail(
-                subject = subject,
-                message = message,
-                from_email = "admission.django@gmail.com",
-                recipient_list = [email],
-                fail_silently = False,
-            )
+            #send_mail(
+            #    subject = subject,
+            #    message = message,
+            #    from_email = "admission.django@gmail.com",
+            #    recipient_list = [email],
+            #    fail_silently = False,
+            #)
 
             # Testing mail
             #print(f'{email} created an account and this email is from {from_email}')
@@ -328,7 +328,7 @@ def register_user(request):
 
 # Update Profile
 def update_info(request):
-    if request.user.is_authenticated:
+    
         # Get Current User Profile
         current_user = Profile.objects.get(user__id=request.user.id)
 
@@ -348,15 +348,13 @@ def update_info(request):
                 return redirect('logout')
 
         return render(request, "parent/update_info.html", {'form': form})
-    else:
-        messages.error(request, "You Must Be Logged In To Access That Page!!")
-        return redirect('login')
+ 
 
 
 
 # Update School Info
 def update_school_info(request):
-    if request.user.is_authenticated:
+   
         # Get the current user's school
         try:
             current_user = School.objects.get(user__id=request.user.id)
@@ -373,6 +371,4 @@ def update_school_info(request):
             return redirect('logout')
 
         return render(request, "parent/update_school_info.html", {'form': form})
-    else:
-        messages.error(request, "You must be logged in to access this page!")
-        return redirect('home')
+ 
