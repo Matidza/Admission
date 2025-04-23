@@ -11,14 +11,13 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-0^suq@5g&!0#n)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False  # Set to False in production
 ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'http://127.0.0.1:8000/',
-    'http://127.0.0.1:5000/',
-    'localhost',
     '.railway.app',
     'admission.up.railway.app',
-    'admission.up.railway.app/',
-    'admission-6phv.onrender.com'
+    '127.0.0.1',
+    '127.0.0.1:8000/',
+    '127.0.0.1:5000/',
+    'localhost',
+
 ]
 CSRF_TRUSTED_ORIGINS = [
     'https://admission.up.railway.app',
@@ -121,7 +120,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Used for `collectstatic` in production
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Used for `collectstatic` in production
+
 STATICFILES_DIRS = [BASE_DIR / 'static']  # Ensure this points to your 'static' folder
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
