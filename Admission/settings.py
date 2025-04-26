@@ -83,15 +83,7 @@ DATABASES = {
         #'NAME': BASE_DIR / 'db.sqlite3',
 
         #Production
-        #'ENGINE': 'django.db.backends.postgresql',
-        #'NAME': 'railway',
-        #'USER': 'postgres',
-        #'PASSWORD': 'wYLaHcnRtQyduiqwWZhGmPvvdhuXBKXH',
-        #'HOST': 'yamanote.proxy.rlwy.net',
-        #'PORT': '52241',
-        #'OPTIONS': {
-        #    'sslmode': 'require',
-        #},
+
     }
 }
 
