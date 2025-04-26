@@ -28,7 +28,7 @@ class School(models.Model):
     website = models.TextField(max_length=100)
     slogan = models.CharField(max_length=200, blank=True)
     image = models.ImageField(
-    upload_to='uploads/schoolprofile/', default=None, blank=False, null=False)
+    upload_to='media/', default=None, blank=False, null=False)
     
 
     SCHOOL_SECTOR = [
@@ -205,7 +205,7 @@ class Sports(models.Model):
     story = models.TextField(max_length=10000, blank=True)
     date = models.DateField(max_length=10000, blank=True)
     date_modified = models.DateTimeField(auto_now=True)
-    image = models.ImageField(upload_to='uploads/sports/', default="", blank=True, null=True)
+    image = models.ImageField(upload_to='media/', default="", blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -221,7 +221,7 @@ class Academics(models.Model):
     date = models.DateField(max_length=10000, blank=True)
     date_modified = models.DateTimeField(auto_now=True)
     image = models.ImageField(
-        upload_to='uploads/academics/', default="", blank=True, null=True)
+        upload_to='media/', default="", blank=True, null=True)
 
     def __str__(self):
         return self.title
