@@ -1,6 +1,6 @@
 from pathlib import Path
 import os
-#import dj_database_url
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,7 +10,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-0^suq@5g&!0#n)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False  # Set to False in production
-ALLOWED_HOSTS = ["*"]
+#ALLOWED_HOSTS = ["*"]
 
 """  
 ALLOWED_HOSTS = [
@@ -83,23 +83,23 @@ DATABASES = {
         #'NAME': BASE_DIR / 'db.sqlite3',
 
         #Production
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'wYLaHcnRtQyduiqwWZhGmPvvdhuXBKXH',
-        'HOST': 'yamanote.proxy.rlwy.net',
-        'PORT': '52241',
-        'OPTIONS': {
-            'sslmode': 'require',
-        },
+        #'ENGINE': 'django.db.backends.postgresql',
+        #'NAME': 'railway',
+        #'USER': 'postgres',
+        #'PASSWORD': 'wYLaHcnRtQyduiqwWZhGmPvvdhuXBKXH',
+        #'HOST': 'yamanote.proxy.rlwy.net',
+        #'PORT': '52241',
+        #'OPTIONS': {
+        #    'sslmode': 'require',
+        #},
     }
 }
 
-#import dj_database_url
+import dj_database_url
 
-#DATABASES = {
-#  'default': dj_database_url.parse(os.environ['Aiven'], conn_max_age=600)
-#}
+DATABASES = {
+  'default': dj_database_url.parse(os.environ['Aiven'], conn_max_age=600)
+}
 
 
 # Password validation
