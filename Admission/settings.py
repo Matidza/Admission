@@ -102,10 +102,6 @@ DATABASES = {
 #}
 
 
-#DATABASES = {
-#    'default': dj_database_url.parse(os.environ.get('AIVEN'), conn_max_age=600)
-#}
-
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
