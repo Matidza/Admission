@@ -10,6 +10,9 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-0^suq@5g&!0#n)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False  # Set to False in production
+ALLOWED_HOSTS = ["*"]
+
+"""  
 ALLOWED_HOSTS = [
     'admission.up.railway.app',
     'localhost',
@@ -23,6 +26,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost',
     'http://127.0.0.1',
 ]
+"""
 
 # Application definition
 INSTALLED_APPS = [
@@ -74,6 +78,11 @@ WSGI_APPLICATION = 'Admission.wsgi.application'
 '''   '''
 DATABASES = {
     'default': {
+        # Development
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': BASE_DIR / 'db.sqlite3',
+
+        #Production
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'railway',
         'USER': 'postgres',
