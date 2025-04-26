@@ -98,7 +98,7 @@ DATABASES = {
 import dj_database_url
 
 DATABASES = {
-  'default': dj_database_url.parse(os.environ['Aiven'], conn_max_age=600)
+  'default': dj_database_url.parse(os.environ['AIVEN'], conn_max_age=600)
 }
 
 
