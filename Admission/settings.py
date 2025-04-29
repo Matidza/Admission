@@ -12,7 +12,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-0^suq@5g&!0#n)
 DEBUG = False  # Set to False in production
 #ALLOWED_HOSTS = ["*"]
 
-"""  
+"""  """
 ALLOWED_HOSTS = [
     'admission.up.railway.app',
     'localhost',
@@ -26,7 +26,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost',
     'http://127.0.0.1',
 ]
-"""
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -75,7 +75,7 @@ WSGI_APPLICATION = 'Admission.wsgi.application'
 
 # Database
 # Production database connection using environment variable
-'''   '''
+'''   
 DATABASES = {
     'default': {
         # Development
@@ -85,14 +85,11 @@ DATABASES = {
         #Production
 
     }
-}
+}'''
 
+# Aiven.io
 DATABASES = {
-    'default': dj_database_url.parse(
-        os.environ['VEN'],
-        conn_max_age=600,
-        ssl_require=True
-    )
+  'default': dj_database_url.parse(os.environ['Aiven'], conn_max_age=600,ssl_require=True)
 }
 
 
