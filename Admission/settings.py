@@ -1,15 +1,18 @@
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv()
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-0^suq@5g&!0#n)7%=wd6=@h2i1yc4a%2q)qqpd_jf&jn3w_vok')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False  # Set to False in production
+DEBUG = True  # Set to False in production
 #ALLOWED_HOSTS = ["*"]
 
 """  """
@@ -89,7 +92,7 @@ DATABASES = {
 
 # Aiven.io
 DATABASES = {
-  'default': dj_database_url.parse(os.environ('Aiven'), conn_max_age=600)
+  'default': dj_database_url.parse(os.environ['Aiven'], conn_max_age=600)
 }
 
 
