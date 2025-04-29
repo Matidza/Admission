@@ -89,7 +89,7 @@ DATABASES = {
 
 # Aiven.io
 DATABASES = {
-  'default': dj_database_url.parse(os.environ['Aiven'], conn_max_age=600,ssl_require=True)
+  'default': dj_database_url.parse(os.environ('Aiven'), conn_max_age=600)
 }
 
 
