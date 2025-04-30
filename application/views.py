@@ -109,7 +109,7 @@ def applyadmission(request, school_id):
         # Get the form data
         childname = request.POST['childname']
         childsurname = request.POST['childsurname']
-        id_number = request.POST['id_number']
+        #id_number = request.POST['id_number']
         grade = request.POST['grade']
         parentname = request.POST['parentname']
         
