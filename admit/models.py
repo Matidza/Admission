@@ -8,8 +8,6 @@ from school.models import School
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     date_modified = models.DateTimeField(auto_now=True)
-    #country = models.CharField(max_length=200, blank=True)
-    #image = models.ImageField(upload_to='uploads/parentprofile/', blank=True, null=True)
 
     ROLE_CHOICES = [('parent', 'Parent'), ('school', 'School')]
     user_type = models.CharField(max_length=10, choices=ROLE_CHOICES, blank=True)
@@ -23,21 +21,19 @@ class Profile(models.Model):
 
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
-    
+    # Use get_or_create to avoid IntegrityError if profile already exists
     if created:
-        Profile.objects.create(user=instance)
+        Profile.objects.get_or_create(user=instance)
 
 
 @receiver(post_save, sender=Profile)
 def create_or_delete_school(sender, instance, created, **kwargs):
     # Lazy load the School model to avoid circular imports
     School = apps.get_model('school', 'School')
-    
-    # Always create a School instance when a Profile is created
-    if created:
-        School.objects.create(user=instance.user)
-    
-    # Check the user_type after creation or update
-    if instance.user_type == 'parent':
-        # Delete the associated School instance if user_type is "parent"
+
+    if instance.user_type == 'school':
+        # Ensure a School instance exists for this user
+        School.objects.get_or_create(user=instance.user)
+    else:
+        # If user is not a school (i.e. parent), delete any associated School instance
         School.objects.filter(user=instance.user).delete()
