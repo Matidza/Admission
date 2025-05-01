@@ -280,14 +280,13 @@ def update_user(request):
 
 
 # Register User
-from django.core.mail import send_mail
-from django.contrib import messages
-from django.shortcuts import redirect, render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from django.core.mail import send_mail
 from .forms import SignUpForm
 
 def register_user(request):
-    form = SignUpForm()
     if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -296,32 +295,33 @@ def register_user(request):
             password = form.cleaned_data['password1']
             email = form.cleaned_data['email']
 
+            # Authenticate and log the user in
             user = authenticate(username=username, password=password)
             login(request, user)
+
+            # Send a confirmation email (you can enable this later)
             from_email = "views@ygmail.com"
-
-            # Send confirmation email
             subject = f'Application to SchoolName'
-            message = f"Your application  for  was sent to.  will keep in touch with you with regards to your application. Or you can always check your application status on views.com"
-
-            #send_mail(
-            #    subject = subject,
-            #    message = message,
-            #    from_email = "admission.django@gmail.com",
-            #    recipient_list = [email],
-            #    fail_silently = False,
-            #)
-
-            # Testing mail
-            #print(f'{email} created an account and this email is from {from_email}')
+            message = f"Your application was sent to SchoolName. We will keep in touch with you regarding your application. Or you can always check your application status on views.com"
+            
+            # Uncomment and configure email sending for production
+            # send_mail(
+            #     subject=subject,
+            #     message=message,
+            #     from_email="admission.django@gmail.com",
+            #     recipient_list=[email],
+            #     fail_silently=False,
+            # )
 
             messages.success(request, 'Username & Account Created. A confirmation email has been sent.')
-            return redirect('update_info')
+            return redirect('update_info')  # Or your next page URL
         else:
-            messages.error(request, 'Registration Not Successful. Try Again!')
-            return redirect('register')
+            messages.error(request, 'Registration Not Successful. Please try again.')
+            return redirect('register')  # The name of your registration page URL
     else:
-        return render(request, 'parent/register.html', {'form': form})
+        form = SignUpForm()
+    return render(request, 'parent/register.html', {'form': form})
+
 
 
 
