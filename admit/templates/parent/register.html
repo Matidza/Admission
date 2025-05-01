@@ -32,16 +32,25 @@
                                         <h1 class="h4 text-gray-900 mb-4">Welcome, Register!</h1>
                                     </div>
                                     
-                                    <form method="POST" action="{% url 'register' %}">   
+                                   <form method="POST" action="{% url 'register' %}">
                                         {% csrf_token %}
                                         {{ form.as_p }}
-                                        <br/>
-                                        <div align="right">
-                                            <button type="submit" class="btn btn-primary">
-                                                Register
-                                            </button>
+                                    
+                                        {% if form.errors %}
+                                            <div class="alert alert-danger mt-3">
+                                                <ul>
+                                                    {% for field in form %}
+                                                        {% for error in field.errors %}
+                                                            <li>{{ error }}</li>
+                                                        {% endfor %}
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                    
+                                        <div class="text-right">
+                                            <button type="submit" class="btn btn-primary">Register</button>
                                         </div>
-                                             
                                     </form>
                                     <hr>
                                     <div class="text-center">
