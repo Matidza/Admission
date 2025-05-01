@@ -6,22 +6,36 @@ from .models import Profile
 
 # Sign Up user form
 class SignUpForm(UserCreationForm):
-    email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}))
-    #first_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'First Name'}))
-    #last_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Last Name'}))
+    email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email Address'}))
 
     class Meta:
         model = User
-        fields = ('username',  'email', 'password1', 'password2') #'first_name', 'last_name',
+        fields = ('username', 'email', 'password1', 'password2')
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("Email is already taken.")
+        return email
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exists():
+            raise ValidationError("Username is already taken.")
+        return username
 
     def __init__(self, *args, **kwargs):
         super(SignUpForm, self).__init__(*args, **kwargs)
 
+        # Customize the form fields with specific CSS classes and placeholders
         self.fields['username'].widget.attrs['class'] = 'form-control'
         self.fields['username'].widget.attrs['placeholder'] = 'Username'
         self.fields['username'].label = ''
-        self.fields['username'].help_text = '<span class="form-text text-muted"><small></small></span>'
         
+        self.fields['email'].widget.attrs['class'] = 'form-control'
+        self.fields['email'].widget.attrs['placeholder'] = 'Email Address'
+        self.fields['email'].label = ''
+
         self.fields['password1'].widget.attrs['class'] = 'form-control'
         self.fields['password1'].widget.attrs['placeholder'] = 'Password'
         self.fields['password1'].label = ''
@@ -30,7 +44,6 @@ class SignUpForm(UserCreationForm):
         self.fields['password2'].widget.attrs['class'] = 'form-control'
         self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
         self.fields['password2'].label = ''
-        self.fields['password2'].help_text = '<span class="form-text text-muted"><small></small></span>'
 
 
 class UpdateUserForm(UserChangeForm):
