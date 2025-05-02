@@ -285,7 +285,54 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.core.mail import send_mail
 from .forms import SignUpForm
+from django.contrib.auth.models import User
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
+def register_user(request):
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+
+        # Username validation
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'This username is already taken. Please choose a different one.')
+            return redirect('register')
+        elif len(username) > 150:
+            messages.error(request, 'Username must be 150 characters or fewer.')
+            return redirect('register')
+        elif not all(c.isalnum() or c in "@.+-_" for c in username):
+            messages.error(request, 'Username contains invalid characters. Use only letters, digits, and @/./+/-/_')
+            return redirect('register')
+
+        # Email validation
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'This email is already registered. Try logging in or using a different email.')
+            return redirect('register')
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.error(request, 'Enter a valid email address.')
+            return redirect('register')
+
+        if form.is_valid():
+            user = form.save()
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=password)
+            login(request, user)
+
+            # Optional: send confirmation email
+            messages.success(request, 'Account created successfully. A confirmation email has been sent.')
+            return redirect('update_info')
+        else:
+            messages.error(request, 'Registration not successful. Please ensure all fields are valid.')
+            return redirect('register')
+    else:
+        form = SignUpForm()
+    return render(request, 'parent/register.html', {'form': form})
+
+"""
 def register_user(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)
@@ -321,7 +368,7 @@ def register_user(request):
     else:
         form = SignUpForm()
     return render(request, 'parent/register.html', {'form': form})
-
+"""
 
 
 
