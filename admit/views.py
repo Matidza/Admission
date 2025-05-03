@@ -40,7 +40,7 @@ from django.core.paginator import Paginator
 
 def schools(request):
     school_profile = School.objects.all().order_by('id')
-    paginator = Paginator(school_profile, 10)  # 5 schools per page
+    paginator = Paginator(school_profile, 9)  # 5 schools per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'parent/schools.html', {'page_obj': page_obj})
