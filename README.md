@@ -179,10 +179,4 @@ admissions/
 4. Push to the branch (`git push origin feature-branch`).
 5. Open a pull request.
 
-
-
-For any questions or inquiries, feel free to reach out:
-
 📧 Email: admission.django@gmail.com
-
-
